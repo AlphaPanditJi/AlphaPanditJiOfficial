@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Alpha Pandit Ji - Professional Digital Services | 7+ Years Experience in YouTube Growth, Video Editing & Digital Content Creation">
+    <title>Alpha Pandit Ji - Professional Digital Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1e3a8a;
+            --secondary-blue: #3b82f6;
+            --light-blue: #60a5fa;
+            --dark-bg: #0f172a;
+            --white: #ffffff;
+            --light-gray: #f1f5f9;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--white);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: var(--white);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: var(--white);
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--white);
+            color: var(--primary-blue);
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: transform 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 3rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: var(--light-gray);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .pricing {
+            background: var(--light-gray);
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .pricing-card.featured {
+            border: 3px solid var(--secondary-blue);
+        }
+
+        .badge {
+            background: var(--secondary-blue);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 3rem;
+            color: var(--primary-blue);
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .price small {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .features-list li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .features-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--secondary-blue);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .buy-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s;
+            margin-top: 1rem;
+        }
+
+        .buy-button:hover {
+            transform: translateY(-3px);
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .about-content h3 {
+            color: var(--primary-blue);
+            margin: 2rem 0 1rem;
+            font-size: 1.5rem;
+        }
+
+        .contact {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: var(--white);
+        }
+
+        .contact-info {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-item {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+        }
+
+        .contact-item h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .contact-item a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        .contact-item a:hover {
+            opacity: 0.8;
+        }
+
+        footer {
+            background: var(--dark-bg);
+            color: var(--white);
+            padding: 3rem 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            margin: 2rem 0;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--light-blue);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .pricing-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo">Alpha Pandit Ji</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Alpha Pandit Ji</h1>
+        <p>Professional Digital Services | 7+ Years Experience</p>
+        <a href="#pricing" class="cta-button">Get Started →</a>
+    </section>
+
+    <section id="features" class="container">
+        <h2 class="section-title">Why Choose Us?</h2>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🎬</div>
+                <h3>Professional Editing</h3>
+                <p>High-quality video editing services with 7+ years of experience</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3>YouTube Growth</h3>
+                <p>Proven strategies to grow your channel</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💎</div>
+                <h3>Premium Content</h3>
+                <p>Access to exclusive editing packs and tutorials</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤝</div>
+                <h3>Personal Support</h3>
+                <p>Direct support for premium members</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2 class="section-title">Choose Your Plan</h2>
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <h3>Basic</h3>
+                    <div class="price">₹199<small>/7 days</small></div>
+                    <ul class="features-list">
+                        <li>Limited content previews</li>
+                        <li>Basic editing tips</li>
+                        <li>Telegram channel access</li>
+                        <li>7 days validity</li>
+                    </ul>
+                    <a href="mailto:businessrelatedsms21@gmail.com" class="buy-button">Contact Us</a>
+                </div>
+
+                <div class="pricing-card">
+                    <h3>Pro</h3>
+                    <div class="price">₹499<small>/month</small></div>
+                    <ul class="features-list">
+                        <li>All editing packages</li>
+                        <li>Growth tips & tricks</li>
+                        <li>Telegram channel access</li>
+                        <li>Regular updates</li>
+                        <li>1 month validity</li>
+                    </ul>
+                    <a href="mailto:businessrelatedsms21@gmail.com" class="buy-button">Contact Us</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <span class="badge">Most Popular</span>
+                    <h3>Premium</h3>
+                    <div class="price">₹999<small>/month</small></div>
+                    <ul class="features-list">
+                        <li>Full access to all content</li>
+                        <li>Personal guidance</li>
+                        <li>Direct WhatsApp support</li>
+                        <li>All premium packs</li>
+                        <li>Exclusive Telegram channel</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <a href="mailto:businessrelatedsms21@gmail.com" class="buy-button">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="container">
+        <h2 class="section-title">My Journey</h2>
+        <div class="about-content">
+            <p>नमस्ते! मैं 7+ years से YouTube और digital content creation की दुनिया में हूं।</p>
+            
+            <h3>🎯 मैंने क्या सीखा?</h3>
+            <p>YouTube algorithms, viral content strategies, professional editing techniques, channel monetization—सब कुछ practical experience से सीखा है।</p>
+            
+            <h3>💡 आपको क्या मिलेगा?</h3>
+            <p>Real working strategies, proven techniques, और personal guidance जो मैंने खुद test किया है।</p>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h3>📧 Email</h3>
+                    <a href="mailto:businessrelatedsms21@gmail.com">businessrelatedsms21@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <h3>📱 Telegram Channel</h3>
+                    <a href="https://t.me/AlphaPanditJiApp" target="_blank">Join Our Community</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">Terms & Conditions</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Refund Policy</a>
+        </div>
+        <p style="margin-top: 2rem; opacity: 0.7;">&copy; 2025 Alpha Pandit Ji - Professional Digital Services. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
