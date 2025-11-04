@@ -7,133 +7,57 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{
-  background:linear-gradient(135deg,#ffeb99,#fff8e1);
-  color:#222;
-}
+body{background:linear-gradient(135deg,#ffeb99,#fff8e1);color:#222;}
 header{
-  background:#fff8cc;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:15px 25px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+  background:#fff8cc;display:flex;align-items:center;justify-content:space-between;
+  padding:15px 25px;box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 header img{height:60px;width:60px;}
 header h1{font-size:20px;color:#333;}
-header button{
-  background:#ffd700;
-  border:none;
-  padding:8px 14px;
-  border-radius:8px;
-  font-weight:600;
-  cursor:pointer;
-  transition:0.3s;
-}
+header button{background:#ffd700;border:none;padding:8px 14px;border-radius:8px;font-weight:600;cursor:pointer;transition:0.3s;}
 header button:hover{background:#ffce00;}
-
-.note-bar{
-  background:#fff0a3;
-  text-align:center;
-  padding:6px;
-  font-size:14px;
-  color:#333;
-  font-weight:500;
-}
-
+.note-bar{background:#fff0a3;text-align:center;padding:6px;font-size:14px;color:#333;font-weight:500;}
 .container{max-width:1100px;margin:30px auto;padding:0 20px;text-align:center;}
 .plans{display:flex;flex-wrap:wrap;justify-content:center;gap:20px;margin-top:30px;}
-.plan{
-  background:#fff;
-  border-radius:14px;
-  box-shadow:0 3px 8px rgba(0,0,0,0.1);
-  width:290px;
-  padding:20px;
-}
+.plan{background:#fff;border-radius:14px;box-shadow:0 3px 8px rgba(0,0,0,0.1);width:290px;padding:20px;}
 .plan h3{background:#ffd700;padding:6px;border-radius:6px;display:inline-block;}
 .plan h2{margin:12px 0;font-size:22px;color:#333;}
 .plan p{font-size:14px;color:#555;}
-.plan button{
-  margin-top:10px;
-  background:#00a651;
-  color:#fff;
-  border:none;
-  padding:10px 18px;
-  border-radius:8px;
-  cursor:pointer;
-  transition:0.3s;
-}
+.plan button{margin-top:10px;background:#00a651;color:#fff;border:none;padding:10px 18px;border-radius:8px;cursor:pointer;transition:0.3s;}
 .plan button:hover{background:#008f45;}
+
+/* Affiliate Generator */
+.generator{background:#fff8e1;padding:20px;margin:20px auto;max-width:900px;border-radius:14px;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+.generator h3{margin-bottom:10px;}
+.generator input, .generator select{
+  padding:10px;border-radius:8px;border:1px solid #ccc;width:70%;margin-right:10px;font-size:14px;
+}
+.generator button{
+  background:#00a651;color:#fff;border:none;padding:10px 18px;border-radius:8px;cursor:pointer;font-weight:600;
+}
+.generator button:hover{background:#008f45;}
 
 /* Recent Earners */
 .earners-bar{
-  background:#fff8e1;
-  padding:8px 0;
-  font-size:14px;
-  color:#444;
-  overflow:hidden;
-  position:relative;
-  white-space:nowrap;
-  border-top:2px solid #ffe066;
-  border-bottom:2px solid #ffe066;
+  background:#fff8e1;padding:8px 0;font-size:14px;color:#444;overflow:hidden;white-space:nowrap;border-top:2px solid #ffe066;border-bottom:2px solid #ffe066;
 }
 .earners-content{
-  display:inline-block;
-  padding-left:100%;
-  animation:scrollEarners 40s linear infinite; /* Slowed down (was 20s) */
+  display:inline-block;padding-left:100%;
+  animation:scrollEarners 50s linear infinite; /* slow & smooth */
 }
-@keyframes scrollEarners{
-  from{transform:translateX(0);}
-  to{transform:translateX(-100%);}
-}
-
-/* Reviews */
-.reviews{background:#fff;padding:30px 0;margin-top:30px;}
-.reviews h2{margin-bottom:15px;color:#333;}
-.review-box{
-  display:flex;
-  gap:15px;
-  overflow-x:auto;
-  scroll-behavior:smooth;
-}
-.review{
-  background:#fff8cc;
-  border-radius:12px;
-  padding:15px;
-  min-width:220px;
-  flex-shrink:0;
-  box-shadow:0 2px 5px rgba(0,0,0,0.1);
-}
-.review img{
-  width:50px;height:50px;border-radius:50%;
-  object-fit:cover;
-}
-.review .name{font-weight:600;margin-top:8px;}
-.review .stars{color:#f4b400;}
+@keyframes scrollEarners{from{transform:translateX(0);}to{transform:translateX(-100%);}}
 
 /* Footer */
-footer{
-  background:#fff8cc;
-  text-align:center;
-  padding:20px;
-  margin-top:30px;
-  border-top:2px solid #ffe066;
-}
-footer a{
-  text-decoration:none;
-  color:#222;
-  margin:0 8px;
-  font-weight:500;
-}
+footer{background:#fff8cc;text-align:center;padding:20px;margin-top:30px;border-top:2px solid #ffe066;}
+footer a{text-decoration:none;color:#222;margin:0 8px;font-weight:500;}
 footer img{height:24px;width:24px;vertical-align:middle;margin-right:6px;}
 footer p{margin-top:10px;font-size:13px;color:#444;}
-
 </style>
 </head>
 <body>
 
 <div class="note-bar">
-  ⚠️ Note: Platform fee 30% is automatically applied to all affiliate earnings (Premium Plus users pay only 25%).
+⚠️ Note: Platform fee 30% is automatically applied to all affiliate earnings (Premium Plus users pay only 25%).
 </div>
 
 <header>
@@ -176,22 +100,31 @@ footer p{margin-top:10px;font-size:13px;color:#444;}
   </div>
 </div>
 
-<!-- Recent Earners Section -->
-<div class="earners-bar">
-  <div class="earners-content" id="earnersScroll">
-    🔥 Recent Earners:
-    💰 Rohan earned ₹1529 • Sneha earned ₹1342 • Meena earned ₹1746 • Rahul earned ₹1265 • Nisha earned ₹845 • Mona earned ₹1136 • Deepak earned ₹1289 • Asha earned ₹935 • Kunal earned ₹1468 • Priya earned ₹1210 • Manish earned ₹1378 • Ankit earned ₹1156 •
-  </div>
+<!-- Affiliate Link Generator -->
+<div class="generator">
+  <h3>Affiliate Link Generator</h3>
+  <p>Paste your product link and choose platform:</p>
+  <input type="text" placeholder="Paste Flipkart / Amazon / Meesho / Myntra link...">
+  <select>
+    <option>Amazon</option>
+    <option>Flipkart</option>
+    <option>Meesho</option>
+    <option>Myntra</option>
+    <option>Ajio</option>
+    <option>Nykaa</option>
+    <option>Snapdeal</option>
+    <option>TataCliq</option>
+    <option>ShopClues</option>
+    <option>eBay</option>
+  </select>
+  <button>Generate Link</button>
 </div>
 
-<!-- Reviews Section -->
-<div class="reviews">
-  <h2>⭐ 3.7 / 5 — 10,000+ Reviews</h2>
-  <div class="review-box">
-    <div class="review"><img src="https://randomuser.me/api/portraits/women/44.jpg"><div class="name">Ritika</div><div class="stars">★★★★☆ (4.3)</div><p>Amazing service! Highly recommended.</p></div>
-    <div class="review"><img src="https://randomuser.me/api/portraits/women/56.jpg"><div class="name">Asha</div><div class="stars">★★★☆☆ (3.8)</div><p>Really helped me a lot. Great content.</p></div>
-    <div class="review"><img src="https://randomuser.me/api/portraits/women/68.jpg"><div class="name">Mona</div><div class="stars">★★★★☆ (4.4)</div><p>Good value for money and quick support.</p></div>
-    <div class="review"><img src="https://randomuser.me/api/portraits/women/22.jpg"><div class="name">Rekha</div><div class="stars">★★★☆☆ (3.5)</div><p>Loved the guidance and timely updates.</p></div>
+<!-- Recent Earners -->
+<div class="earners-bar">
+  <div class="earners-content" id="earnersScroll">
+    🔥 Recent Earners: 
+    💰 Rohan earned ₹1529 • Sneha earned ₹1342 • Meena earned ₹1746 • Rahul earned ₹1265 • Nisha earned ₹845 • Mona earned ₹1136 • Deepak earned ₹1289 • Asha earned ₹935 • Kunal earned ₹1468 • Priya earned ₹1210 • Manish earned ₹1378 • Ankit earned ₹1156 •
   </div>
 </div>
 
@@ -207,7 +140,7 @@ footer p{margin-top:10px;font-size:13px;color:#444;}
 </footer>
 
 <script>
-// Infinite earner list (auto-duplicate for endless scroll)
+// Infinite earner scroll
 const earners = document.getElementById('earnersScroll');
 earners.innerHTML += earners.innerHTML; // duplicate for seamless loop
 </script>
