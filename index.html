@@ -1,199 +1,429 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Alpha Pandit Ji Official</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: "Poppins", sans-serif;
-      background-color: #fff8e1;
-      color: #222;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Alpha Pandit Ji Official</title>
+<link rel="icon" href="https://i.ibb.co/HTmgqXLh/Picsart-25-11-04-05-36-14-228.png" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold-1:#D4AF37;
+    --gold-2:#E9C46A;
+    --bg-white:#fff;
+    --muted:#6b6b6b;
+    --accent:#00c46a; /* generate button green */
+  }
+  *{box-sizing:border-box;font-family:'Poppins',sans-serif}
+  html,body{height:100%}
+  body{
+    margin:0;
+    background:linear-gradient(180deg,#fff 0%, #fbf6ee 60%);
+    color:#111;
+    -webkit-font-smoothing:antialiased;
+  }
 
-    header {
-      background-color: #ffcc00;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 30px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
+  /* STICKY HEADER */
+  header{
+    position:sticky;
+    top:0;
+    z-index:1200;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 20px;
+    border-bottom:1px solid rgba(0,0,0,0.04);
+    background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.75));
+    backdrop-filter: blur(6px);
+  }
+  .left-head{display:flex;align-items:center;gap:14px}
+  .logo-wrap{display:flex;align-items:center;gap:10px}
+  .logo-img{width:64px;height:64px;border-radius:12px;overflow:hidden;border:3px solid rgba(0,0,0,0.06);box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+  .logo-img img{width:100%;height:100%;object-fit:cover;display:block}
+  .brand{font-weight:700;color:var(--gold-1);line-height:1}
+  .tag{font-size:0.85rem;color:var(--muted);margin-top:3px}
 
-    header img.logo {
-      height: 60px;
-    }
+  .top-actions{display:flex;align-items:center;gap:10px}
+  .btn{padding:8px 14px;border-radius:999px;border:none;cursor:pointer;font-weight:700}
+  .btn-login{background:linear-gradient(90deg,var(--gold-1),var(--gold-2));color:#111}
+  .btn-settings{background:#fff;border:1px solid #eee;color:#333}
+  .lang-select{padding:7px 12px;border-radius:10px;border:1px solid #eee;background:#fff}
 
-    .nav-buttons {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-    }
+  /* NOTE bar */
+  .note{
+    text-align:center;
+    background:linear-gradient(90deg, rgba(212,175,55,0.12), rgba(212,175,55,0.06));
+    padding:8px 12px;
+    font-weight:600;
+    color: #444;
+    border-bottom:1px solid rgba(212,175,55,0.08);
+  }
 
-    .btn {
-      padding: 8px 16px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-    }
+  /* HERO */
+  .hero{
+    max-width:1200px;margin:28px auto;padding:36px 20px;border-radius:18px;display:flex;gap:30px;align-items:center;background:linear-gradient(180deg,rgba(212,175,55,0.06),rgba(255,255,255,0.6));
+    box-shadow:0 10px 40px rgba(212,175,55,0.06);
+  }
+  .hero-left{flex:1;min-width:260px}
+  .hero-title{font-size:2.1rem;margin-bottom:10px;color:var(--gold-1);font-weight:800}
+  .hero-sub{color:#444;margin-bottom:18px;line-height:1.5}
+  .cta-group{display:flex;gap:12px;flex-wrap:wrap}
+  .cta-primary{background:var(--accent);color:#00281a;padding:12px 20px;border-radius:999px;font-weight:800;box-shadow:0 10px 30px rgba(0,196,106,0.12)}
+  .cta-secondary{background:transparent;border:2px solid rgba(0,0,0,0.06);padding:10px 18px;border-radius:999px;color:#333}
 
-    .login-btn {
-      background: linear-gradient(90deg, #ffb300, #ffcc33);
-      color: #000;
-    }
+  .hero-stats{display:flex;gap:14px;margin-top:20px;flex-wrap:wrap}
+  .stat{background:#fff;padding:14px 18px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.04)}
+  .stat h3{color:var(--gold-1);margin-bottom:6px}
+  .stat p{color:var(--muted);font-size:0.9rem}
 
-    .settings-btn {
-      background: linear-gradient(90deg, #ffd700, #fff176);
-    }
+  /* PLANS */
+  .plans{max-width:1200px;margin:28px auto;padding:18px;display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
+  .plan{background:#fff;border-radius:14px;padding:20px;width:280px;border:1px solid rgba(0,0,0,0.04);box-shadow:0 8px 28px rgba(0,0,0,0.04)}
+  .plan .badge{display:inline-block;background:linear-gradient(90deg,var(--gold-1),var(--gold-2));color:#111;padding:6px 12px;border-radius:999px;font-weight:800;margin-bottom:10px}
+  .plan h4{margin:6px 0 10px}
+  .plan p{font-size:0.95rem;color:var(--muted);margin-bottom:14px}
+  .buy{display:inline-block;background:var(--accent);color:#001f12;padding:10px 18px;border-radius:999px;font-weight:800;text-decoration:none}
 
-    .review-btn {
-      background-color: #ffb300;
-      color: #000;
-      border: 2px solid #fff;
-      transition: 0.3s;
-    }
+  /* Affiliate generator */
+  .affiliate-wrap{max-width:1000px;margin:24px auto;padding:20px;background:#fff;border-radius:14px;border:1px solid rgba(0,0,0,0.03)}
+  .affiliate-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+  .affiliate-head h3{margin:0;color:#111}
+  .affiliate-body{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .affiliate-input{flex:1;min-width:220px;display:flex;gap:10px;align-items:center}
+  .affiliate-input input[type="text"]{flex:1;padding:12px;border-radius:10px;border:1px solid #eee}
+  .affiliate-input select{padding:10px;border-radius:10px;border:1px solid #eee}
+  .generate{background:linear-gradient(90deg,var(--gold-1),var(--gold-2));color:#111;padding:10px 18px;border-radius:10px;font-weight:800;border:none;cursor:pointer}
+  .result{margin-top:12px;color:#0b6b3a;font-weight:700;word-break:break-all}
 
-    .review-btn:hover {
-      background-color: #ffcc33;
-    }
+  /* REVIEW SECTION */
+  .reviews-section{max-width:1200px;margin:32px auto;padding:16px}
+  .reviews-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+  .reviews-left{display:flex;flex-direction:column}
+  .avg{display:flex;align-items:center;gap:10px}
+  .avg .score{font-weight:800;color:var(--gold-1);font-size:1.3rem}
+  .review-action{display:flex;gap:8px}
+  .review-open{background:linear-gradient(90deg,var(--gold-1),var(--gold-2));color:#111;padding:8px 16px;border-radius:999px;border:none;cursor:pointer}
 
-    /* Recent Earners bar */
-    .earners-bar {
-      background-color: #ffecb3;
-      padding: 8px;
-      overflow: hidden;
-      white-space: nowrap;
-      font-size: 16px;
-      font-weight: 500;
-      color: #444;
-      position: relative;
-    }
+  .carousel-viewport{position:relative;overflow:hidden;padding:12px 6px;border-radius:12px}
+  .carousel-track{display:flex;gap:12px;transition:transform 600ms linear;will-change:transform;padding-bottom:10px}
+  .review-card{min-width:220px;background:#fff;border-radius:12px;padding:12px;border:1px solid rgba(0,0,0,0.04);box-shadow:0 8px 20px rgba(0,0,0,0.04);color:#111}
+  .review-card .avatar{width:56px;height:56px;border-radius:12px;overflow:hidden;margin-bottom:8px}
+  .review-card img{width:100%;height:100%;object-fit:cover}
+  .review-name{font-weight:700}
+  .review-stars{color:gold;margin:6px 0}
+  .review-text{font-size:0.92rem;color:#333}
 
-    .earners-text {
-      display: inline-block;
-      animation: scrollEarners 60s linear infinite;
-    }
+  /* RECENT EARNERS TICKER */
+  .ticker{background:#fff;padding:10px;border-radius:999px;display:flex;align-items:center;gap:10px;max-width:1200px;margin:20px auto;overflow:hidden;border:1px solid rgba(0,0,0,0.04)}
+  .ticker .label{font-weight:700;color:var(--gold-1);padding-left:8px}
+  .ticker .marquee{white-space:nowrap;display:inline-block;animation:marquee 18s linear infinite}
+  @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
 
-    @keyframes scrollEarners {
-      from { transform: translateX(100%); }
-      to { transform: translateX(-100%); }
-    }
+  /* Visitor & help chat */
+  .bottom-controls{max-width:1200px;margin:18px auto;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 8px}
+  .visitor{background:#fff;padding:8px 14px;border-radius:999px;color:#333;font-weight:700;border:1px solid rgba(0,0,0,0.04)}
+  .chat-btn{position:fixed;right:18px;bottom:24px;background:linear-gradient(90deg,var(--gold-1),var(--gold-2));color:#111;border:none;padding:14px;border-radius:999px;box-shadow:0 14px 40px rgba(212,175,55,0.18);cursor:pointer;z-index:1500}
 
-    /* Affiliate Generator */
-    .affiliate-box {
-      background: #fff;
-      margin: 40px auto;
-      width: 80%;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
+  /* Footer */
+  footer{margin-top:40px;background:#fff;padding:28px 18px;border-top:1px solid rgba(0,0,0,0.04);color:#333}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+  .social-list{display:flex;gap:12px;align-items:center}
+  .social-list a{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid rgba(0,0,0,0.04);text-decoration:none;color:#111;background:linear-gradient(90deg,#fff,#fff)}
+  .social-list img{width:26px;height:26px}
+  .contact-email{color:#666}
 
-    .affiliate-box input {
-      width: 80%;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-    }
+  /* modal */
+  .modal-overlay{position:fixed;inset:0;background:rgba(10,10,10,0.6);display:none;align-items:center;justify-content:center;z-index:2000;padding:16px}
+  .modal{background:#fff;border-radius:12px;padding:18px;max-width:520px;width:100%}
+  .modal h3{margin-bottom:8px}
+  .modal input, .modal textarea, .modal select{width:100%;padding:10px;border-radius:8px;border:1px solid #eee;margin:8px 0}
+  .modal .actions{display:flex;justify-content:flex-end;gap:8px;margin-top:8px}
 
-    .affiliate-box button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      border: none;
-      background-color: #00c853;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    .affiliate-box button:hover {
-      background-color: #009624;
-    }
-
-    footer {
-      background-color: #ffcc00;
-      text-align: center;
-      padding: 15px;
-      font-weight: bold;
-    }
-  </style>
+  /* small responsive */
+  @media (max-width:900px){
+    .hero{flex-direction:column;align-items:flex-start}
+    .plans{justify-content:center}
+    .carousel-viewport{padding:0}
+  }
+</style>
 </head>
 <body>
 
+  <!-- NOTE -->
+  <div class="note">
+    🔔 Note: Platform fee 30% is automatically applied to all affiliate earnings (Premium Plus users pay only 25%).
+  </div>
+
+  <!-- HEADER -->
   <header>
-    <img src="Picsart_25-11-04_05-36-14-228.png" alt="Logo" class="logo" />
-    <div class="nav-buttons">
-      <button class="btn login-btn">Sign Up / Login</button>
-      <button class="btn settings-btn">Settings ⚙️</button>
-      <button class="btn review-btn">⭐ Review (3.7)</button>
+    <div class="left-head">
+      <div class="logo-wrap">
+        <div class="logo-img"><img src="https://i.ibb.co/HTmgqXLh/Picsart-25-11-04-05-36-14-228.png" alt="Alpha Pandit Ji Logo"></div>
+      </div>
+      <div>
+        <div class="brand">Alpha Pandit Ji Official</div>
+        <div class="tag">Professional Digital Services · Affiliate Hub</div>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <select class="lang-select" id="langSelect" title="Choose language">
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="bn">Bengali</option>
+        <option value="mr">Marathi</option>
+        <option value="ta">Tamil</option>
+      </select>
+      <button class="btn btn-settings" id="settingsBtn">⚙️ Settings</button>
+      <button class="btn btn-login" id="loginBtn">Sign Up / Login</button>
     </div>
   </header>
 
-  <div class="earners-bar">
-    <span class="earners-text" id="earnersText">
-      🏆 Recent Earners: Rahul ₹1200 | Priya ₹900 | Aman ₹650 | Neha ₹850 | Kunal ₹1100 | Riya ₹700 | Mohit ₹450 | Deepika ₹950 | Sanjay ₹1250 | Komal ₹780 |
-    </span>
+  <!-- HERO -->
+  <section class="hero" role="region">
+    <div class="hero-left">
+      <div class="hero-title">India’s Smartest Affiliate Hub</div>
+      <div class="hero-sub">Join thousands who earn by sharing product links. Subscribe, generate affiliate links, share, and earn — we handle the split automatically.</div>
+
+      <div class="cta-group">
+        <button class="cta-primary" id="startEarningBtn">Start Earning</button>
+        <button class="cta-secondary" id="subscribeNowBtn">Subscribe Now</button>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat"><h3>5000+</h3><p>Happy Members</p></div>
+        <div class="stat"><h3>10000+</h3><p>Content Downloads</p></div>
+        <div class="stat"><h3>50+</h3><p>Premium Tools</p></div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <img src="https://i.ibb.co/HTmgqXLh/Picsart-25-11-04-05-36-14-228.png" alt="logo" style="width:200px;border-radius:14px;box-shadow:0 20px 60px rgba(212,175,55,0.12)">
+    </div>
+  </section>
+
+  <!-- PLANS -->
+  <div class="plans" role="region" aria-label="Subscription plans">
+    <div class="plan">
+      <div class="badge">BASIC</div>
+      <h4>Basic Plan</h4>
+      <p>₹99 / month — Access to affiliate link preview & limited features.</p>
+      <a class="buy" href="https://imjo.in/v8sXQG" target="_blank" rel="noopener">Buy ₹99</a>
+    </div>
+
+    <div class="plan">
+      <div class="badge">MOST POPULAR</div>
+      <h4>Premium Plan</h4>
+      <p>₹299 / month — Affiliate generator + contact support.</p>
+      <a class="buy" href="https://imjo.in/mKZYp9" target="_blank" rel="noopener">Buy ₹299</a>
+    </div>
+
+    <div class="plan">
+      <div class="badge">PREMIUM PLUS</div>
+      <h4>Premium Plus</h4>
+      <p>₹999 / month — Priority support, low fee (25% platform cut).</p>
+      <a class="buy" href="https://imjo.in/g9YxyK" target="_blank" rel="noopener">Buy ₹999</a>
+    </div>
   </div>
 
-  <div class="affiliate-box">
-    <h2>Affiliate Link Generator 🔗</h2>
-    <p>Supported Sites: Amazon, Flipkart, Meesho, Myntra, Ajio, Snapdeal, Nykaa, Jiomart, Paytm Mall, BigBasket, Shopclues</p>
-    <input type="text" id="userLink" placeholder="Paste your shopping product link here..." />
-    <br>
-    <button onclick="generateAffiliateLink()">Generate Affiliate Link</button>
-    <p id="generatedLink"></p>
+  <!-- AFFILIATE GENERATOR -->
+  <div class="affiliate-wrap" id="affiliateWrap">
+    <div class="affiliate-head">
+      <h3>Affiliate Link Generator</h3>
+      <div style="font-size:0.95rem;color:var(--muted)">Paste any shopping product link and choose commission percent</div>
+    </div>
+    <div class="affiliate-body">
+      <div class="affiliate-input">
+        <input id="productUrl" type="text" placeholder="Paste Flipkart / Amazon / other product link...">
+        <select id="commissionSelect" aria-label="commission percent">
+          <option value="5">5%</option>
+          <option value="10">10%</option>
+          <option value="15">15%</option>
+          <option value="20">20%</option>
+          <option value="30">30%</option>
+          <option value="50">50%</option>
+          <option value="100">100%</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+        <button class="generate" id="generateBtn">Generate Link</button>
+        <div style="font-size:0.9rem;color:var(--muted)">*Only for subscribed users (299 / 999)</div>
+      </div>
+    </div>
+    <div class="result" id="affiliateResult"></div>
   </div>
 
+  <!-- RECENT EARNERS TICKER -->
+  <div class="ticker" aria-hidden="false">
+    <div class="label">🔥 Recent Earners:</div>
+    <div style="overflow:hidden" aria-hidden="true">
+      <div class="marquee" id="earnersMarquee"></div>
+    </div>
+  </div>
+
+  <!-- REVIEWS -->
+  <div class="reviews-section">
+    <div class="reviews-header">
+      <div class="reviews-left">
+        <div class="avg"><div class="score">3.7</div><div style="color:var(--muted);margin-left:6px">/5 — 10,000+ reviews</div></div>
+        <div style="font-size:0.95rem;color:var(--muted);margin-top:6px">Real people — real experiences</div>
+      </div>
+      <div class="review-action">
+        <button class="review-open" id="openReview">Add Review</button>
+      </div>
+    </div>
+
+    <div class="carousel-viewport">
+      <div class="carousel-track" id="carouselTrack" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <!-- Visitor & Controls -->
+  <div class="bottom-controls">
+    <div class="visitor" id="visitorCount">👁️ 0 visitors</div>
+    <div style="color:var(--muted)">Need help? Click the chat bubble.</div>
+  </div>
+
+  <!-- Floating chat -->
+  <button class="chat-btn" id="chatBtn">💬 Help</button>
+
+  <!-- Footer -->
   <footer>
-    © 2025 Alpha Pandit Ji Official | All Rights Reserved
+    <div class="footer-inner">
+      <div>
+        <div style="font-weight:800;color:var(--gold-1)">Follow Us</div>
+        <div class="contact-email">📧 Businessrelatedsms21@gmail.com</div>
+      </div>
+
+      <div class="social-list">
+        <a href="https://youtube.com/@alphapanditji?si=erkkS2thnaJOAkbW" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="yt">YouTube</a>
+        <a href="https://www.instagram.com/alphapanditjiofficial?igsh=cjhwZ2F2bXowMHJp" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="ig">Instagram</a>
+        <a href="https://t.me/AlphaPanditJiApp" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="tg">Telegram</a>
+        <a href="https://www.facebook.com/share/1YiZJjkEmw/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="fb">Facebook</a>
+        <a href="https://youtube.com/@holaaieditz?si=uZ_oseK55QblfQKg" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="yt2">YouTube (Hola)</a>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:14px;color:#777;font-size:0.9rem">© 2025 Alpha Pandit Ji Official · All Rights Reserved</div>
   </footer>
 
-  <script>
-    // Infinite Earners Loop (auto-update)
-    const earners = [
-      "Rahul ₹1200", "Priya ₹900", "Aman ₹650", "Neha ₹850", "Kunal ₹1100",
-      "Riya ₹700", "Mohit ₹450", "Deepika ₹950", "Sanjay ₹1250", "Komal ₹780",
-      "Sumit ₹620", "Anjali ₹890", "Vikas ₹500", "Nisha ₹1350", "Rohit ₹800",
-      "Sneha ₹950", "Arjun ₹1080", "Kritika ₹640", "Manoj ₹760", "Divya ₹890"
-    ];
+  <!-- Review Modal -->
+  <div class="modal-overlay" id="reviewModalOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true">
+      <h3>Write a Review</h3>
+      <input id="r_name" placeholder="Your name">
+      <input id="r_photo" type="file" accept="image/*">
+      <select id="r_stars">
+        <option value="5">★★★★★ (5)</option>
+        <option value="4">★★★★ (4)</option>
+        <option value="3">★★★ (3)</option>
+        <option value="2">★★ (2)</option>
+        <option value="1">★ (1)</option>
+      </select>
+      <textarea id="r_text" rows="4" placeholder="Write your experience..."></textarea>
+      <div class="actions">
+        <button id="submitReviewBtn" class="btn" style="background:var(--gold-1);color:#111">Submit</button>
+        <button id="cancelReviewBtn" class="btn" style="background:#eee;color:#111">Cancel</button>
+      </div>
+    </div>
+  </div>
 
-    function updateEarners() {
-      const text = document.getElementById("earnersText");
-      let str = "🏆 Recent Earners: ";
-      for (let i = 0; i < earners.length; i++) {
-        str += earners[i] + " | ";
-      }
-      text.innerText = str;
-    }
-    setInterval(updateEarners, 30000); // every 30 sec update
+  <!-- Settings Modal (simple) -->
+  <div class="modal-overlay" id="settingsOverlay" aria-hidden="true">
+    <div class="modal">
+      <h3>Settings</h3>
+      <div style="margin-bottom:10px">
+        <label style="font-weight:700">Theme</label>
+        <select id="themeSel">
+          <option value="gold">Gold (Recommended)</option>
+          <option value="white">White (Clean)</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
+      <div style="margin-bottom:10px">
+        <label style="font-weight:700">Language</label>
+        <select id="langSel">
+          <option value="en">English</option>
+          <option value="hi">Hindi</option>
+          <option value="bn">Bengali</option>
+          <option value="mr">Marathi</option>
+          <option value="ta">Tamil</option>
+        </select>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:8px">
+        <button id="saveSettings" class="btn" style="background:var(--gold-1);color:#111">Save</button>
+        <button id="closeSettings" class="btn" style="background:#eee;color:#111">Close</button>
+      </div>
+    </div>
+  </div>
 
-    // Affiliate Generator
-    const supportedSites = [
-      "amazon", "flipkart", "meesho", "myntra", "ajio", "snapdeal",
-      "nykaa", "jiomart", "paytmmall", "bigbasket", "shopclues"
-    ];
+<script>
+/* -------------------------
+  UTILITIES & LOCAL STORAGE
+--------------------------*/
+const LS_REVS = 'apj_reviews_v2';
+const LS_AFF = 'apj_affs_v2';
+const LS_VIS = 'apj_vis_v2';
+const instamojo = {
+  basic: 'https://imjo.in/v8sXQG',
+  standard: 'https://imjo.in/mKZYp9',
+  plus: 'https://imjo.in/g9YxyK'
+};
 
-    function generateAffiliateLink() {
-      const input = document.getElementById("userLink").value;
-      const output = document.getElementById("generatedLink");
-      let valid = supportedSites.some(site => input.includes(site));
-      if (!valid) {
-        output.style.color = "red";
-        output.innerText = "❌ Unsupported link! Please use any supported shopping site link.";
-      } else {
-        const affiliateLink = input + "?ref=AlphaPanditAffiliate";
-        output.style.color = "green";
-        output.innerHTML = `✅ Your Affiliate Link:<br><a href="${affiliateLink}" target="_blank">${affiliateLink}</a>`;
-      }
-    }
-  </script>
-</body>
-</html>
+/* -------------------------
+  Visitor counter (simulated)
+--------------------------*/
+let visitors = parseInt(localStorage.getItem(LS_VIS) || '120') || 120;
+const visitorEl = document.getElementById('visitorCount');
+function tickVisitor(){
+  // random small fluctuation for realism
+  const delta = Math.floor(Math.random()*3); visitors += delta;
+  localStorage.setItem(LS_VIS, visitors.toString());
+  visitorEl.textContent = '👁️ ' + visitors + ' visitors';
+}
+setInterval(tickVisitor, 7000);
+tickVisitor();
+
+/* -------------------------
+  Recent earners ticker (simulated)
+--------------------------*/
+const earners = ['Rahul','Priya','Aman','Meena','Rohan','Simran','Anita','Aditya','Karan','Mona','Rekha','Vikram','Nisha','Asha','Ritesh','Sonal'];
+function buildEarnerString(){
+  const parts = [];
+  for(let i=0;i<40;i++){
+    const name = earners[Math.floor(Math.random()*earners.length)];
+    const amount = Math.floor(Math.random()*1500) + 50;
+    parts.push(`${name} earned ₹${amount}`);
+  }
+  return parts.join('  •  ');
+}
+document.getElementById('earnersMarquee').textContent = buildEarnerString();
+
+/* -------------------------
+  Reviews: generate many dummy cards but not DOM-bomb
+  We'll create ~200 unique cards, duplicate to create longer track feel.
+--------------------------*/
+const sampleNames = ["Rahul","Priya","Aman","Meena","Rohan","Simran","Anjali","Vikram","Neha","Ritesh","Karan","Nisha","Pooja","Aditi","Kunal","Ritika","Asha","Mona","Rekha","Sahil","Aditya","Rakesh","Anita","Rhea","Gaurav","Sana","Tarun","Isha","Yash","Kriti"];
+const sampleTexts = [
+  "Amazing service! Highly recommended.",
+  "Really helped me a lot. Great content.",
+  "Good value for money and quick support.",
+  "Loved the guidance and timely updates.",
+  "Great experience! Will subscribe again."
+];
+function randInt(max){return Math.floor(Math.random()*max);}
+function genDummyReview(i){
+  const name = sampleNames[i % sampleNames.length] + (Math.random()<0.12 ? ' ' + (Math.floor(Math.random()*90)+10) : '');
+  const stars = (Math.random()*1.3 + 3.2).toFixed(1); // around 3.2-4.5
+  const avatar = 'https://i.pravatar.cc/150?img=' + ((i%70)+1);
+  const text = sampleTexts[i % sampleTexts.length];
+  return { id: 'd'+i, name, stars: parseFloat(stars), avatar, text };
+}
+// load or create reviews
+let reviews = JSON.parse(localStorage.getItem(LS_REVS) || 'null');
+if(!reviews){
+  const arr = [];
+  const N = 200;
+  for(let i=0;i<N;i++) arr.push(genDummyReview(i));
+  // store but we pretend count 10000+
+  localStorage.setItem(LS_REVS, JSON.stringify(ar
