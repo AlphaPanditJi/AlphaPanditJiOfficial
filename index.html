@@ -1,149 +1,199 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alpha Pandit Ji Official</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{background:linear-gradient(135deg,#ffeb99,#fff8e1);color:#222;}
-header{
-  background:#fff8cc;display:flex;align-items:center;justify-content:space-between;
-  padding:15px 25px;box-shadow:0 2px 6px rgba(0,0,0,0.1);
-}
-header img{height:60px;width:60px;}
-header h1{font-size:20px;color:#333;}
-header button{background:#ffd700;border:none;padding:8px 14px;border-radius:8px;font-weight:600;cursor:pointer;transition:0.3s;}
-header button:hover{background:#ffce00;}
-.note-bar{background:#fff0a3;text-align:center;padding:6px;font-size:14px;color:#333;font-weight:500;}
-.container{max-width:1100px;margin:30px auto;padding:0 20px;text-align:center;}
-.plans{display:flex;flex-wrap:wrap;justify-content:center;gap:20px;margin-top:30px;}
-.plan{background:#fff;border-radius:14px;box-shadow:0 3px 8px rgba(0,0,0,0.1);width:290px;padding:20px;}
-.plan h3{background:#ffd700;padding:6px;border-radius:6px;display:inline-block;}
-.plan h2{margin:12px 0;font-size:22px;color:#333;}
-.plan p{font-size:14px;color:#555;}
-.plan button{margin-top:10px;background:#00a651;color:#fff;border:none;padding:10px 18px;border-radius:8px;cursor:pointer;transition:0.3s;}
-.plan button:hover{background:#008f45;}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alpha Pandit Ji Official</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background-color: #fff8e1;
+      color: #222;
+    }
 
-/* Affiliate Generator */
-.generator{background:#fff8e1;padding:20px;margin:20px auto;max-width:900px;border-radius:14px;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
-.generator h3{margin-bottom:10px;}
-.generator input, .generator select{
-  padding:10px;border-radius:8px;border:1px solid #ccc;width:70%;margin-right:10px;font-size:14px;
-}
-.generator button{
-  background:#00a651;color:#fff;border:none;padding:10px 18px;border-radius:8px;cursor:pointer;font-weight:600;
-}
-.generator button:hover{background:#008f45;}
+    header {
+      background-color: #ffcc00;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 30px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
 
-/* Recent Earners */
-.earners-bar{
-  background:#fff8e1;padding:8px 0;font-size:14px;color:#444;overflow:hidden;white-space:nowrap;border-top:2px solid #ffe066;border-bottom:2px solid #ffe066;
-}
-.earners-content{
-  display:inline-block;padding-left:100%;
-  animation:scrollEarners 50s linear infinite; /* slow & smooth */
-}
-@keyframes scrollEarners{from{transform:translateX(0);}to{transform:translateX(-100%);}}
+    header img.logo {
+      height: 60px;
+    }
 
-/* Footer */
-footer{background:#fff8cc;text-align:center;padding:20px;margin-top:30px;border-top:2px solid #ffe066;}
-footer a{text-decoration:none;color:#222;margin:0 8px;font-weight:500;}
-footer img{height:24px;width:24px;vertical-align:middle;margin-right:6px;}
-footer p{margin-top:10px;font-size:13px;color:#444;}
-</style>
+    .nav-buttons {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .login-btn {
+      background: linear-gradient(90deg, #ffb300, #ffcc33);
+      color: #000;
+    }
+
+    .settings-btn {
+      background: linear-gradient(90deg, #ffd700, #fff176);
+    }
+
+    .review-btn {
+      background-color: #ffb300;
+      color: #000;
+      border: 2px solid #fff;
+      transition: 0.3s;
+    }
+
+    .review-btn:hover {
+      background-color: #ffcc33;
+    }
+
+    /* Recent Earners bar */
+    .earners-bar {
+      background-color: #ffecb3;
+      padding: 8px;
+      overflow: hidden;
+      white-space: nowrap;
+      font-size: 16px;
+      font-weight: 500;
+      color: #444;
+      position: relative;
+    }
+
+    .earners-text {
+      display: inline-block;
+      animation: scrollEarners 60s linear infinite;
+    }
+
+    @keyframes scrollEarners {
+      from { transform: translateX(100%); }
+      to { transform: translateX(-100%); }
+    }
+
+    /* Affiliate Generator */
+    .affiliate-box {
+      background: #fff;
+      margin: 40px auto;
+      width: 80%;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .affiliate-box input {
+      width: 80%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    .affiliate-box button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      border: none;
+      background-color: #00c853;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .affiliate-box button:hover {
+      background-color: #009624;
+    }
+
+    footer {
+      background-color: #ffcc00;
+      text-align: center;
+      padding: 15px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
 
-<div class="note-bar">
-⚠️ Note: Platform fee 30% is automatically applied to all affiliate earnings (Premium Plus users pay only 25%).
-</div>
-
-<header>
-  <div style="display:flex;align-items:center;gap:10px;">
-    <img src="Picsart_25-11-04_05-36-14-228.png" alt="Logo">
-    <div>
-      <h1>Alpha Pandit Ji Official</h1>
-      <small>Professional Digital Services · Affiliate Hub</small>
+  <header>
+    <img src="Picsart_25-11-04_05-36-14-228.png" alt="Logo" class="logo" />
+    <div class="nav-buttons">
+      <button class="btn login-btn">Sign Up / Login</button>
+      <button class="btn settings-btn">Settings ⚙️</button>
+      <button class="btn review-btn">⭐ Review (3.7)</button>
     </div>
+  </header>
+
+  <div class="earners-bar">
+    <span class="earners-text" id="earnersText">
+      🏆 Recent Earners: Rahul ₹1200 | Priya ₹900 | Aman ₹650 | Neha ₹850 | Kunal ₹1100 | Riya ₹700 | Mohit ₹450 | Deepika ₹950 | Sanjay ₹1250 | Komal ₹780 |
+    </span>
   </div>
-  <div>
-    <button>Settings</button>
-    <button>Sign Up / Login</button>
+
+  <div class="affiliate-box">
+    <h2>Affiliate Link Generator 🔗</h2>
+    <p>Supported Sites: Amazon, Flipkart, Meesho, Myntra, Ajio, Snapdeal, Nykaa, Jiomart, Paytm Mall, BigBasket, Shopclues</p>
+    <input type="text" id="userLink" placeholder="Paste your shopping product link here..." />
+    <br>
+    <button onclick="generateAffiliateLink()">Generate Affiliate Link</button>
+    <p id="generatedLink"></p>
   </div>
-</header>
 
-<div class="container">
-  <h2>India’s Smartest Affiliate Hub</h2>
-  <p>Join thousands who earn by sharing product links. Subscribe, generate affiliate links, share, and earn — we handle the split automatically.</p>
+  <footer>
+    © 2025 Alpha Pandit Ji Official | All Rights Reserved
+  </footer>
 
-  <div class="plans">
-    <div class="plan">
-      <h3>BASIC</h3>
-      <h2>Basic Plan</h2>
-      <p>₹99 / month — Access to affiliate link preview & limited features.</p>
-      <button onclick="window.open('https://imjo.in/v8sXQG')">Buy ₹99</button>
-    </div>
-    <div class="plan">
-      <h3>MOST POPULAR</h3>
-      <h2>Premium Plan</h2>
-      <p>₹299 / month — Affiliate generator + contact support.</p>
-      <button onclick="window.open('https://imjo.in/mKZYp9')">Buy ₹299</button>
-    </div>
-    <div class="plan">
-      <h3>PREMIUM PLUS</h3>
-      <h2>Premium Plus</h2>
-      <p>₹999 / month — Priority support, low fee (25% platform cut).</p>
-      <button onclick="window.open('https://imjo.in/g9YxyK')">Buy ₹999</button>
-    </div>
-  </div>
-</div>
+  <script>
+    // Infinite Earners Loop (auto-update)
+    const earners = [
+      "Rahul ₹1200", "Priya ₹900", "Aman ₹650", "Neha ₹850", "Kunal ₹1100",
+      "Riya ₹700", "Mohit ₹450", "Deepika ₹950", "Sanjay ₹1250", "Komal ₹780",
+      "Sumit ₹620", "Anjali ₹890", "Vikas ₹500", "Nisha ₹1350", "Rohit ₹800",
+      "Sneha ₹950", "Arjun ₹1080", "Kritika ₹640", "Manoj ₹760", "Divya ₹890"
+    ];
 
-<!-- Affiliate Link Generator -->
-<div class="generator">
-  <h3>Affiliate Link Generator</h3>
-  <p>Paste your product link and choose platform:</p>
-  <input type="text" placeholder="Paste Flipkart / Amazon / Meesho / Myntra link...">
-  <select>
-    <option>Amazon</option>
-    <option>Flipkart</option>
-    <option>Meesho</option>
-    <option>Myntra</option>
-    <option>Ajio</option>
-    <option>Nykaa</option>
-    <option>Snapdeal</option>
-    <option>TataCliq</option>
-    <option>ShopClues</option>
-    <option>eBay</option>
-  </select>
-  <button>Generate Link</button>
-</div>
+    function updateEarners() {
+      const text = document.getElementById("earnersText");
+      let str = "🏆 Recent Earners: ";
+      for (let i = 0; i < earners.length; i++) {
+        str += earners[i] + " | ";
+      }
+      text.innerText = str;
+    }
+    setInterval(updateEarners, 30000); // every 30 sec update
 
-<!-- Recent Earners -->
-<div class="earners-bar">
-  <div class="earners-content" id="earnersScroll">
-    🔥 Recent Earners: 
-    💰 Rohan earned ₹1529 • Sneha earned ₹1342 • Meena earned ₹1746 • Rahul earned ₹1265 • Nisha earned ₹845 • Mona earned ₹1136 • Deepak earned ₹1289 • Asha earned ₹935 • Kunal earned ₹1468 • Priya earned ₹1210 • Manish earned ₹1378 • Ankit earned ₹1156 •
-  </div>
-</div>
+    // Affiliate Generator
+    const supportedSites = [
+      "amazon", "flipkart", "meesho", "myntra", "ajio", "snapdeal",
+      "nykaa", "jiomart", "paytmmall", "bigbasket", "shopclues"
+    ];
 
-<footer>
-  <p>📩 Businessrelatedsms21@gmail.com</p>
-  <div>
-    <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">YouTube</a>
-    <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png">Instagram</a>
-    <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">Telegram</a>
-    <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384053.png">Facebook</a>
-  </div>
-  <p>© 2025 Alpha Pandit Ji Official · All Rights Reserved</p>
-</footer>
-
-<script>
-// Infinite earner scroll
-const earners = document.getElementById('earnersScroll');
-earners.innerHTML += earners.innerHTML; // duplicate for seamless loop
-</script>
-
+    function generateAffiliateLink() {
+      const input = document.getElementById("userLink").value;
+      const output = document.getElementById("generatedLink");
+      let valid = supportedSites.some(site => input.includes(site));
+      if (!valid) {
+        output.style.color = "red";
+        output.innerText = "❌ Unsupported link! Please use any supported shopping site link.";
+      } else {
+        const affiliateLink = input + "?ref=AlphaPanditAffiliate";
+        output.style.color = "green";
+        output.innerHTML = `✅ Your Affiliate Link:<br><a href="${affiliateLink}" target="_blank">${affiliateLink}</a>`;
+      }
+    }
+  </script>
 </body>
 </html>
