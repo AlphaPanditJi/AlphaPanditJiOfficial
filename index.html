@@ -3,295 +3,451 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alpha Pandit Ji - Professional Digital Services</title>
+    <title>Alpha Pandit Ji - Premium Spiritual Content & Guidance</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #0f0f0f;
+            color: #ffffff;
             line-height: 1.6;
-            color: #333;
-            background: #f5f5f5;
         }
-        
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1056,192,1152,197.3C1248,203,1344,149,1392,122.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') bottom center no-repeat;
+            background-size: cover;
+            animation: wave 10s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .logo {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid rgba(255,255,255,0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: fadeIn 1s ease;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 18px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 20px;
+            background: #1a1a1a;
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
         }
-        
-        /* Header & Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 80px 20px;
-            text-align: center;
-        }
-        
-        .logo-container {
-            margin-bottom: 30px;
-            animation: fadeInDown 1s ease-out;
-        }
-        
-        .logo {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border: 5px solid rgba(255,255,255,0.3);
-            transition: transform 0.3s ease;
-        }
-        
-        .logo:hover {
-            transform: scale(1.05) rotate(5deg);
-        }
-        
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            animation: fadeInUp 1s ease-out;
-        }
-        
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 30px;
-            opacity: 0.95;
-            animation: fadeInUp 1.2s ease-out;
-        }
-        
-        .btn-primary {
-            display: inline-block;
-            padding: 15px 40px;
-            background: white;
-            color: #667eea;
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            animation: fadeInUp 1.4s ease-out;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-        
-        /* Features Section */
-        .features {
-            padding: 80px 20px;
-            background: white;
-        }
-        
+
         .section-title {
             text-align: center;
             font-size: 2.5rem;
-            margin-bottom: 50px;
-            color: #667eea;
+            margin-bottom: 60px;
+            font-weight: 700;
         }
-        
+
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            gap: 40px;
         }
-        
+
         .feature-card {
-            background: #f9f9f9;
+            background: #252525;
             padding: 40px 30px;
-            border-radius: 15px;
+            border-radius: 20px;
             text-align: center;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #333;
         }
-        
+
         .feature-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.3);
         }
-        
+
         .feature-icon {
             font-size: 3rem;
             margin-bottom: 20px;
         }
-        
+
         .feature-card h3 {
             font-size: 1.5rem;
             margin-bottom: 15px;
-            color: #333;
+            color: #667eea;
         }
-        
+
         .feature-card p {
-            color: #666;
-            font-size: 1rem;
+            color: #aaa;
+            line-height: 1.8;
         }
-        
+
         /* Pricing Section */
         .pricing {
-            padding: 80px 20px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 100px 20px;
+            background: #0f0f0f;
         }
-        
+
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        
-        .pricing-card {
-            background: white;
-            padding: 50px 30px;
-            border-radius: 20px;
+
+        .price-card {
+            background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
+            border-radius: 25px;
+            padding: 50px 35px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: all 0.3s;
+            position: relative;
+            border: 2px solid #333;
+            transition: all 0.4s ease;
         }
-        
-        .pricing-card:hover {
+
+        .price-card:hover {
+            transform: translateY(-15px);
+            border-color: #667eea;
+            box-shadow: 0 25px 60px rgba(102, 126, 234, 0.4);
+        }
+
+        .price-card.featured {
+            border-color: #FFD700;
+            box-shadow: 0 20px 50px rgba(255, 215, 0, 0.3);
             transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
         }
-        
-        .pricing-card.featured {
+
+        .price-badge {
+            display: inline-block;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            transform: scale(1.05);
-        }
-        
-        .pricing-card h3 {
-            font-size: 1.8rem;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
             margin-bottom: 20px;
         }
-        
+
+        .price-card.featured .price-badge {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000;
+        }
+
+        .price-card h3 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
         .price {
-            font-size: 3rem;
-            font-weight: bold;
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #667eea;
             margin-bottom: 10px;
         }
-        
-        .price span {
-            font-size: 1.3rem;
-            font-weight: normal;
+
+        .price-card.featured .price {
+            color: #FFD700;
         }
-        
-        .features-list {
+
+        .price span {
+            font-size: 1.2rem;
+            color: #888;
+            font-weight: 400;
+        }
+
+        .price-features {
             list-style: none;
-            margin: 30px 0;
+            margin: 40px 0;
             text-align: left;
         }
-        
-        .features-list li {
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
+
+        .price-features li {
+            padding: 15px 0;
+            border-bottom: 1px solid #333;
+            color: #ccc;
+            display: flex;
+            align-items: center;
         }
-        
-        .features-list li:before {
-            content: "✓ ";
-            color: #4CAF50;
+
+        .price-features li::before {
+            content: '✓';
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 25px;
+            margin-right: 15px;
             font-weight: bold;
-            margin-right: 10px;
+            flex-shrink: 0;
         }
-        
-        .pricing-card.featured .features-list li {
-            border-bottom: 1px solid rgba(255,255,255,0.2);
+
+        .buy-button {
+            display: block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
         }
-        
-        .pricing-card.featured .features-list li:before {
-            color: #fff;
+
+        .buy-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
         }
-        
-        /* Contact Section */
-        .contact {
-            padding: 80px 20px;
-            background: white;
+
+        .price-card.featured .buy-button {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000;
         }
-        
-        .contact-info {
-            max-width: 600px;
-            margin: 50px auto;
+
+        .alt-button {
+            display: block;
+            background: transparent;
+            color: #667eea;
+            padding: 15px 35px;
+            border: 2px solid #667eea;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .alt-button:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 100px 20px;
+            background: #1a1a1a;
+        }
+
+        .faq-item {
+            background: #252525;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        .faq-question {
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #2a2a2a;
+        }
+
+        .faq-answer {
+            padding: 0 30px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: #aaa;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 30px 25px 30px;
+            max-height: 500px;
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 20px;
+            background: #0f0f0f;
             text-align: center;
         }
-        
-        .contact-item {
-            margin: 30px 0;
-            font-size: 1.2rem;
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
         }
-        
-        .contact-item a {
+
+        .about p {
+            font-size: 1.2rem;
+            color: #aaa;
+            margin-bottom: 30px;
+            line-height: 1.9;
+        }
+
+        /* Footer */
+        .footer {
+            background: #000;
+            padding: 60px 20px 40px;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: #1a1a1a;
+            border-radius: 50%;
+            color: #667eea;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid #333;
+        }
+
+        .social-links a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .footer p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .footer a {
             color: #667eea;
             text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s;
         }
-        
-        .contact-item a:hover {
-            color: #764ba2;
-            text-decoration: underline;
-        }
-        
-        /* Footer */
-        footer {
-            background: #2c3e50;
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-        }
-        
-        footer p {
-            margin: 5px 0;
-        }
-        
+
         /* Animations */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-        
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(50px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-        
-        /* Responsive Design */
+
+        /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
-            
-            .hero p {
-                font-size: 1.1rem;
-            }
-            
-            .logo {
-                width: 140px;
-                height: 140px;
-            }
-            
             .section-title {
                 font-size: 2rem;
             }
-            
-            .features-grid,
+            .price {
+                font-size: 2.5rem;
+            }
             .pricing-grid {
                 grid-template-columns: 1fr;
+            }
+            .price-card.featured {
+                transform: scale(1);
+            }
+            .logo {
+                width: 150px;
+                height: 150px;
             }
         }
     </style>
@@ -299,102 +455,219 @@
 <body>
     <!-- Hero Section -->
     <section class="hero">
-        <div class="container">
-            <div class="logo-container">
-                <img src="https://i.postimg.cc/0NxkB5tq/Picsart-25-11-02-11-52-39-910.png" alt="Alpha Pandit Ji Logo" class="logo">
+        <div class="hero-content">
+            <div class="logo">
+                <img src="https://i.ibb.co/HTmgqXLh/Picsart-25-11-04-05-36-14-228.png" alt="Alpha Pandit Ji">
             </div>
             <h1>Alpha Pandit Ji</h1>
-            <p>Professional Digital Services | 7+ Years Experience</p>
-            <a href="#contact" class="btn-primary">Get Started →</a>
+            <p>Premium Spiritual Content, Guidance & Exclusive Community Access</p>
+            <a href="#pricing" class="cta-button">Choose Your Plan</a>
         </div>
     </section>
 
     <!-- Features Section -->
     <section class="features">
         <div class="container">
-            <h2 class="section-title">Why Choose Us?</h2>
+            <h2 class="section-title">What You'll Get</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">🎬</div>
-                    <h3>Professional Editing</h3>
-                    <p>High-quality video editing services with 7+ years of experience</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📈</div>
-                    <h3>YouTube Growth</h3>
-                    <p>Proven strategies to grow your channel and boost engagement</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎨</div>
-                    <h3>Premium Content</h3>
-                    <p>Access to exclusive editing packs and tutorials</p>
+                    <div class="feature-icon">📱</div>
+                    <h3>Premium Telegram Access</h3>
+                    <p>Join our exclusive Telegram channel with daily spiritual content and insights</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">💬</div>
-                    <h3>Personal Support</h3>
-                    <p>Direct support for premium members</p>
+                    <h3>WhatsApp Community</h3>
+                    <p>Connect with like-minded individuals in our private WhatsApp groups</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Personal Guidance</h3>
+                    <p>Get personalized spiritual guidance and support from Alpha Pandit Ji</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Exclusive Content</h3>
+                    <p>Access premium spiritual teachings, rituals, and educational material</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Priority Support</h3>
+                    <p>Get your questions answered quickly with priority customer support</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Lifetime Access</h3>
+                    <p>Once a member, always a member - join our growing community forever</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Pricing Section -->
-    <section class="pricing">
+    <section class="pricing" id="pricing">
         <div class="container">
             <h2 class="section-title">Choose Your Plan</h2>
             <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>Basic</h3>
-                    <div class="price">₹199<span>/mo</span></div>
-                    <ul class="features-list">
-                        <li>Limited content previews</li>
-                        <li>Community access</li>
-                        <li>Telegram channel access</li>
-                        <li>7 days validity</li>
+                <!-- Basic Plan -->
+                <div class="price-card">
+                    <span class="price-badge">BASIC</span>
+                    <h3>Basic Plan</h3>
+                    <div class="price">₹199<span>/month</span></div>
+                    <ul class="price-features">
+                        <li>Premium Telegram Channel Access</li>
+                        <li>Daily Spiritual Content</li>
+                        <li>Community Support</li>
+                        <li>30 Days Validity</li>
                     </ul>
+                    <a href="https://imjo.in/v8sXQG" class="buy-button" target="_blank">Buy Now</a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSciLA2M3H1XVJdVWmbWKhpuwZgLLRIUMAkArIVRHH7u-zoLEg/viewform" class="alt-button" target="_blank">Alternative Form</a>
                 </div>
-                <div class="pricing-card featured">
-                    <h3>Pro</h3>
+
+                <!-- Premium Plan -->
+                <div class="price-card featured">
+                    <span class="price-badge">⭐ MOST POPULAR</span>
+                    <h3>Premium Plan</h3>
                     <div class="price">₹499<span>/month</span></div>
-                    <ul class="features-list">
-                        <li>All editing packages</li>
-                        <li>Growth tips & tricks</li>
-                        <li>Telegram channel access</li>
-                        <li>Regular updates</li>
-                        <li>1 month validity</li>
+                    <ul class="price-features">
+                        <li>All Basic Features</li>
+                        <li>WhatsApp Group Access</li>
+                        <li>Priority Support</li>
+                        <li>Exclusive Spiritual Content</li>
+                        <li>30 Days Validity</li>
                     </ul>
+                    <a href="https://imjo.in/mKZYp9" class="buy-button" target="_blank">Buy Now</a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSciLA2M3H1XVJdVWmbWKhpuwZgLLRIUMAkArIVRHH7u-zoLEg/viewform" class="alt-button" target="_blank">Alternative Form</a>
+                </div>
+
+                <!-- Premium Plus Plan -->
+                <div class="price-card">
+                    <span class="price-badge">💎 VIP</span>
+                    <h3>Premium Plus</h3>
+                    <div class="price">₹999<span>/month</span></div>
+                    <ul class="price-features">
+                        <li>Daily New Updates For Social Media</li>
+                        <li>Personal Guide For Only Plus Members</li>
+                        <li>All Premium Features</li>
+                        <li>Personal Guidance</li>
+                        <li>All Editing Premiums Unlocked Apps</li>
+                        <li>30 Days Validity</li>
+                        <li>VIP Content Access</li>
+                    </ul>
+                    <a href="https://imjo.in/g9YxyK" class="buy-button" target="_blank">Buy Now</a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSciLA2M3H1XVJdVWmbWKhpuwZgLLRIUMAkArIVRHH7u-zoLEg/viewform" class="alt-button" target="_blank">Alternative Form</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
+    <!-- FAQ Section -->
+    <section class="faq">
         <div class="container">
-            <h2 class="section-title">Get in Touch</h2>
-            <div class="contact-info">
-                <div class="contact-item">
-                    <strong>📧 Email:</strong><br>
-                    <a href="mailto:alphapanditji@gmail.com">alphapanditji@gmail.com</a>
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    What payment methods do you accept?
+                    <span>+</span>
                 </div>
-                <div class="contact-item">
-                    <strong>📱 WhatsApp:</strong><br>
-                    <a href="https://wa.me/919876543210" target="_blank">+91 98765 43210</a>
-                </div>
-                <div class="contact-item">
-                    <strong>💬 Telegram:</strong><br>
-                    <a href="https://t.me/alphapanditji" target="_blank">@alphapanditji</a>
+                <div class="faq-answer">
+                    We accept all major payment methods through Instamojo including UPI, Credit/Debit Cards, Net Banking, and Wallets. All transactions are 100% secure.
                 </div>
             </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    How do I get access after payment?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    After successful payment, you'll receive an email with your Telegram/WhatsApp group links within 24 hours. Check your registered email and follow the instructions.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    Can I upgrade my plan later?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Yes! You can upgrade to a higher plan anytime. Simply contact our support team and they'll help you with the upgrade process.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    Is there a refund policy?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    We offer a 7-day money-back guarantee. If you're not satisfied with the content, contact us within 7 days for a full refund.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <div class="about-content">
+            <h2 class="section-title">About Alpha Pandit Ji</h2>
+            <p>With years of experience in spiritual guidance and content creation, Alpha Pandit Ji has helped thousands of followers on their spiritual journey.</p>
+            <p>Our mission is to provide authentic spiritual knowledge, practical guidance, and a supportive community for seekers on their path to enlightenment.</p>
+            <p>Join our growing family of satisfied members who have transformed their lives through our premium content and personalized guidance.</p>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
+    <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 Alpha Pandit Ji. All rights reserved.</p>
-            <p>Professional Digital Services | 7+ Years Experience</p>
+            <h3 style="color: #667eea; margin-bottom: 20px;">Follow Us</h3>
+            <div class="social-links">
+                <a href="https://www.instagram.com/alphapanditjiofficial?igsh=cjhwZ2F2bXowMHJp" target="_blank" title="Instagram">
+                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+                <a href="https://youtube.com/@alphapanditji?si=8EiqrotqCMrtcGyt" target="_blank" title="YouTube Alpha Pandit Ji">
+                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+                <a href="https://youtube.com/@holaaieditz?si=DLe-zaPr0vqlYao7" target="_blank" title="YouTube Hola AI Editz">
+                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+                <a href="https://t.me/AlphaPanditJiApp" target="_blank" title="Telegram">
+                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                </a>
+                <a href="https://whatsapp.com/channel/0029VbB4dZrCxoB4uE18WT2a" target="_blank" title="WhatsApp">
+                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                </a>
+                <a href="https://www.facebook.com/share/1BuK9n8R1N/" target="_blank" title="Facebook">
+                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+            </div>
+            <p>&copy; 2025 Alpha Pandit Ji | All Rights Reserved</p>
+            <p>Secure payments powered by <a href="https://www.instamojo.com" target="_blank">Instamojo</a></p>
         </div>
     </footer>
+
+    <script>
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            // Close all FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('.faq-question span').textContent = '+';
+            });
+            
+            // Open clicked item if it wasn't active
+            if (!isActive) {
+                faqItem.classList.add('active');
+                element.querySelector('span').textContent = '-';
+            }
+        }
+
+        // Smooth scroll for CTA button
+        document.querySelector('.cta-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('#pricing').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    </script>
 </body>
 </html>
