@@ -426,4 +426,215 @@ if(!reviews){
   const N = 200;
   for(let i=0;i<N;i++) arr.push(genDummyReview(i));
   // store but we pretend count 10000+
-  localStorage.setItem(LS_REVS, JSON.stringify(ar
+  localStorage.setItem(LS_REVS, JSON.stringify(arr));
+  reviews = arr;
+}
+
+const carouselTrack = document.getElementById('carouselTrack');
+
+function createCard(review){
+  const el = document.createElement('div'); el.className='review-card';
+  const avatarWrap = document.createElement('div'); avatarWrap.className='avatar';
+  const img = document.createElement('img'); img.src = review.avatar; img.alt = review.name;
+  avatarWrap.appendChild(img);
+  el.appendChild(avatarWrap);
+  const name = document.createElement('div'); name.className='review-name'; name.textContent = review.name;
+  el.appendChild(name);
+  const stars = document.createElement('div'); stars.className='review-stars';
+  const starCount = Math.round(review.stars);
+  stars.textContent = '★'.repeat(starCount) + ' ('+review.stars.toFixed(1)+')';
+  el.appendChild(stars);
+  const text = document.createElement('div'); text.className='review-text'; text.textContent = review.text;
+  el.appendChild(text);
+  return el;
+}
+
+function renderCarousel(){
+  carouselTrack.innerHTML = '';
+  // to create long track, duplicate reviews multiple times
+  const duplicate = 6; // 200 * 6 = 1200 cards (good balance)
+  for(let k=0;k<duplicate;k++){
+    for(let i=0;i<reviews.length;i++){
+      const card = createCard(reviews[i]);
+      carouselTrack.appendChild(card);
+    }
+  }
+}
+renderCarousel();
+
+/* -------------------------
+  Auto-scroll carousel
+--------------------------*/
+let trackPos = 0;
+let autoId = null;
+function startAutoScroll(){
+  stopAutoScroll();
+  const track = carouselTrack;
+  const totalWidth = track.scrollWidth;
+  autoId = setInterval(()=>{
+    trackPos += 1; // px
+    if(trackPos >= totalWidth/2) trackPos = 0; // loop (we duplicated)
+    track.style.transform = `translateX(${-trackPos}px)`;
+  }, 16); // ~60fps
+}
+function stopAutoScroll(){ if(autoId) clearInterval(autoId); autoId = null; }
+startAutoScroll();
+carouselTrack.addEventListener('mouseenter', stopAutoScroll);
+carouselTrack.addEventListener('mouseleave', startAutoScroll);
+
+/* -------------------------
+  Review modal behavior
+--------------------------*/
+const reviewModalOverlay = document.getElementById('reviewModalOverlay');
+document.getElementById('openReview').addEventListener('click', ()=> reviewModalOverlay.style.display = 'flex');
+document.getElementById('cancelReviewBtn').addEventListener('click', ()=> reviewModalOverlay.style.display = 'none');
+
+document.getElementById('submitReviewBtn').addEventListener('click', ()=>{
+  const name = document.getElementById('r_name').value.trim() || 'Anonymous';
+  const stars = parseInt(document.getElementById('r_stars').value);
+  const text = document.getElementById('r_text').value.trim() || 'Good service.';
+  const photoFile = document.getElementById('r_photo').files[0];
+  const id = 'u' + Date.now();
+  function pushReview(avatar){
+    const obj = { id, name, stars, avatar, text };
+    // prepend in storage and re-render first chunk
+    reviews.unshift(obj);
+    if(reviews.length > 500) reviews.pop(); // cap for perf
+    localStorage.setItem(LS_REVS, JSON.stringify(reviews));
+    // add card to front of track visually
+    const card = createCard(obj);
+    carouselTrack.prepend(card);
+    // update avg rating label (we keep static 3.7 but we can recompute)
+    reviewModalOverlay.style.display = 'none';
+    alert('Thanks — your review was added!');
+  }
+  if(photoFile){
+    const reader = new FileReader();
+    reader.onload = (e)=> pushReview(e.target.result);
+    reader.readAsDataURL(photoFile);
+  } else {
+    pushReview('https://i.ibb.co/dBLbrRV/user.png');
+  }
+});
+
+/* -------------------------
+  Affiliate generator logic (subscription gating)
+  - For demo: subscription flag stored in localStorage per user
+--------------------------*/
+let currentUser = JSON.parse(localStorage.getItem('apj_user') || 'null'); // demo user profile
+// For the demo, if no user, user is "guest" (no subscription)
+if(!currentUser){
+  currentUser = { id: null, email: null, subscribed:false, tier:null }; // tier: 'basic','standard','plus'
+  localStorage.setItem('apj_user', JSON.stringify(currentUser));
+}
+
+function requireSubscriptionMessage(){
+  alert('Please sign up and purchase subscription (₹299 or ₹999) to generate affiliate links.');
+}
+
+// generate link handler
+document.getElementById('generateBtn').addEventListener('click', ()=>{
+  const url = document.getElementById('productUrl').value.trim();
+  const pct = parseFloat(document.getElementById('commissionSelect').value);
+  if(!url){ alert('Paste a product link first'); return; }
+  // check subscription
+  if(!currentUser.subscribed || (currentUser.tier==='basic')){
+    requireSubscriptionMessage(); return;
+  }
+  // generate fake affiliate link
+  const base = url.split('?')[0];
+  const aff = `${base}?ref=alpha_${(currentUser.id||'guest')}&comm=${pct}&uid=${Math.floor(Math.random()*90000)+10000}`;
+  const display = `Affiliate Link (copy/share): ${aff}`;
+  document.getElementById('affiliateResult').innerHTML = `<div style="color:#0b6b3a;font-weight:800">${display}</div>`;
+  // store in localStorage
+  const arr = JSON.parse(localStorage.getItem(LS_AFF) || '[]');
+  arr.unshift({ id:'aff'+Date.now(), url:base, link:aff, pct, created:new Date().toISOString() });
+  localStorage.setItem(LS_AFF, JSON.stringify(arr));
+});
+
+/* -------------------------
+  Simulated Login / Subscribe buttons
+--------------------------*/
+document.getElementById('loginBtn').addEventListener('click', ()=>{
+  // quick pseudo-login prompt for demo
+  const email = prompt('Enter your email to sign up / login (demo):');
+  if(!email) return;
+  currentUser = { id: 'u'+Date.now(), email, subscribed:false, tier:'free' };
+  localStorage.setItem('apj_user', JSON.stringify(currentUser));
+  alert('Signed in as ' + email + '. Now please subscribe to unlock features.');
+});
+
+document.getElementById('subscribeNowBtn').addEventListener('click', ()=>{
+  // show options
+  const choice = prompt('Choose plan: 1=₹99, 2=₹299, 3=₹999  (enter 1/2/3)');
+  if(!choice) return;
+  if(choice==='1'){ window.open(instamojo.basic, '_blank'); attemptActivate('basic'); }
+  else if(choice==='2'){ window.open(instamojo.standard, '_blank'); attemptActivate('standard'); }
+  else if(choice==='3'){ window.open(instamojo.plus, '_blank'); attemptActivate('plus'); }
+});
+
+function attemptActivate(tier){
+  // For demo: ask user to confirm they've paid (since no backend)
+  const ok = confirm('After completing payment on Instamojo, click OK to activate subscription (demo).');
+  if(!ok) return;
+  // activate
+  currentUser.subscribed = true;
+  currentUser.tier = tier;
+  localStorage.setItem('apj_user', JSON.stringify(currentUser));
+  alert('Subscription activated: ' + tier + ' (demo). You can now generate affiliate links.');
+}
+
+/* -------------------------
+  Settings modal
+--------------------------*/
+const settingsOverlay = document.getElementById('settingsOverlay');
+document.getElementById('settingsBtn').addEventListener('click', ()=> settingsOverlay.style.display='flex');
+document.getElementById('closeSettings').addEventListener('click', ()=> settingsOverlay.style.display='none');
+document.getElementById('saveSettings').addEventListener('click', ()=>{
+  const theme = document.getElementById('themeSel').value;
+  const lang = document.getElementById('langSel').value;
+  // theme application (simple)
+  if(theme==='dark'){ document.body.style.background='linear-gradient(180deg,#0b0711,#12061a)'; }
+  else if(theme==='white'){ document.body.style.background='linear-gradient(180deg,#fff,#fbf6ee)'; }
+  else { document.body.style.background='linear-gradient(180deg,#fff 0%, #fbf6ee 60%)'; }
+  settingsOverlay.style.display='none';
+  alert('Settings saved (demo).');
+});
+
+/* -------------------------
+  Chat button (static helper)
+--------------------------*/
+document.getElementById('chatBtn').addEventListener('click', ()=>{
+  const answer = prompt('Help — choose:\n1. How to generate affiliate link\n2. How to subscribe\n3. Withdraw earnings\nEnter 1/2/3');
+  if(answer==='1') alert('Sign up -> Subscribe (₹299/₹999) -> Paste product link -> Generate Link.');
+  else if(answer==='2') alert('Click Subscribe Now -> choose plan -> complete Instamojo payment -> confirm activation in site.');
+  else if(answer==='3') alert('Open Wallet (coming soon), create withdraw request with UPI/Bank details, admin pays manually.');
+});
+
+/* -------------------------
+  Auto-run small helpers: scroll ticker refresh + resize handling
+--------------------------*/
+setInterval(()=> {
+  // refresh marquee content occasionally
+  document.getElementById('earnersMarquee').textContent = buildEarnerString();
+}, 18000);
+
+/* -------------------------
+  Accessibility & closing modals on ESC
+--------------------------*/
+document.addEventListener('keydown', (e)=>{
+  if(e.key==='Escape'){
+    document.querySelectorAll('.modal-overlay').forEach(m=> m.style.display='none');
+  }
+});
+
+/* -------------------------
+  Pre-seed: If no affiliate arr, add some example aff links (demo)
+--------------------------*/
+if(!localStorage.getItem(LS_AFF)){
+  const sample = [{id:'affdemo1',url:'https://flipkart.com/product1',link:'https://flipkart.com/product1?ref=alpha_demo&comm=5',pct:5,created:new Date().toISOString()}];
+  localStorage.setItem(LS_AFF, JSON.stringify(sample));
+}
+</script>
+</body>
+</html>
