@@ -1,640 +1,564 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Alpha Pandit Ji Official</title>
-<link rel="icon" href="https://i.ibb.co/HTmgqXLh/Picsart-25-11-04-05-36-14-228.png" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --gold-1:#D4AF37;
-    --gold-2:#E9C46A;
-    --bg-white:#fff;
-    --muted:#6b6b6b;
-    --accent:#00c46a; /* generate button green */
-  }
-  *{box-sizing:border-box;font-family:'Poppins',sans-serif}
-  html,body{height:100%}
-  body{
-    margin:0;
-    background:linear-gradient(180deg,#fff 0%, #fbf6ee 60%);
-    color:#111;
-    -webkit-font-smoothing:antialiased;
-  }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HolaTube — Bot & Full Platform Demo</title>
+  <meta name="description" content="HolaTube — Creator & Affiliate Platform (Demo). Bot support, subscriptions, affiliate, wallet, leaderboard, roadmap, policies."/>
+  <!-- Icons / fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    /* ===== Reset & base ===== */
+    :root{
+      --primary:#1a73e8; --accent:#ff6f00; --muted:#6b7280; --bg:#f5f7fb;
+      --card:#ffffff; --danger:#e53935;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Roboto,Arial;color:#111;background:var(--bg)}
+    a{color:inherit}
+    .container{max-width:1200px;margin:0 auto;padding:20px;}
 
-  /* STICKY HEADER */
-  header{
-    position:sticky;
-    top:0;
-    z-index:1200;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:12px 20px;
-    border-bottom:1px solid rgba(0,0,0,0.04);
-    background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.75));
-    backdrop-filter: blur(6px);
-  }
-  .left-head{display:flex;align-items:center;gap:14px}
-  .logo-wrap{display:flex;align-items:center;gap:10px}
-  .logo-img{width:64px;height:64px;border-radius:12px;overflow:hidden;border:3px solid rgba(0,0,0,0.06);box-shadow:0 6px 18px rgba(0,0,0,0.06)}
-  .logo-img img{width:100%;height:100%;object-fit:cover;display:block}
-  .brand{font-weight:700;color:var(--gold-1);line-height:1}
-  .tag{font-size:0.85rem;color:var(--muted);margin-top:3px}
+    /* ===== Header ===== */
+    header{background:linear-gradient(90deg,var(--primary),#3b82f6);color:white;padding:18px 20px;position:sticky;top:0;z-index:50;box-shadow:0 2px 10px rgba(0,0,0,0.08)}
+    header .wrap{display:flex;align-items:center;gap:16px;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:1.25rem}
+    .brand .logo{width:44px;height:44px;border-radius:8px;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:800}
+    nav a{margin-left:14px;color:rgba(255,255,255,0.95);font-weight:600}
+    .header-actions{display:flex;gap:10px;align-items:center}
 
-  .top-actions{display:flex;align-items:center;gap:10px}
-  .btn{padding:8px 14px;border-radius:999px;border:none;cursor:pointer;font-weight:700}
-  .btn-login{background:linear-gradient(90deg,var(--gold-1),var(--gold-2));color:#111}
-  .btn-settings{background:#fff;border:1px solid #eee;color:#333}
-  .lang-select{padding:7px 12px;border-radius:10px;border:1px solid #eee;background:#fff}
+    /* ===== Hero ===== */
+    .hero{padding:56px 20px;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0));margin-bottom:22px;text-align:center}
+    .hero h1{font-size:2.2rem;margin-bottom:8px}
+    .hero p{color:var(--muted);margin:0 auto 18px;max-width:800px}
+    .primary-btn{background:var(--accent);color:white;border:none;padding:12px 18px;border-radius:8px;cursor:pointer;font-weight:700}
+    .ghost-btn{background:transparent;border:2px solid rgba(255,255,255,0.12);padding:10px 14px;border-radius:8px;color:white;cursor:pointer}
 
-  /* NOTE bar */
-  .note{
-    text-align:center;
-    background:linear-gradient(90deg, rgba(212,175,55,0.12), rgba(212,175,55,0.06));
-    padding:8px 12px;
-    font-weight:600;
-    color: #444;
-    border-bottom:1px solid rgba(212,175,55,0.08);
-  }
+    /* ===== Grid / cards ===== */
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+    .col-4{grid-column:span 4}
+    .col-8{grid-column:span 8}
+    .col-12{grid-column:span 12}
+    .card{background:var(--card);padding:18px;border-radius:12px;box-shadow:0 6px 18px rgba(15,23,42,0.06)}
+    .muted{color:var(--muted);font-size:0.92rem}
+    .small{font-size:0.85rem;color:var(--muted)}
 
-  /* HERO */
-  .hero{
-    max-width:1200px;margin:28px auto;padding:36px 20px;border-radius:18px;display:flex;gap:30px;align-items:center;background:linear-gradient(180deg,rgba(212,175,55,0.06),rgba(255,255,255,0.6));
-    box-shadow:0 10px 40px rgba(212,175,55,0.06);
-  }
-  .hero-left{flex:1;min-width:260px}
-  .hero-title{font-size:2.1rem;margin-bottom:10px;color:var(--gold-1);font-weight:800}
-  .hero-sub{color:#444;margin-bottom:18px;line-height:1.5}
-  .cta-group{display:flex;gap:12px;flex-wrap:wrap}
-  .cta-primary{background:var(--accent);color:#00281a;padding:12px 20px;border-radius:999px;font-weight:800;box-shadow:0 10px 30px rgba(0,196,106,0.12)}
-  .cta-secondary{background:transparent;border:2px solid rgba(0,0,0,0.06);padding:10px 18px;border-radius:999px;color:#333}
+    /* ===== Inputs / forms ===== */
+    input[type="text"], input[type="number"], select, textarea{
+      width:100%;padding:10px;border-radius:8px;border:1px solid #e6e9ef;font-size:0.95rem;margin-top:8px
+    }
+    label{font-weight:600;font-size:0.95rem}
 
-  .hero-stats{display:flex;gap:14px;margin-top:20px;flex-wrap:wrap}
-  .stat{background:#fff;padding:14px 18px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.04)}
-  .stat h3{color:var(--gold-1);margin-bottom:6px}
-  .stat p{color:var(--muted);font-size:0.9rem}
+    /* ===== sections ===== */
+    h2.section-title{margin:0 0 12px;font-size:1.2rem;color:var(--primary)}
+    .row{display:flex;gap:12px;flex-wrap:wrap}
 
-  /* PLANS */
-  .plans{max-width:1200px;margin:28px auto;padding:18px;display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
-  .plan{background:#fff;border-radius:14px;padding:20px;width:280px;border:1px solid rgba(0,0,0,0.04);box-shadow:0 8px 28px rgba(0,0,0,0.04)}
-  .plan .badge{display:inline-block;background:linear-gradient(90deg,var(--gold-1),var(--gold-2));color:#111;padding:6px 12px;border-radius:999px;font-weight:800;margin-bottom:10px}
-  .plan h4{margin:6px 0 10px}
-  .plan p{font-size:0.95rem;color:var(--muted);margin-bottom:14px}
-  .buy{display:inline-block;background:var(--accent);color:#001f12;padding:10px 18px;border-radius:999px;font-weight:800;text-decoration:none}
+    /* ===== Bot widget ===== */
+    .bot-btn{position:fixed;right:20px;bottom:20px;background:var(--primary);color:white;width:64px;height:64px;border-radius:50%;box-shadow:0 12px 30px rgba(0,0,0,0.18);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:9999}
+    .bot-window{position:fixed;right:20px;bottom:92px;width:360px;max-width:calc(100% - 40px);background:var(--card);border-radius:12px;box-shadow:0 18px 60px rgba(2,6,23,0.18);overflow:hidden;display:none;flex-direction:column;z-index:9999}
+    .bot-header{background:linear-gradient(90deg,var(--primary),#3b82f6);color:white;padding:12px 14px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+    .bot-body{padding:12px;height:320px;overflow:auto}
+    .bot-input{display:flex;border-top:1px solid #eef2f6}
+    .bot-input input{flex:1;padding:10px;border:none}
+    .bot-input button{background:var(--accent);color:white;border:none;padding:0 14px;cursor:pointer}
 
-  /* Affiliate generator */
-  .affiliate-wrap{max-width:1000px;margin:24px auto;padding:20px;background:#fff;border-radius:14px;border:1px solid rgba(0,0,0,0.03)}
-  .affiliate-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
-  .affiliate-head h3{margin:0;color:#111}
-  .affiliate-body{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-  .affiliate-input{flex:1;min-width:220px;display:flex;gap:10px;align-items:center}
-  .affiliate-input input[type="text"]{flex:1;padding:12px;border-radius:10px;border:1px solid #eee}
-  .affiliate-input select{padding:10px;border-radius:10px;border:1px solid #eee}
-  .generate{background:linear-gradient(90deg,var(--gold-1),var(--gold-2));color:#111;padding:10px 18px;border-radius:10px;font-weight:800;border:none;cursor:pointer}
-  .result{margin-top:12px;color:#0b6b3a;font-weight:700;word-break:break-all}
+    .msg{margin:6px 0;padding:10px;border-radius:10px;max-width:85%}
+    .msg.user{background:#e6f0ff;color:#03204b;margin-left:auto}
+    .msg.bot{background:#f1f5f9;color:#0b1221}
 
-  /* REVIEW SECTION */
-  .reviews-section{max-width:1200px;margin:32px auto;padding:16px}
-  .reviews-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
-  .reviews-left{display:flex;flex-direction:column}
-  .avg{display:flex;align-items:center;gap:10px}
-  .avg .score{font-weight:800;color:var(--gold-1);font-size:1.3rem}
-  .review-action{display:flex;gap:8px}
-  .review-open{background:linear-gradient(90deg,var(--gold-1),var(--gold-2));color:#111;padding:8px 16px;border-radius:999px;border:none;cursor:pointer}
+    /* ===== small UI ===== */
+    .flex{display:flex;gap:10px;align-items:center}
+    .right{margin-left:auto}
+    .label-pill{background:#f1f5f9;padding:6px 10px;border-radius:999px;font-weight:700;color:var(--primary)}
 
-  .carousel-viewport{position:relative;overflow:hidden;padding:12px 6px;border-radius:12px}
-  .carousel-track{display:flex;gap:12px;transition:transform 600ms linear;will-change:transform;padding-bottom:10px}
-  .review-card{min-width:220px;background:#fff;border-radius:12px;padding:12px;border:1px solid rgba(0,0,0,0.04);box-shadow:0 8px 20px rgba(0,0,0,0.04);color:#111}
-  .review-card .avatar{width:56px;height:56px;border-radius:12px;overflow:hidden;margin-bottom:8px}
-  .review-card img{width:100%;height:100%;object-fit:cover}
-  .review-name{font-weight:700}
-  .review-stars{color:gold;margin:6px 0}
-  .review-text{font-size:0.92rem;color:#333}
+    /* ===== table leader ===== */
+    table{width:100%;border-collapse:collapse}
+    table th, table td{padding:10px;border-bottom:1px solid #eef2f6;text-align:left}
+    table th{background:#f8fafc;color:var(--muted);font-weight:700}
 
-  /* RECENT EARNERS TICKER */
-  .ticker{background:#fff;padding:10px;border-radius:999px;display:flex;align-items:center;gap:10px;max-width:1200px;margin:20px auto;overflow:hidden;border:1px solid rgba(0,0,0,0.04)}
-  .ticker .label{font-weight:700;color:var(--gold-1);padding-left:8px}
-  .ticker .marquee{white-space:nowrap;display:inline-block;animation:marquee 18s linear infinite}
-  @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+    /* ===== footer ===== */
+    footer{padding:24px 20px;background:#0f1724;color:#cbd5e1;margin-top:30px}
 
-  /* Visitor & help chat */
-  .bottom-controls{max-width:1200px;margin:18px auto;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 8px}
-  .visitor{background:#fff;padding:8px 14px;border-radius:999px;color:#333;font-weight:700;border:1px solid rgba(0,0,0,0.04)}
-  .chat-btn{position:fixed;right:18px;bottom:24px;background:linear-gradient(90deg,var(--gold-1),var(--gold-2));color:#111;border:none;padding:14px;border-radius:999px;box-shadow:0 14px 40px rgba(212,175,55,0.18);cursor:pointer;z-index:1500}
-
-  /* Footer */
-  footer{margin-top:40px;background:#fff;padding:28px 18px;border-top:1px solid rgba(0,0,0,0.04);color:#333}
-  .footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
-  .social-list{display:flex;gap:12px;align-items:center}
-  .social-list a{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid rgba(0,0,0,0.04);text-decoration:none;color:#111;background:linear-gradient(90deg,#fff,#fff)}
-  .social-list img{width:26px;height:26px}
-  .contact-email{color:#666}
-
-  /* modal */
-  .modal-overlay{position:fixed;inset:0;background:rgba(10,10,10,0.6);display:none;align-items:center;justify-content:center;z-index:2000;padding:16px}
-  .modal{background:#fff;border-radius:12px;padding:18px;max-width:520px;width:100%}
-  .modal h3{margin-bottom:8px}
-  .modal input, .modal textarea, .modal select{width:100%;padding:10px;border-radius:8px;border:1px solid #eee;margin:8px 0}
-  .modal .actions{display:flex;justify-content:flex-end;gap:8px;margin-top:8px}
-
-  /* small responsive */
-  @media (max-width:900px){
-    .hero{flex-direction:column;align-items:flex-start}
-    .plans{justify-content:center}
-    .carousel-viewport{padding:0}
-  }
-</style>
+    /* ===== responsive ===== */
+    @media(max-width:900px){
+      .col-4{grid-column:span 12}
+      .col-8{grid-column:span 12}
+      .hero h1{font-size:1.5rem}
+      .bot-window{right:12px;left:12px;width:auto;bottom:90px}
+    }
+  </style>
 </head>
 <body>
 
-  <!-- NOTE -->
-  <div class="note">
-    🔔 Note: Platform fee 30% is automatically applied to all affiliate earnings (Premium Plus users pay only 25%).
-  </div>
-
   <!-- HEADER -->
   <header>
-    <div class="left-head">
-      <div class="logo-wrap">
-        <div class="logo-img"><img src="https://i.ibb.co/HTmgqXLh/Picsart-25-11-04-05-36-14-228.png" alt="Alpha Pandit Ji Logo"></div>
+    <div class="wrap container" style="align-items:center">
+      <div class="brand">
+        <div class="logo">HT</div>
+        <div>
+          <div>HolaTube</div>
+          <div class="small" style="opacity:0.9">Creators • Affiliate • Wallet</div>
+        </div>
       </div>
-      <div>
-        <div class="brand">Alpha Pandit Ji Official</div>
-        <div class="tag">Professional Digital Services · Affiliate Hub</div>
-      </div>
-    </div>
 
-    <div class="top-actions">
-      <select class="lang-select" id="langSelect" title="Choose language">
-        <option value="en">English</option>
-        <option value="hi">Hindi</option>
-        <option value="bn">Bengali</option>
-        <option value="mr">Marathi</option>
-        <option value="ta">Tamil</option>
-      </select>
-      <button class="btn btn-settings" id="settingsBtn">⚙️ Settings</button>
-      <button class="btn btn-login" id="loginBtn">Sign Up / Login</button>
+      <div class="header-actions">
+        <nav>
+          <a href="#features">Features</a>
+          <a href="#dashboard">Dashboard</a>
+          <a href="#roadmap">Roadmap</a>
+          <a href="#policies">Policies</a>
+        </nav>
+      </div>
     </div>
   </header>
 
   <!-- HERO -->
-  <section class="hero" role="region">
-    <div class="hero-left">
-      <div class="hero-title">India’s Smartest Affiliate Hub</div>
-      <div class="hero-sub">Join thousands who earn by sharing product links. Subscribe, generate affiliate links, share, and earn — we handle the split automatically.</div>
-
-      <div class="cta-group">
-        <button class="cta-primary" id="startEarningBtn">Start Earning</button>
-        <button class="cta-secondary" id="subscribeNowBtn">Subscribe Now</button>
+  <section class="hero">
+    <div class="container">
+      <h1>HolaTube — Grow, Earn & Scale</h1>
+      <p class="muted">India + Global creators — discover affiliate income, manage wallet, withdraw, and get instant help from our bot assistant. (Demo mode — connect backend for live payments)</p>
+      <div style="margin-top:16px">
+        <button class="primary-btn" onclick="document.getElementById('subscription').scrollIntoView({behavior:'smooth'})">Start Free Demo</button>
+        <button class="ghost-btn" onclick="document.getElementById('botButton').click()" style="margin-left:10px">Open Bot</button>
       </div>
-
-      <div class="hero-stats">
-        <div class="stat"><h3>5000+</h3><p>Happy Members</p></div>
-        <div class="stat"><h3>10000+</h3><p>Content Downloads</p></div>
-        <div class="stat"><h3>50+</h3><p>Premium Tools</p></div>
-      </div>
-    </div>
-
-    <div class="hero-right">
-      <img src="https://i.ibb.co/HTmgqXLh/Picsart-25-11-04-05-36-14-228.png" alt="logo" style="width:200px;border-radius:14px;box-shadow:0 20px 60px rgba(212,175,55,0.12)">
     </div>
   </section>
 
-  <!-- PLANS -->
-  <div class="plans" role="region" aria-label="Subscription plans">
-    <div class="plan">
-      <div class="badge">BASIC</div>
-      <h4>Basic Plan</h4>
-      <p>₹99 / month — Access to affiliate link preview & limited features.</p>
-      <a class="buy" href="https://imjo.in/v8sXQG" target="_blank" rel="noopener">Buy ₹99</a>
-    </div>
+  <!-- MAIN CONTENT -->
+  <main class="container">
+    <div class="grid">
 
-    <div class="plan">
-      <div class="badge">MOST POPULAR</div>
-      <h4>Premium Plan</h4>
-      <p>₹299 / month — Affiliate generator + contact support.</p>
-      <a class="buy" href="https://imjo.in/mKZYp9" target="_blank" rel="noopener">Buy ₹299</a>
-    </div>
+      <!-- LEFT: SUBSCRIPTION + AFFILIATE -->
+      <div class="col-8">
+        <!-- SUBSCRIPTION -->
+        <div id="subscription" class="card">
+          <h2 class="section-title">Subscription / Membership</h2>
+          <p class="muted">Choose a plan — demo will simulate subscription and credit wallet based on plan percentage logic.</p>
 
-    <div class="plan">
-      <div class="badge">PREMIUM PLUS</div>
-      <h4>Premium Plus</h4>
-      <p>₹999 / month — Priority support, low fee (25% platform cut).</p>
-      <a class="buy" href="https://imjo.in/g9YxyK" target="_blank" rel="noopener">Buy ₹999</a>
-    </div>
-  </div>
+          <div class="row" style="margin-top:12px">
+            <div style="flex:1">
+              <label>Plan</label>
+              <select id="planSelect">
+                <option value="99" data-tier="basic">Basic — ₹99 (30% platform cut)</option>
+                <option value="299" data-tier="premium">Premium — ₹299 (25% platform cut)</option>
+              </select>
+            </div>
+            <div style="width:220px">
+              <label>Pay Method (demo)</label>
+              <select id="payMethod">
+                <option>Instamojo (Demo)</option>
+                <option>UPI (Demo)</option>
+              </select>
+            </div>
+          </div>
 
-  <!-- AFFILIATE GENERATOR -->
-  <div class="affiliate-wrap" id="affiliateWrap">
-    <div class="affiliate-head">
-      <h3>Affiliate Link Generator</h3>
-      <div style="font-size:0.95rem;color:var(--muted)">Paste any shopping product link and choose commission percent</div>
-    </div>
-    <div class="affiliate-body">
-      <div class="affiliate-input">
-        <input id="productUrl" type="text" placeholder="Paste Flipkart / Amazon / other product link...">
-        <select id="commissionSelect" aria-label="commission percent">
-          <option value="5">5%</option>
-          <option value="10">10%</option>
-          <option value="15">15%</option>
-          <option value="20">20%</option>
-          <option value="30">30%</option>
-          <option value="50">50%</option>
-          <option value="100">100%</option>
-        </select>
+          <div style="margin-top:12px" class="flex">
+            <button class="primary-btn" onclick="doSubscribe()">Subscribe Now</button>
+            <div class="small right muted">Subscription status: <span id="subStatus">Not Subscribed</span></div>
+          </div>
+          <div style="margin-top:12px" class="small muted">Note: In demo mode subscriptions are saved in your browser. Connect backend to accept real payments and webhooks.</div>
+        </div>
+
+        <!-- AFFILIATE -->
+        <div id="affiliate" class="card" style="margin-top:18px">
+          <h2 class="section-title">Affiliate & Referral</h2>
+          <p class="muted">Generate shareable links, choose commission %, and track simulated clicks/sales.</p>
+
+          <label>Your name (for ref code)</label>
+          <input id="affName" placeholder="Enter username or code (e.g., raju123)">
+
+          <label>Commission share to affiliate</label>
+          <select id="commissionSelect">
+            <option value="5">5%</option>
+            <option value="10" selected>10%</option>
+            <option value="15">15%</option>
+            <option value="20">20%</option>
+          </select>
+
+          <div style="margin-top:12px" class="row">
+            <button class="primary-btn" onclick="generateAffiliate()">Generate Link</button>
+            <button class="primary-btn" style="background:#10b981" onclick="simulateSale()">Simulate Sale</button>
+            <button class="primary-btn" style="background:#6b7280" onclick="copyAffiliateLink()">Copy Link</button>
+          </div>
+
+          <div id="affResult" style="margin-top:12px" class="small muted">Your affiliate link will appear here.</div>
+        </div>
+
+        <!-- BOT GUIDE & FAQ (Short) -->
+        <div class="card" style="margin-top:18px">
+          <h2 class="section-title">Bot Guide & FAQ (Examples)</h2>
+          <div class="small muted">
+            <p><b>Bot can help:</b></p>
+            <ul>
+              <li>How to subscribe?</li>
+              <li>How to generate affiliate link?</li>
+              <li>How to request withdraw?</li>
+              <li>How to check wallet & transactions?</li>
+            </ul>
+            <p>Open the bot (bottom-right) and type your question. Bot supports keywords and action buttons for demo actions.</p>
+          </div>
+        </div>
+
       </div>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
-        <button class="generate" id="generateBtn">Generate Link</button>
-        <div style="font-size:0.9rem;color:var(--muted)">*Only for subscribed users (299 / 999)</div>
+
+      <!-- RIGHT: DASHBOARD SUMMARY -->
+      <div class="col-4">
+        <div class="card">
+          <h2 class="section-title">Wallet & Quick Actions</h2>
+          <p class="muted">Balance, transactions and quick withdraw (demo).</p>
+
+          <div style="margin-top:8px" class="flex">
+            <div>
+              <div class="small muted">Wallet Balance</div>
+              <div style="font-weight:800;font-size:1.4rem">₹<span id="walletBalance">0</span></div>
+            </div>
+            <div class="right">
+              <div class="small muted">User</div>
+              <div style="font-weight:700">Guest (demo)</div>
+            </div>
+          </div>
+
+          <hr style="margin:12px 0;border:none;border-top:1px solid #eef2f6">
+
+          <label>Withdraw Amount (₹)</label>
+          <input id="withdrawAmt" type="number" placeholder="Min ₹100">
+          <label>Withdraw Mode</label>
+          <select id="withdrawMode">
+            <option>UPI</option>
+            <option>Bank</option>
+          </select>
+          <div style="margin-top:10px" class="row">
+            <button class="primary-btn" onclick="requestWithdraw()">Request Withdraw</button>
+            <button class="primary-btn" style="background:#6b7280" onclick="showTransactions()">View Tx</button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:18px">
+          <h2 class="section-title">Leaderboard (Demo)</h2>
+          <table>
+            <thead><tr><th>Rank</th><th>Name</th><th>Earnings</th></tr></thead>
+            <tbody id="leaderboardBody">
+              <tr><td>1</td><td>Creator A</td><td>₹5000</td></tr>
+              <tr><td>2</td><td>Creator B</td><td>₹3500</td></tr>
+              <tr><td>3</td><td>Creator C</td><td>₹2000</td></tr>
+            </tbody>
+          </table>
+          <div class="small muted" style="margin-top:8px">Leaderboard updates will be live after backend integration.</div>
+        </div>
       </div>
-    </div>
-    <div class="result" id="affiliateResult"></div>
-  </div>
 
-  <!-- RECENT EARNERS TICKER -->
-  <div class="ticker" aria-hidden="false">
-    <div class="label">🔥 Recent Earners:</div>
-    <div style="overflow:hidden" aria-hidden="true">
-      <div class="marquee" id="earnersMarquee"></div>
-    </div>
-  </div>
-
-  <!-- REVIEWS -->
-  <div class="reviews-section">
-    <div class="reviews-header">
-      <div class="reviews-left">
-        <div class="avg"><div class="score">3.7</div><div style="color:var(--muted);margin-left:6px">/5 — 10,000+ reviews</div></div>
-        <div style="font-size:0.95rem;color:var(--muted);margin-top:6px">Real people — real experiences</div>
+      <!-- FULL-WIDTH: DASHBOARD DETAILS & CHARTS -->
+      <div class="col-12 card" style="margin-top:18px">
+        <h2 class="section-title">User Dashboard — Transactions & Affiliate Stats</h2>
+        <div class="row" style="margin-top:12px">
+          <div style="flex:1">
+            <h4 class="small">Recent Transactions</h4>
+            <div id="txList" class="small muted">No transactions yet.</div>
+          </div>
+          <div style="width:360px">
+            <h4 class="small">Affiliate Performance (Simulated)</h4>
+            <div id="affStats" class="small muted">No data yet. Use <b>Simulate Sale</b>.</div>
+          </div>
+        </div>
       </div>
-      <div class="review-action">
-        <button class="review-open" id="openReview">Add Review</button>
+
+      <!-- ROADMAP & POLICIES -->
+      <div class="col-12" style="margin-top:18px">
+        <div class="card">
+          <h2 class="section-title">Roadmap — Future Features & Timeline</h2>
+          <ol class="small muted">
+            <li><b>Phase 1 (Done - demo):</b> Subscription demo, Affiliate demo, Wallet demo, Bot (FAQ & guided), Dashboard placeholders.</li>
+            <li><b>Phase 2 (Next):</b> Live Leaderboard, Daily Rewards, Achievement Badges, Email/SMS notifications, Multi-language (EN/HI).</li>
+            <li><b>Phase 3:</b> PWA, Push notifications, Auto-renewal payments, Real payment gateway + Instamojo webhook integration.</li>
+            <li><b>Phase 4:</b> AI-powered recommendations, Marketplace for creators (courses/templates), White-label APIs, Fraud detection & 2FA.</li>
+          </ol>
+          <h3 style="margin-top:12px">Update Log / Changelog</h3>
+          <ul class="small muted">
+            <li><b>v0.1 (Demo)</b> — Core UI + subscription & affiliate demo + bot added.</li>
+            <li><b>v0.2</b> — Wallet persistence + simulated withdraw + leaderboard placeholders.</li>
+            <li><b>v1.0 (Planned)</b> — Backend connect, real payments, admin panel live.</li>
+          </ul>
+        </div>
+
+        <div id="policies" class="card" style="margin-top:18px">
+          <h2 class="section-title">Guidelines, Policies & Terms (Summary)</h2>
+          <div class="small muted">
+            <h4>Usage Guidelines</h4>
+            <ol>
+              <li>Do not use demo balances for real transactions. Connect backend for production.</li>
+              <li>Respect other creators; any abusive behavior may result in bans.</li>
+              <li>Use genuine affiliate promotions; no spammy or misleading links.</li>
+            </ol>
+
+            <h4 style="margin-top:8px">Privacy Policy (Short)</h4>
+            <p>HolaTube collects basic user data (email, name), subscription records, affiliate and transaction metadata. For demo mode data is stored locally. In production we will store data securely on our servers and use HTTPS & encryption. Users can request deletion of data via the support channel.</p>
+
+            <h4 style="margin-top:8px">Terms & Conditions (Short)</h4>
+            <ol>
+              <li>All content and earnings in demo are for demonstration purposes only.</li>
+              <li>Payments in real mode will be processed by third-party providers (Instamojo, UPI providers). HolaTube is not liable for third-party delays.</li>
+              <li>Withdrawals require admin approval in production to prevent fraud.</li>
+              <li>Platform reserves the right to change commission rates with 30 days notice.</li>
+            </ol>
+
+            <h4 style="margin-top:8px">Security & Fraud Policy</h4>
+            <p>Production systems must use 2FA for withdrawals, rate-limiting on endpoints, and fraud detection mechanisms. Any attempt to manipulate affiliate sales will result in account suspension and possible legal action.</p>
+
+            <p style="margin-top:8px"><b>Full legal policy documents (long-form) should be hosted on separate pages and linked from footer for compliance.</b></p>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="carousel-viewport">
-      <div class="carousel-track" id="carouselTrack" aria-live="polite"></div>
+    </div>
+  </main>
+
+  <!-- BOT BUTTON & WINDOW -->
+  <div id="botButton" class="bot-btn" title="HolaTube Assistant" onclick="toggleBotWindow()"><i class="fas fa-robot" style="font-size:20px"></i></div>
+
+  <div id="botWindow" class="bot-window" role="dialog" aria-label="HolaTube Assistant">
+    <div class="bot-header">
+      <div>HolaTube Assistant</div>
+      <div style="font-size:0.9rem" class="small">Type keywords: subscription, affiliate, wallet, withdraw</div>
+    </div>
+    <div class="bot-body" id="botBody">
+      <div class="msg bot">Hi! I'm HolaTube Assistant. I can guide you step-by-step. Try typing "subscribe" or "generate affiliate".</div>
+    </div>
+    <div class="bot-input">
+      <input id="botText" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter') sendBot()">
+      <button onclick="sendBot()">Send</button>
     </div>
   </div>
 
-  <!-- Visitor & Controls -->
-  <div class="bottom-controls">
-    <div class="visitor" id="visitorCount">👁️ 0 visitors</div>
-    <div style="color:var(--muted)">Need help? Click the chat bubble.</div>
-  </div>
-
-  <!-- Floating chat -->
-  <button class="chat-btn" id="chatBtn">💬 Help</button>
-
-  <!-- Footer -->
+  <!-- FOOTER -->
   <footer>
-    <div class="footer-inner">
-      <div>
-        <div style="font-weight:800;color:var(--gold-1)">Follow Us</div>
-        <div class="contact-email">📧 Businessrelatedsms21@gmail.com</div>
+    <div class="container" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+      <div style="flex:1">
+        <strong>HolaTube</strong> — © <span id="yr"></span>. Made with ❤ for creators.
+        <div class="small muted">Contact: support@holatube.example (demo)</div>
       </div>
-
-      <div class="social-list">
-        <a href="https://youtube.com/@alphapanditji?si=erkkS2thnaJOAkbW" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="yt">YouTube</a>
-        <a href="https://www.instagram.com/alphapanditjiofficial?igsh=cjhwZ2F2bXowMHJp" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="ig">Instagram</a>
-        <a href="https://t.me/AlphaPanditJiApp" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="tg">Telegram</a>
-        <a href="https://www.facebook.com/share/1YiZJjkEmw/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="fb">Facebook</a>
-        <a href="https://youtube.com/@holaaieditz?si=uZ_oseK55QblfQKg" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="yt2">YouTube (Hola)</a>
+      <div style="display:flex;gap:10px;align-items:center">
+        <a href="#" onclick="openTC()">Terms</a>
+        <a href="#" onclick="openPrivacy()">Privacy</a>
+        <a href="#roadmap">Roadmap</a>
       </div>
     </div>
-
-    <div style="text-align:center;margin-top:14px;color:#777;font-size:0.9rem">© 2025 Alpha Pandit Ji Official · All Rights Reserved</div>
   </footer>
 
-  <!-- Review Modal -->
-  <div class="modal-overlay" id="reviewModalOverlay" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true">
-      <h3>Write a Review</h3>
-      <input id="r_name" placeholder="Your name">
-      <input id="r_photo" type="file" accept="image/*">
-      <select id="r_stars">
-        <option value="5">★★★★★ (5)</option>
-        <option value="4">★★★★ (4)</option>
-        <option value="3">★★★ (3)</option>
-        <option value="2">★★ (2)</option>
-        <option value="1">★ (1)</option>
-      </select>
-      <textarea id="r_text" rows="4" placeholder="Write your experience..."></textarea>
-      <div class="actions">
-        <button id="submitReviewBtn" class="btn" style="background:var(--gold-1);color:#111">Submit</button>
-        <button id="cancelReviewBtn" class="btn" style="background:#eee;color:#111">Cancel</button>
-      </div>
-    </div>
+  <!-- TERMS & PRIVACY MODALS (Simple) -->
+  <div id="modalOverlay" style="display:none;position:fixed;inset:0;background:rgba(2,6,23,0.6);z-index:9998;align-items:center;justify-content:center">
+    <div id="modalContent" style="width:90%;max-width:800px;background:white;border-radius:10px;padding:18px;max-height:80vh;overflow:auto"></div>
+    <button style="position:fixed;right:20px;top:20px;background:#ef4444;color:white;border:none;padding:10px;border-radius:8px;cursor:pointer" onclick="closeModal()">Close</button>
   </div>
 
-  <!-- Settings Modal (simple) -->
-  <div class="modal-overlay" id="settingsOverlay" aria-hidden="true">
-    <div class="modal">
-      <h3>Settings</h3>
-      <div style="margin-bottom:10px">
-        <label style="font-weight:700">Theme</label>
-        <select id="themeSel">
-          <option value="gold">Gold (Recommended)</option>
-          <option value="white">White (Clean)</option>
-          <option value="dark">Dark</option>
-        </select>
-      </div>
-      <div style="margin-bottom:10px">
-        <label style="font-weight:700">Language</label>
-        <select id="langSel">
-          <option value="en">English</option>
-          <option value="hi">Hindi</option>
-          <option value="bn">Bengali</option>
-          <option value="mr">Marathi</option>
-          <option value="ta">Tamil</option>
-        </select>
-      </div>
-      <div style="display:flex;justify-content:flex-end;gap:8px">
-        <button id="saveSettings" class="btn" style="background:var(--gold-1);color:#111">Save</button>
-        <button id="closeSettings" class="btn" style="background:#eee;color:#111">Close</button>
-      </div>
-    </div>
-  </div>
-
-<script>
-/* -------------------------
-  UTILITIES & LOCAL STORAGE
---------------------------*/
-const LS_REVS = 'apj_reviews_v2';
-const LS_AFF = 'apj_affs_v2';
-const LS_VIS = 'apj_vis_v2';
-const instamojo = {
-  basic: 'https://imjo.in/v8sXQG',
-  standard: 'https://imjo.in/mKZYp9',
-  plus: 'https://imjo.in/g9YxyK'
-};
-
-/* -------------------------
-  Visitor counter (simulated)
---------------------------*/
-let visitors = parseInt(localStorage.getItem(LS_VIS) || '120') || 120;
-const visitorEl = document.getElementById('visitorCount');
-function tickVisitor(){
-  // random small fluctuation for realism
-  const delta = Math.floor(Math.random()*3); visitors += delta;
-  localStorage.setItem(LS_VIS, visitors.toString());
-  visitorEl.textContent = '👁️ ' + visitors + ' visitors';
-}
-setInterval(tickVisitor, 7000);
-tickVisitor();
-
-/* -------------------------
-  Recent earners ticker (simulated)
---------------------------*/
-const earners = ['Rahul','Priya','Aman','Meena','Rohan','Simran','Anita','Aditya','Karan','Mona','Rekha','Vikram','Nisha','Asha','Ritesh','Sonal'];
-function buildEarnerString(){
-  const parts = [];
-  for(let i=0;i<40;i++){
-    const name = earners[Math.floor(Math.random()*earners.length)];
-    const amount = Math.floor(Math.random()*1500) + 50;
-    parts.push(`${name} earned ₹${amount}`);
-  }
-  return parts.join('  •  ');
-}
-document.getElementById('earnersMarquee').textContent = buildEarnerString();
-
-/* -------------------------
-  Reviews: generate many dummy cards but not DOM-bomb
-  We'll create ~200 unique cards, duplicate to create longer track feel.
---------------------------*/
-const sampleNames = ["Rahul","Priya","Aman","Meena","Rohan","Simran","Anjali","Vikram","Neha","Ritesh","Karan","Nisha","Pooja","Aditi","Kunal","Ritika","Asha","Mona","Rekha","Sahil","Aditya","Rakesh","Anita","Rhea","Gaurav","Sana","Tarun","Isha","Yash","Kriti"];
-const sampleTexts = [
-  "Amazing service! Highly recommended.",
-  "Really helped me a lot. Great content.",
-  "Good value for money and quick support.",
-  "Loved the guidance and timely updates.",
-  "Great experience! Will subscribe again."
-];
-function randInt(max){return Math.floor(Math.random()*max);}
-function genDummyReview(i){
-  const name = sampleNames[i % sampleNames.length] + (Math.random()<0.12 ? ' ' + (Math.floor(Math.random()*90)+10) : '');
-  const stars = (Math.random()*1.3 + 3.2).toFixed(1); // around 3.2-4.5
-  const avatar = 'https://i.pravatar.cc/150?img=' + ((i%70)+1);
-  const text = sampleTexts[i % sampleTexts.length];
-  return { id: 'd'+i, name, stars: parseFloat(stars), avatar, text };
-}
-// load or create reviews
-let reviews = JSON.parse(localStorage.getItem(LS_REVS) || 'null');
-if(!reviews){
-  const arr = [];
-  const N = 200;
-  for(let i=0;i<N;i++) arr.push(genDummyReview(i));
-  // store but we pretend count 10000+
-  localStorage.setItem(LS_REVS, JSON.stringify(arr));
-  reviews = arr;
-}
-
-const carouselTrack = document.getElementById('carouselTrack');
-
-function createCard(review){
-  const el = document.createElement('div'); el.className='review-card';
-  const avatarWrap = document.createElement('div'); avatarWrap.className='avatar';
-  const img = document.createElement('img'); img.src = review.avatar; img.alt = review.name;
-  avatarWrap.appendChild(img);
-  el.appendChild(avatarWrap);
-  const name = document.createElement('div'); name.className='review-name'; name.textContent = review.name;
-  el.appendChild(name);
-  const stars = document.createElement('div'); stars.className='review-stars';
-  const starCount = Math.round(review.stars);
-  stars.textContent = '★'.repeat(starCount) + ' ('+review.stars.toFixed(1)+')';
-  el.appendChild(stars);
-  const text = document.createElement('div'); text.className='review-text'; text.textContent = review.text;
-  el.appendChild(text);
-  return el;
-}
-
-function renderCarousel(){
-  carouselTrack.innerHTML = '';
-  // to create long track, duplicate reviews multiple times
-  const duplicate = 6; // 200 * 6 = 1200 cards (good balance)
-  for(let k=0;k<duplicate;k++){
-    for(let i=0;i<reviews.length;i++){
-      const card = createCard(reviews[i]);
-      carouselTrack.appendChild(card);
+  <script>
+    // ====== Utility & Demo persistence ======
+    const storageKey = 'holatube_demo_data_v1';
+    function loadState(){
+      const raw = localStorage.getItem(storageKey);
+      return raw ? JSON.parse(raw) : {wallet:0,tx:[],subs:null,aff:{},withdraws:[]};
     }
-  }
-}
-renderCarousel();
+    function saveState(state){ localStorage.setItem(storageKey, JSON.stringify(state)); }
 
-/* -------------------------
-  Auto-scroll carousel
---------------------------*/
-let trackPos = 0;
-let autoId = null;
-function startAutoScroll(){
-  stopAutoScroll();
-  const track = carouselTrack;
-  const totalWidth = track.scrollWidth;
-  autoId = setInterval(()=>{
-    trackPos += 1; // px
-    if(trackPos >= totalWidth/2) trackPos = 0; // loop (we duplicated)
-    track.style.transform = `translateX(${-trackPos}px)`;
-  }, 16); // ~60fps
-}
-function stopAutoScroll(){ if(autoId) clearInterval(autoId); autoId = null; }
-startAutoScroll();
-carouselTrack.addEventListener('mouseenter', stopAutoScroll);
-carouselTrack.addEventListener('mouseleave', startAutoScroll);
+    let state = loadState();
+    document.getElementById('yr').innerText = new Date().getFullYear();
+    updateUI();
 
-/* -------------------------
-  Review modal behavior
---------------------------*/
-const reviewModalOverlay = document.getElementById('reviewModalOverlay');
-document.getElementById('openReview').addEventListener('click', ()=> reviewModalOverlay.style.display = 'flex');
-document.getElementById('cancelReviewBtn').addEventListener('click', ()=> reviewModalOverlay.style.display = 'none');
+    // ====== SUBSCRIPTION DEMO ======
+    function doSubscribe(){
+      const planEl = document.getElementById('planSelect');
+      const price = parseInt(planEl.value,10);
+      const tier = planEl.options[planEl.selectedIndex].dataset.tier || 'basic';
+      // platform cut
+      const platformCut = (tier==='premium') ? 0.25 : 0.30;
+      // For demo: credit user's wallet with price - platformCut*price (simulate affiliate credited)
+      const credit = Math.round(price * (1 - platformCut));
+      state.wallet += credit;
+      state.tx.push({type:'credit',amount:credit,desc:`Subscribed ${tier} (demo) — credited ₹${credit}`,time:Date.now()});
+      state.subs = {tier,price,validTill: Date.now() + 30*24*3600*1000};
+      saveState(state);
+      updateUI();
+      alert(`Subscribed to ${tier} plan. ₹${credit} credited to your wallet (demo).`);
+    }
 
-document.getElementById('submitReviewBtn').addEventListener('click', ()=>{
-  const name = document.getElementById('r_name').value.trim() || 'Anonymous';
-  const stars = parseInt(document.getElementById('r_stars').value);
-  const text = document.getElementById('r_text').value.trim() || 'Good service.';
-  const photoFile = document.getElementById('r_photo').files[0];
-  const id = 'u' + Date.now();
-  function pushReview(avatar){
-    const obj = { id, name, stars, avatar, text };
-    // prepend in storage and re-render first chunk
-    reviews.unshift(obj);
-    if(reviews.length > 500) reviews.pop(); // cap for perf
-    localStorage.setItem(LS_REVS, JSON.stringify(reviews));
-    // add card to front of track visually
-    const card = createCard(obj);
-    carouselTrack.prepend(card);
-    // update avg rating label (we keep static 3.7 but we can recompute)
-    reviewModalOverlay.style.display = 'none';
-    alert('Thanks — your review was added!');
-  }
-  if(photoFile){
-    const reader = new FileReader();
-    reader.onload = (e)=> pushReview(e.target.result);
-    reader.readAsDataURL(photoFile);
-  } else {
-    pushReview('https://i.ibb.co/dBLbrRV/user.png');
-  }
-});
+    // ====== AFFILIATE ======
+    function generateAffiliate(){
+      const name = document.getElementById('affName').value.trim() || 'guest';
+      const comm = parseInt(document.getElementById('commissionSelect').value,10);
+      const ref = `${name}-${Math.random().toString(36).slice(2,8)}`;
+      const link = `${location.origin}${location.pathname}?ref=${encodeURIComponent(ref)}`;
+      state.aff[ref] = {owner:name,commission:comm,clicks:0,sales:0};
+      saveState(state);
+      document.getElementById('affResult').innerHTML = `<b>Link:</b> <a href="${link}" target="_blank">${link}</a> <div class="small muted">Ref code: ${ref} — commission: ${comm}%</div>`;
+    }
+    function copyAffiliateLink(){
+      const el = document.querySelector('#affResult a');
+      if(!el){ alert('Generate link first'); return; }
+      navigator.clipboard.writeText(el.href).then(()=>alert('Copied link to clipboard'));
+    }
+    function simulateSale(){
+      // take any ref from state.aff, if none create one
+      const keys = Object.keys(state.aff);
+      if(keys.length===0){ alert('Generate an affiliate first (enter name and click Generate Link)'); return; }
+      const ref = keys[Math.floor(Math.random()*keys.length)];
+      const info = state.aff[ref];
+      // simulate sale price random
+      const amount = Math.floor((Math.random()*900)+100); // ₹100-1000
+      info.sales += 1;
+      info.revenue = (info.revenue||0) + amount;
+      // affiliate receives commission percent
+      const affiliateShare = Math.round(amount * (info.commission/100));
+      state.wallet += affiliateShare;
+      state.tx.push({type:'credit',amount:affiliateShare,desc:`Affiliate sale credited (ref ${ref}) ₹${affiliateShare}`,time:Date.now()});
+      saveState(state);
+      updateUI();
+      alert(`Simulated sale ₹${amount}. Affiliate ${info.owner} earned ₹${affiliateShare} (demo).`);
+    }
 
-/* -------------------------
-  Affiliate generator logic (subscription gating)
-  - For demo: subscription flag stored in localStorage per user
---------------------------*/
-let currentUser = JSON.parse(localStorage.getItem('apj_user') || 'null'); // demo user profile
-// For the demo, if no user, user is "guest" (no subscription)
-if(!currentUser){
-  currentUser = { id: null, email: null, subscribed:false, tier:null }; // tier: 'basic','standard','plus'
-  localStorage.setItem('apj_user', JSON.stringify(currentUser));
-}
+    // ====== WITHDRAW ======
+    function requestWithdraw(){
+      const amt = parseInt(document.getElementById('withdrawAmt').value,10);
+      if(!amt || amt < 100){ alert('Enter amount. Minimum ₹100'); return; }
+      if(amt > state.wallet){ alert('Insufficient balance'); return; }
+      // create withdraw record (pending)
+      const id = 'wd_'+Math.random().toString(36).slice(2,9);
+      const rec = {id,amount:amt,mode:document.getElementById('withdrawMode').value,status:'pending',time:Date.now()};
+      state.withdraws.push(rec);
+      saveState(state);
+      updateUI();
+      alert('Withdraw request submitted (demo). Admin must approve in production.');
+    }
 
-function requireSubscriptionMessage(){
-  alert('Please sign up and purchase subscription (₹299 or ₹999) to generate affiliate links.');
-}
+    // Admin approve simulate (simple UI: approve oldest)
+    function adminApproveNext(){
+      const pend = state.withdraws.find(w=>w.status==='pending');
+      if(!pend){ alert('No pending withdraws'); return; }
+      pend.status = 'approved';
+      // deduct
+      state.wallet -= pend.amount;
+      state.tx.push({type:'debit',amount:pend.amount,desc:`Withdraw approved (demo) id:${pend.id}`,time:Date.now()});
+      saveState(state);
+      updateUI();
+      alert('Withdraw approved (demo).');
+    }
 
-// generate link handler
-document.getElementById('generateBtn').addEventListener('click', ()=>{
-  const url = document.getElementById('productUrl').value.trim();
-  const pct = parseFloat(document.getElementById('commissionSelect').value);
-  if(!url){ alert('Paste a product link first'); return; }
-  // check subscription
-  if(!currentUser.subscribed || (currentUser.tier==='basic')){
-    requireSubscriptionMessage(); return;
-  }
-  // generate fake affiliate link
-  const base = url.split('?')[0];
-  const aff = `${base}?ref=alpha_${(currentUser.id||'guest')}&comm=${pct}&uid=${Math.floor(Math.random()*90000)+10000}`;
-  const display = `Affiliate Link (copy/share): ${aff}`;
-  document.getElementById('affiliateResult').innerHTML = `<div style="color:#0b6b3a;font-weight:800">${display}</div>`;
-  // store in localStorage
-  const arr = JSON.parse(localStorage.getItem(LS_AFF) || '[]');
-  arr.unshift({ id:'aff'+Date.now(), url:base, link:aff, pct, created:new Date().toISOString() });
-  localStorage.setItem(LS_AFF, JSON.stringify(arr));
-});
+    // ====== TRANSACTIONS & UI ======
+    function updateUI(){
+      document.getElementById('walletBalance').innerText = state.wallet || 0;
+      document.getElementById('subStatus').innerText = state.subs ? `${state.subs.tier} (valid till ${new Date(state.subs.validTill).toLocaleDateString()})` : 'Not Subscribed';
+      // tx list
+      const txDiv = document.getElementById('txList');
+      if(state.tx.length===0) txDiv.innerHTML = '<div class="small muted">No transactions yet.</div>';
+      else txDiv.innerHTML = state.tx.slice().reverse().map(t=>`<div style="margin-bottom:6px"><b>${t.type==='credit'?'+':'-'} ₹${t.amount}</b> <div class="small muted">${t.desc} • ${new Date(t.time).toLocaleString()}</div></div>`).join('');
+      // aff stats
+      const affStats = Object.keys(state.aff).length ? Object.keys(state.aff).map(k=>{ const a = state.aff[k]; return `${a.owner}: ${a.sales||0} sales, ₹${a.revenue||0}`}).join('<br>') : 'No affiliate data yet.';
+      document.getElementById('affStats').innerHTML = affStats;
+      // tx modal list (for quick view)
+      // leaderboard update can be simulated by pushing demo values
+      renderLeaderboard();
+    }
+    function showTransactions(){
+      alert((state.tx.length? state.tx.map(t=>`${t.desc} — ₹${t.amount}`).join('\\n') : 'No transactions'));
+    }
 
-/* -------------------------
-  Simulated Login / Subscribe buttons
---------------------------*/
-document.getElementById('loginBtn').addEventListener('click', ()=>{
-  // quick pseudo-login prompt for demo
-  const email = prompt('Enter your email to sign up / login (demo):');
-  if(!email) return;
-  currentUser = { id: 'u'+Date.now(), email, subscribed:false, tier:'free' };
-  localStorage.setItem('apj_user', JSON.stringify(currentUser));
-  alert('Signed in as ' + email + '. Now please subscribe to unlock features.');
-});
+    // ====== BOT logic (simple keyword-based + actions) ======
+    function toggleBotWindow(){ const w = document.getElementById('botWindow'); w.style.display = (w.style.display==='flex') ? 'none' : 'flex'; }
+    function sendBot(){
+      const txtEl = document.getElementById('botText');
+      const val = txtEl.value.trim();
+      if(!val) return;
+      appendBot('user', val);
+      // simple NLP
+      const q = val.toLowerCase();
+      let resp = "I'm here to help. Try: 'subscribe', 'generate affiliate', 'simulate sale', 'wallet', 'withdraw', 'help'.";
+      if(q.includes('subscribe')) resp = "To subscribe: choose a plan in Subscription section and click 'Subscribe Now'. I can also simulate a subscription for you if you want — type 'simulate subscribe'.";
+      else if(q.includes('simulate subscribe')){ resp = "Simulating subscription now..."; doSubscribe(); }
+      else if(q.includes('affiliate') || q.includes('generate')) resp = "To create an affiliate link: enter your name in Affiliate box and click 'Generate Link'. Or try 'generate link <name>'.";
+      else if(q.startsWith('generate link ')){
+        const name = val.slice(14).trim(); document.getElementById('affName').value = name; generateAffiliate(); resp = `Generated link for ${name}. Check Affiliate section.`; 
+      } else if(q.includes('simulate sale')){ simulateSale(); resp = "Simulated a sale and credited affiliate wallet (demo)."; }
+      else if(q.includes('wallet')) resp = `Your wallet balance is ₹${state.wallet}. View Transactions in Dashboard.`;
+      else if(q.includes('withdraw')) resp = "To request withdraw: enter amount in Withdraw box and click 'Request Withdraw'. Min ₹100.";
+      else if(q.includes('help')) resp = "I can guide you through Subscription, Affiliate link generation, Wallet, Withdraw and Dashboard features. Ask or click action buttons.";
+      // quick-action buttons from bot (rendered as message suggestions)
+      appendBot('bot', resp, true);
+      txtEl.value = '';
+    }
+    function appendBot(kind, text, withActions=false){
+      const body = document.getElementById('botBody');
+      const div = document.createElement('div');
+      div.className = 'msg ' + (kind==='user' ? 'user' : 'bot');
+      div.innerHTML = text;
+      body.appendChild(div);
+      if(withActions && kind==='bot'){
+        const actions = document.createElement('div');
+        actions.style.marginTop='6px';
+        actions.innerHTML = `
+          <button class="primary-btn" style="padding:6px 10px;margin-right:6px" onclick="doSubscribe();appendBot('bot','Subscription simulated via bot (demo).',false)">Simulate Subscribe</button>
+          <button class="primary-btn" style="background:#10b981;padding:6px 10px;margin-right:6px" onclick="generateAffiliate();appendBot('bot','Affiliate link created (demo).',false)">Generate Link</button>
+          <button class="primary-btn" style="background:#6b7280;padding:6px 10px" onclick="simulateSale();appendBot('bot','Simulated sale credited (demo).',false)">Simulate Sale</button>
+        `;
+        body.appendChild(actions);
+      }
+      body.scrollTop = body.scrollHeight;
+    }
 
-document.getElementById('subscribeNowBtn').addEventListener('click', ()=>{
-  // show options
-  const choice = prompt('Choose plan: 1=₹99, 2=₹299, 3=₹999  (enter 1/2/3)');
-  if(!choice) return;
-  if(choice==='1'){ window.open(instamojo.basic, '_blank'); attemptActivate('basic'); }
-  else if(choice==='2'){ window.open(instamojo.standard, '_blank'); attemptActivate('standard'); }
-  else if(choice==='3'){ window.open(instamojo.plus, '_blank'); attemptActivate('plus'); }
-});
+    // ====== LEADERBOARD (demo update) ======
+    function renderLeaderboard(){
+      const tbody = document.getElementById('leaderboardBody');
+      // keep default items, but add demo user on top if earnings > 0
+      let rows = [
+        {rank:1,name:'Creator A',earn:5000},
+        {rank:2,name:'Creator B',earn:3500},
+        {rank:3,name:'Creator C',earn:2000}
+      ];
+      if(state.wallet > 0){
+        rows.unshift({rank:0,name:'You (demo)',earn:state.wallet});
+      }
+      tbody.innerHTML = rows.map((r,i)=>`<tr><td>${i+1}</td><td>${r.name}</td><td>₹${r.earn}</td></tr>`).join('');
+    }
 
-function attemptActivate(tier){
-  // For demo: ask user to confirm they've paid (since no backend)
-  const ok = confirm('After completing payment on Instamojo, click OK to activate subscription (demo).');
-  if(!ok) return;
-  // activate
-  currentUser.subscribed = true;
-  currentUser.tier = tier;
-  localStorage.setItem('apj_user', JSON.stringify(currentUser));
-  alert('Subscription activated: ' + tier + ' (demo). You can now generate affiliate links.');
-}
+    // ====== MODAL helpers for T&C & Privacy ======
+    function openTC(){
+      const html = `<h3>Terms & Conditions — HolaTube (Demo)</h3>
+      <p class="small muted">Last updated: ${new Date().toLocaleDateString()}</p>
+      <ol>
+        <li>Demo mode: All demo balances, simulated transactions are for testing only. Do not treat demo balances as real cash.</li>
+        <li>Real payments require backend integration and third-party payment processors (Instamojo, UPI, cards).</li>
+        <li>Withdrawals in production will require admin approval, KYC checks (if applicable) and OTP verification.</li>
+        <li>Users must not attempt fraud. Any suspicious activity may result in account suspension and investigation.</li>
+        <li>Platform has right to modify commission structure with prior notification.</li>
+      </ol>`;
+      showModal(html);
+    }
+    function openPrivacy(){
+      const html = `<h3>Privacy Policy — HolaTube (Demo)</h3>
+      <p class="small muted">This is a demo privacy summary. For production, use a full legal privacy policy and implement secure storage, encryption, and user data deletion flows.</p>
+      <h4>Data we collect</h4>
+      <ul><li>Contact info (email/usernames) — in demo we store locally only</li><li>Transaction metadata & affiliate stats</li></ul>
+      <h4>Your rights</h4>
+      <ol><li>Request data export</li><li>Request account deletion</li></ol>`;
+      showModal(html);
+    }
+    function showModal(html){
+      const overlay = document.getElementById('modalOverlay');
+      const content = document.getElementById('modalContent');
+      content.innerHTML = html;
+      overlay.style.display = 'flex';
+    }
+    function closeModal(){ document.getElementById('modalOverlay').style.display = 'none'; }
 
-/* -------------------------
-  Settings modal
---------------------------*/
-const settingsOverlay = document.getElementById('settingsOverlay');
-document.getElementById('settingsBtn').addEventListener('click', ()=> settingsOverlay.style.display='flex');
-document.getElementById('closeSettings').addEventListener('click', ()=> settingsOverlay.style.display='none');
-document.getElementById('saveSettings').addEventListener('click', ()=>{
-  const theme = document.getElementById('themeSel').value;
-  const lang = document.getElementById('langSel').value;
-  // theme application (simple)
-  if(theme==='dark'){ document.body.style.background='linear-gradient(180deg,#0b0711,#12061a)'; }
-  else if(theme==='white'){ document.body.style.background='linear-gradient(180deg,#fff,#fbf6ee)'; }
-  else { document.body.style.background='linear-gradient(180deg,#fff 0%, #fbf6ee 60%)'; }
-  settingsOverlay.style.display='none';
-  alert('Settings saved (demo).');
-});
+    // ====== Init ======
+    updateUI();
 
-/* -------------------------
-  Chat button (static helper)
---------------------------*/
-document.getElementById('chatBtn').addEventListener('click', ()=>{
-  const answer = prompt('Help — choose:\n1. How to generate affiliate link\n2. How to subscribe\n3. Withdraw earnings\nEnter 1/2/3');
-  if(answer==='1') alert('Sign up -> Subscribe (₹299/₹999) -> Paste product link -> Generate Link.');
-  else if(answer==='2') alert('Click Subscribe Now -> choose plan -> complete Instamojo payment -> confirm activation in site.');
-  else if(answer==='3') alert('Open Wallet (coming soon), create withdraw request with UPI/Bank details, admin pays manually.');
-});
+    // For demo admin approval action (keyboard shortcut: Ctrl+M open admin panel)
+    document.addEventListener('keydown', (e)=>{
+      if(e.ctrlKey && e.key.toLowerCase()==='m'){ 
+        const approve = confirm('Admin shortcut: Approve next pending withdraw? (Demo)'); 
+        if(approve) adminApproveNext();
+      }
+    });
 
-/* -------------------------
-  Auto-run small helpers: scroll ticker refresh + resize handling
---------------------------*/
-setInterval(()=> {
-  // refresh marquee content occasionally
-  document.getElementById('earnersMarquee').textContent = buildEarnerString();
-}, 18000);
-
-/* -------------------------
-  Accessibility & closing modals on ESC
---------------------------*/
-document.addEventListener('keydown', (e)=>{
-  if(e.key==='Escape'){
-    document.querySelectorAll('.modal-overlay').forEach(m=> m.style.display='none');
-  }
-});
-
-/* -------------------------
-  Pre-seed: If no affiliate arr, add some example aff links (demo)
---------------------------*/
-if(!localStorage.getItem(LS_AFF)){
-  const sample = [{id:'affdemo1',url:'https://flipkart.com/product1',link:'https://flipkart.com/product1?ref=alpha_demo&comm=5',pct:5,created:new Date().toISOString()}];
-  localStorage.setItem(LS_AFF, JSON.stringify(sample));
-}
-</script>
+    // Expose adminApproveNext for manual testing via console
+    window.adminApproveNext = adminApproveNext;
+  </script>
 </body>
 </html>
