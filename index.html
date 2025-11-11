@@ -1,557 +1,783 @@
 <!--
-  FILE: index.html
-  PURPOSE: HolaTube Launch Frontend (Single-file starter)
-  HOW TO USE:
-    1) Create GitHub repo, add this file as index.html
-    2) Deploy to Vercel/Netlify (auto-publish)
-    3) Replace TODO endpoints (AUTH, API, STORAGE, PAYMENTS)
-    4) Use this as main public site (connect backend for full features)
-
-  NOTES:
-    - This is a comprehensive frontend UI: homepage, signup/login modal,
-      affiliate generator, wallet, subscription checkout placeholders,
-      KYC uploader UI, Creator Hub, Admin link, HolaBot widget (UI only),
-      Creator Support Ticket demo, Policies page modal, Editor Studio placeholder.
-    - Sensitive admin/owner pages must be protected server-side (NOT via JS).
-    - See inline TODO comments for backend integration points.
+  index.html
+  HolaTube — YouTube-style frontend prototype (GitHub Pages ready)
+  - Theme: red + white (YouTube-like)
+  - SPA single-file with views: Home / Watch / Upload Dashboard / Wallet / KYC
+  - Local demo logic: localStorage-based users, videos, wallet, HolaCoins, KYC
+  - HolaBot: simple keyword-based assistant (placeholder for GPT integration)
+  - NOTE: This is a client-side demo. Do NOT use for real payments or secret keys.
 -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>HolaTube — Create · Earn · Grow</title>
-  <meta name="description" content="HolaTube — AI-powered creator ecosystem. Upload, monetize, affiliate, and grow." />
+  <title>HolaTube — Creator Platform Demo</title>
+  <meta name="description" content="HolaTube demo — YouTube style frontend with Wallet, HolaCoin, KYC, HolaBot, and Creator Dashboard. GitHub Pages ready." />
   <link rel="icon" href="https://i.ibb.co/HTmgqXLh/Picsart-25-11-04-05-36-14-228.png" />
   <style>
-    /* Minimal, clean UI — single-file styles */
+    /* ===== Base / Theme (YouTube-style red & white) ===== */
     :root{
-      --bg:#0f1724; --card:#0b1220; --muted:#9db0c6; --accent:#06b6d4; --accent2:#7c3aed;
-      --success:#10b981; --danger:#ef4444; --glass: rgba(255,255,255,0.04);
-      --maxw:1100px;
+      --bg: #ffffff;
+      --surface:#fafafa;
+      --muted:#6b7280;
+      --accent:#ff0000; /* YouTube-like red (HolaTube) */
+      --brand:#e53935;
+      --card:#ffffff;
+      --glass: rgba(0,0,0,0.04);
+      --success:#10b981;
+      --danger:#ef4444;
+      --maxw:1200px;
+      --shadow: 0 6px 24px rgba(2,6,23,0.06);
+      --font-sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     }
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:#e6f6ff;background:linear-gradient(180deg,#071025 0%, #04101a 100%)}
-    a{color:var(--accent)}
-    .wrap{max-width:var(--maxw);margin:20px auto;padding:18px}
-    header{display:flex;align-items:center;gap:12px}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:800;color:#02111a}
-    h1{margin:0;font-size:20px}
-    .lead{color:var(--muted);font-size:13px}
+    html,body{height:100%;margin:0;font-family:var(--font-sans);background:var(--surface);color:#111;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
 
-    nav{margin-left:auto;display:flex;gap:8px;align-items:center}
-    .btn{padding:8px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:700;background:transparent;color:#dff6ff}
-    .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#02111a}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid var(--glass);border-radius:12px;padding:14px;box-shadow:0 8px 40px rgba(2,8,18,0.6)}
-    .grid{display:grid;grid-template-columns:1fr 360px;gap:16px;margin-top:18px}
-    .hero{display:flex;gap:16px;align-items:center}
-    .hero-left{flex:1}
-    .stats{display:flex;gap:8px;margin-top:12px}
-    .stat{padding:10px;border-radius:10px;background:rgba(255,255,255,0.02);font-size:13px;color:var(--muted)}
+    /* ===== Layout ===== */
+    .app{max-width:var(--maxw);margin:18px auto;padding:12px}
+    header.topbar{display:flex;align-items:center;gap:12px;padding:10px 12px;background:linear-gradient(90deg,#fff,#fff);position:sticky;top:0;z-index:50;border-radius:10px;box-shadow:var(--shadow)}
+    .brand{display:flex;align-items:center;gap:10px}
+    .logo{width:44px;height:28px;background:var(--brand);border-radius:4px;color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center}
+    .search{flex:1;display:flex;align-items:center;gap:8px}
+    .search input{flex:1;padding:10px 12px;border-radius:6px;border:1px solid #e6e6e6}
+    .btn{padding:8px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
+    .btn-primary{background:var(--brand);color:#fff}
+    .btn-ghost{background:transparent;border:1px solid #eee}
 
-    .plans{display:flex;gap:12px;margin-top:18px}
-    .plan{flex:1;padding:12px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.015),transparent);border:1px solid rgba(255,255,255,0.02)}
-    .badge{background:var(--accent);color:#02111a;padding:6px 10px;border-radius:999px;font-weight:800;display:inline-block}
+    .layout{display:grid;grid-template-columns:240px 1fr 360px;gap:16px;margin-top:14px}
+    aside.sidebar{background:var(--card);padding:12px;border-radius:10px;border:1px solid var(--glass);height:calc(100vh - 140px);overflow:auto;position:sticky;top:86px}
+    main.content{background:transparent}
+    .rightpane{background:var(--card);padding:12px;border-radius:10px;border:1px solid var(--glass);height:calc(100vh - 140px);overflow:auto;position:sticky;top:86px}
 
-    input,select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#dff6ff;outline:none}
-    label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
-    small{color:var(--muted)}
+    /* Sidebar items */
+    .menu-item{display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;color:#111;margin-bottom:6px;cursor:pointer}
+    .menu-item:hover{background:#f3f3f3}
+    .menu-item.active{background:linear-gradient(90deg,rgba(229,57,53,0.08),transparent);border-left:3px solid var(--brand);padding-left:9px}
 
-    .list{display:flex;flex-direction:column;gap:8px}
-    footer{margin-top:22px;color:var(--muted);text-align:center;padding-bottom:24px}
+    /* Feed grid */
+    .feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+    .video-card{background:var(--card);border-radius:8px;overflow:hidden;border:1px solid #eee;box-shadow:var(--shadow)}
+    .thumbnail{background:#000;position:relative;height:150px}
+    .duration{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,0.7);padding:4px 6px;border-radius:4px;color:#fff;font-weight:700;font-size:12px}
+    .video-meta{padding:10px}
+    .channel{display:flex;gap:8px;align-items:flex-start}
+    .avatar{width:40px;height:40px;border-radius:50%;background:#ddd;flex-shrink:0}
+    .meta-text{flex:1}
+    .title{font-weight:700;margin-bottom:6px}
+    .subtle{color:var(--muted);font-size:13px}
 
-    /* Creator hub */
-    .creator-grid{display:grid;grid-template-columns:1fr 300px;gap:12px}
-    .review-list{display:flex;flex-direction:column;gap:8px;max-height:220px;overflow:auto;padding-right:6px}
+    /* Watch view */
+    .watch-player{background:var(--card);padding:12px;border-radius:8px;border:1px solid #eee}
+    video{width:100%;height:auto;border-radius:6px;background:#000}
+    .watch-controls{display:flex;gap:10px;align-items:center;margin-top:8px}
 
-    /* HolaBot widget */
-    #hbBtn{position:fixed;right:18px;bottom:18px;width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#02111a;font-size:26px;cursor:pointer;z-index:9998;box-shadow:0 8px 30px rgba(2,8,18,0.6)}
-    #hbModal{display:none;position:fixed;right:18px;bottom:94px;width:420px;max-width:calc(100% - 32px);border-radius:12px;background:#071427;border:1px solid rgba(255,255,255,0.04);box-shadow:0 20px 80px rgba(2,8,18,0.9);z-index:9999}
+    /* Dashboard cards */
+    .card{background:var(--card);padding:12px;border-radius:8px;border:1px solid #eee;margin-bottom:12px}
+    label{display:block;font-weight:700;margin-bottom:6px}
+    input,select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #e6e6e6;margin-bottom:8px}
 
-    /* responsive */
-    @media (max-width:980px){
-      .grid{grid-template-columns:1fr}
-      .creator-grid{grid-template-columns:1fr}
-      .plans{flex-direction:column}
-    }
-    /* small helpers */
-    .muted{color:var(--muted)}
-    .flex{display:flex;gap:8px;align-items:center}
-    .hr{height:1px;background:rgba(255,255,255,0.02);margin:12px 0;border-radius:6px}
-    .link{color:var(--accent);cursor:pointer}
-    .pill{padding:6px 8px;border-radius:999px;background:rgba(255,255,255,0.02);color:var(--muted);font-size:13px}
-    .danger{color:var(--danger)}
-    .success{color:var(--success)}
+    /* Chat/HolaBot widget */
+    .bot-btn{position:fixed;right:18px;bottom:18px;background:linear-gradient(135deg,var(--brand),#ff6b6b);color:#fff;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;cursor:pointer;z-index:999}
+    .bot-window{position:fixed;right:18px;bottom:92px;width:360px;max-width:calc(100% - 36px);background:var(--card);border-radius:12px;box-shadow:0 20px 60px rgba(2,6,23,0.2);overflow:hidden;display:none;flex-direction:column;z-index:9999}
+    .bot-header{background:linear-gradient(90deg,var(--brand),#ff6b6b);color:white;padding:10px 12px;font-weight:800;display:flex;justify-content:space-between;align-items:center}
+    .bot-body{padding:10px;height:260px;overflow:auto}
+    .bot-input{display:flex;border-top:1px solid #f0f0f0}
+    .bot-input input{flex:1;padding:10px;border:none}
+    .bot-input button{background:var(--brand);color:white;border:none;padding:10px 12px;cursor:pointer}
+
+    .msg{margin:8px 0;padding:10px;border-radius:10px;max-width:85%}
+    .msg.user{background:#ffecec;margin-left:auto}
+    .msg.bot{background:#f3f4f6}
+
+    /* Small responsive */
+    @media (max-width:1100px){.layout{grid-template-columns:1fr;}.rightpane{position:relative;height:auto}.sidebar{position:relative;height:auto}.bot-window{right:12px;left:12px;width:auto}}
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="brand">
+  <div class="app" id="app">
+    <!-- TOPBAR -->
+    <header class="topbar" role="banner">
+      <div class="brand" onclick="navigateTo('home')" style="cursor:pointer">
         <div class="logo">HT</div>
         <div>
-          <h1>HolaTube — Create · Earn · Grow</h1>
-          <div class="lead">AI-powered creator ecosystem • Owner: Prakash C. Sharma</div>
+          <div style="font-weight:900">HolaTube</div>
+          <div style="font-size:12px;color:var(--muted)">Create • Earn • Grow</div>
         </div>
       </div>
 
-      <nav>
-        <a class="link" onclick="openPolicies()">Policies</a>
-        <a class="link" onclick="openCreatorHub()">Creator Hub</a>
-        <button class="btn btn-primary" onclick="openAuthModal()">Sign Up / Login</button>
-      </nav>
+      <div class="search" role="search">
+        <input id="searchInput" placeholder="Search videos, creators, tags..." onkeydown="if(event.key==='Enter') doSearch()" />
+        <button class="btn btn-ghost" onclick="doSearch()">Search</button>
+      </div>
+
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn" onclick="navigateTo('upload')">Upload</button>
+        <button class="btn btn-primary" id="loginBtn" onclick="openLogin()">Login / Sign up</button>
+      </div>
     </header>
 
-    <!-- MAIN GRID -->
-    <div class="grid">
-      <!-- LEFT: Main content -->
-      <main>
-        <section class="card hero">
-          <div class="hero-left">
-            <h2 style="margin:0;color:var(--accent)">HolaTube — Build your creator business</h2>
-            <p class="muted">Upload videos, generate affiliate HolaLinks, earn via wallet, use HolaBot AI, and expand globally.</p>
-
-            <div class="stats">
-              <div class="stat">💸 <b id="stat-creators">5000+</b> Creators</div>
-              <div class="stat">🎥 <b id="stat-uploads">120k+</b> Uploads</div>
-              <div class="stat">🌍 <b id="stat-countries">25</b> Countries</div>
-            </div>
-
-            <div class="plans" aria-hidden="false">
-              <div class="plan">
-                <div class="badge">BASIC</div>
-                <h3 style="margin:8px 0">₹99 / month</h3>
-                <small class="muted">Basic tools • 50% platform cut</small>
-                <div style="margin-top:8px"><button class="btn" onclick="startCheckout('basic')">Buy ₹99</button></div>
-              </div>
-              <div class="plan">
-                <div class="badge">PREMIUM</div>
-                <h3 style="margin:8px 0">₹950 / month</h3>
-                <small class="muted">Premium tools • lower platform cut</small>
-                <div style="margin-top:8px"><button class="btn" onclick="startCheckout('premium')">Buy ₹950</button></div>
-              </div>
-              <div class="plan">
-                <div class="badge">ELITE</div>
-                <h3 style="margin:8px 0">₹9500 / month</h3>
-                <small class="muted">Elite access • 45% platform cut</small>
-                <div style="margin-top:8px"><button class="btn btn-primary" onclick="startCheckout('elite')">Buy ₹9,500</button></div>
-              </div>
-            </div>
-          </div>
-
-          <div style="width:320px">
-            <div style="display:flex;flex-direction:column;gap:8px">
-              <div class="card">
-                <b>Wallet</b>
-                <div style="font-weight:900;font-size:20px;margin-top:8px" id="wallet-balance">₹0.00</div>
-                <small class="muted">Withdrawals: admin approved (demo)</small>
-                <div style="margin-top:8px" class="flex">
-                  <button class="btn" onclick="requestWithdraw()">Request Withdraw</button>
-                  <button class="btn" onclick="openWalletTopUp()">Add Funds</button>
-                </div>
-              </div>
-
-              <div class="card">
-                <b>Affiliate Link Generator</b>
-                <small class="muted">Paste product link → choose commission → Generate HolaLink</small>
-                <div style="margin-top:8px">
-                  <input id="input-url" placeholder="Paste product URL (Amazon/Flipkart/other)"/>
-                  <select id="input-comm" style="margin-top:8px">
-                    <option value="5">5%</option><option value="10">10%</option><option value="15">15%</option><option value="20">20%</option><option value="50">50%</option>
-                  </select>
-                  <div style="margin-top:8px"><button class="btn btn-primary" onclick="generateAff()">Generate HolaLink</button></div>
-                  <div id="aff-result" style="margin-top:10px;color:var(--muted)">No links yet.</div>
-                </div>
-              </div>
-
-              <div class="card" style="text-align:center;">
-                <small class="muted">Need help? Click HolaBot</small><br>
-                <button class="btn btn-primary" style="margin-top:8px" onclick="toggleHB()">Open HolaBot</button>
-              </div>
-            </div>
-          </div>
-        </section>
-
+    <!-- LAYOUT -->
+    <div class="layout" role="main">
+      <!-- LEFT SIDEBAR -->
+      <aside class="sidebar" aria-label="Sidebar">
+        <div style="font-weight:800;margin-bottom:8px">Main</div>
+        <div class="menu-item active" data-view="home" onclick="navigateTo('home')">🏠 Home</div>
+        <div class="menu-item" data-view="trending" onclick="navigateTo('trending')">🔥 Trending</div>
+        <div class="menu-item" data-view="subscriptions" onclick="navigateTo('subscriptions')">📺 Subscriptions</div>
+        <div style="height:8px"></div>
+        <div style="font-weight:800;margin-bottom:8px">Monetization</div>
+        <div class="menu-item" data-view="wallet" onclick="navigateTo('wallet')">💰 Wallet & HolaCoins</div>
+        <div class="menu-item" data-view="creator" onclick="navigateTo('creator')">🧑‍💻 Creator Studio</div>
+        <div class="menu-item" data-view="aitools" onclick="navigateTo('aitools')">🤖 AI Tools</div>
+        <div style="height:8px"></div>
+        <div style="font-weight:800;margin-bottom:8px">Account</div>
+        <div class="menu-item" data-view="kyc" onclick="navigateTo('kyc')">🪪 KYC & Verification</div>
+        <div class="menu-item" onclick="openSettings()">⚙️ Settings</div>
         <div style="height:12px"></div>
+        <div style="font-size:13px;color:var(--muted)">Tip: This is a front-end demo. Connect backend for production (Firebase/Node.js).</div>
+      </aside>
 
-        <section class="card">
-          <h3 style="margin:0">Quick Start Checklist</h3>
-          <div class="hr"></div>
-          <ol style="color:var(--muted);margin:0 0 0 18px;padding:0 6px 8px 6px">
-            <li>Deploy this static site to Vercel / Netlify (GitHub repo).</li>
-            <li>Connect backend: Auth, DB (Firestore/Mongo), Storage (S3/Firebase).</li>
-            <li>Enable payments (Razorpay/Stripe sandbox) and webhooks.</li>
-            <li>Implement KYC microservice & secure storage (encrypted).</li>
-            <li>Configure HolaBot backend (GPT / local model + moderation). </li>
-          </ol>
-          <div class="hr"></div>
-          <small class="muted">Tip: Start with Firebase for auth + storage to move fast.</small>
-        </section>
+      <!-- MAIN CONTENT -->
+      <main class="content" id="mainContent">
+        <!-- HOME VIEW -->
+        <section id="view-home">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin:6px 0">
+            <h2 style="margin:0">Featured</h2>
+            <div style="color:var(--muted)">Welcome — demo mode</div>
+          </div>
 
-        <section class="card" style="margin-top:12px">
-          <h3 style="margin:0">Creator Support & Tickets</h3>
-          <div class="hr"></div>
-          <p class="muted">Submit appeals, monetization requests, or content reviews here.</p>
-          <form onsubmit="createTicket(event)" style="display:flex;flex-direction:column;gap:8px">
-            <input id="tname" placeholder="Your name (creator)"/>
-            <input id="temail" placeholder="Email associated with account"/>
-            <select id="ttype"><option>Appeal</option><option>Monetization</option><option>Content Review</option><option>Payment</option></select>
-            <textarea id="tmsg" rows="4" placeholder="Describe your issue (include links/timestamps)"></textarea>
-            <div class="flex">
-              <button class="btn btn-primary" type="submit">Create Ticket</button>
-              <small class="muted">Processing time: 24–72 hrs (priority for Top creators)</small>
+          <div class="card" style="display:flex;gap:12px;align-items:center">
+            <div style="flex:1">
+              <b>HolaTube Demo</b>
+              <div style="color:var(--muted);margin-top:6px">Build your creator profile, upload demo videos, simulate earnings, and test HolaBot.</div>
+              <div style="margin-top:10px;display:flex;gap:8px">
+                <button class="btn btn-primary" onclick="navigateTo('upload')">Upload Demo Video</button>
+                <button class="btn" onclick="navigateTo('creator')">Open Creator Studio</button>
+              </div>
             </div>
-          </form>
+            <img src="https://i.ibb.co/HTmgqXLh/Picsart-25-11-04-05-36-14-228.png" alt="HolaTube" style="width:100px;border-radius:8px">
+          </div>
+
+          <h3 style="margin-top:12px">Recommended</h3>
+          <div id="feed" class="feed" aria-live="polite"></div>
         </section>
 
-        <section class="card" style="margin-top:12px">
-          <h3 style="margin:0">Editor Studio (Placeholder)</h3>
-          <div class="hr"></div>
-          <p class="muted">HolaTube Editor Studio (web-based) — AI-assisted editor, watermark for non-subscribers, export & templates.</p>
-          <div style="display:flex;gap:8px;margin-top:8px">
-            <button class="btn" onclick="openEditor()">Open Editor Studio</button>
-            <button class="btn" onclick="openEditorTemplates()">Templates</button>
+        <!-- WATCH VIEW -->
+        <section id="view-watch" style="display:none">
+          <div class="watch-player card">
+            <div id="watchVideoContainer">
+              <!-- Video element injected here -->
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+              <div>
+                <h3 id="watchTitle" style="margin:0">Video title</h3>
+                <div class="subtle" id="watchMeta">Channel • 0 views • 0 likes</div>
+              </div>
+              <div class="watch-controls">
+                <button class="btn" onclick="toggleLike()">👍 <span id="likeCount">0</span></button>
+                <button class="btn" onclick="toggleSubscribe()">Subscribe</button>
+                <button class="btn btn-primary" onclick="openWallet()">Tip HolaCoin</button>
+              </div>
+            </div>
+
+            <div style="margin-top:12px;display:flex;gap:12px">
+              <div style="flex:1">
+                <div class="card">
+                  <label>Comments</label>
+                  <div id="commentsList" style="max-height:160px;overflow:auto"></div>
+                  <div style="display:flex;gap:8px;margin-top:8px">
+                    <input id="commentInput" placeholder="Write a comment..." />
+                    <button class="btn btn-primary" onclick="postComment()">Post</button>
+                  </div>
+                </div>
+              </div>
+
+              <div style="width:320px">
+                <div class="card">
+                  <label>HolaBot — Suggestions</label>
+                  <div id="botSuggest">Ask HolaBot for tags, titles, or monetization tips. (Open chat widget)</div>
+                  <div style="margin-top:8px">
+                    <button class="btn" onclick="openBot()">Open HolaBot</button>
+                    <button class="btn" onclick="simulateEarn()">Simulate View Earning</button>
+                  </div>
+                </div>
+
+                <div class="card" style="margin-top:12px">
+                  <label>Up Next</label>
+                  <div id="upnextList"></div>
+                </div>
+              </div>
+            </div>
           </div>
-          <small class="muted">Editor requires backend rendering & cloud encoding — TODO integrate Runway/FFmpeg/Cloud render.</small>
         </section>
 
-        <section class="card" style="margin-top:12px">
-          <h3 style="margin:0">Admin / Owner (DO NOT expose publicly)</h3>
-          <div class="hr"></div>
-          <p class="muted">Owner-only actions: approve payouts, manage policies, view audit logs, emergency lockdown.</p>
-          <div class="flex" style="margin-top:8px">
-            <button class="btn danger" onclick="alert('Admin page: Protect server-side')">Open Admin (demo)</button>
+        <!-- UPLOAD / CREATOR VIEW -->
+        <section id="view-upload" style="display:none">
+          <div class="card">
+            <h3>Upload Video (Demo)</h3>
+            <div class="small" style="color:var(--muted)">Note: files are not uploaded to server in demo — metadata stored locally.</div>
+            <label>Title</label>
+            <input id="uploadTitle" placeholder="Video title" />
+            <label>Description</label>
+            <textarea id="uploadDesc" rows="4" placeholder="Describe your video"></textarea>
+            <label>Video file (demo preview only)</label>
+            <input id="uploadFile" type="file" accept="video/*" />
+            <label>Thumbnail (optional)</label>
+            <input id="uploadThumb" type="file" accept="image/*" />
+            <label>Tags (comma-separated)</label>
+            <input id="uploadTags" placeholder="tag1, tag2, etc." />
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <button class="btn btn-primary" onclick="doUpload()">Upload Demo</button>
+              <button class="btn" onclick="navigateTo('creator')">Open Creator Dashboard</button>
+            </div>
+          </div>
+
+          <div id="uploadPreviewArea"></div>
+        </section>
+
+        <!-- CREATOR DASHBOARD -->
+        <section id="view-creator" style="display:none">
+          <div class="card">
+            <h3>Creator Dashboard</h3>
+            <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+              <div class="card" style="min-width:180px">
+                <div class="small">HolaCoins Balance</div>
+                <div id="dashboardCoins" style="font-weight:900;font-size:20px">0 HC</div>
+                <div style="color:var(--muted);font-size:13px">Convert to INR or withdraw after verification</div>
+              </div>
+
+              <div class="card" style="min-width:180px">
+                <div class="small">Views (demo)</div>
+                <div id="dashboardViews" style="font-weight:900;font-size:20px">0</div>
+              </div>
+
+              <div class="card" style="min-width:220px">
+                <div class="small">KYC Status</div>
+                <div id="kycStatus" style="font-weight:700;color:var(--muted)">Not submitted</div>
+                <div style="margin-top:8px">
+                  <button class="btn" onclick="navigateTo('kyc')">Open KYC</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h4>Your Videos</h4>
+            <div id="creatorVideos"></div>
           </div>
         </section>
+
+        <!-- WALLET VIEW -->
+        <section id="view-wallet" style="display:none">
+          <div class="card">
+            <h3>Wallet & HolaCoins</h3>
+            <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+              <div class="card" style="min-width:220px">
+                <div class="small">Address / User</div>
+                <div id="walletUser" style="font-weight:900">Guest (demo)</div>
+              </div>
+              <div class="card" style="min-width:220px">
+                <div class="small">HolaCoins</div>
+                <div id="walletBalance" style="font-weight:900">0 HC</div>
+                <div class="small" style="color:var(--muted)">Exchange rate demo: 1 HC = ₹0.50</div>
+              </div>
+              <div style="flex:1">
+                <button class="btn btn-primary" onclick="requestWithdraw()">Request Withdraw</button>
+                <button class="btn" onclick="convertCoins()">Convert HolaCoins → INR</button>
+              </div>
+            </div>
+            <div style="margin-top:12px" class="small">Withdraw flow: In production, KYC + admin approval required. Demo simulates request only.</div>
+            <div id="withdrawsList" style="margin-top:12px"></div>
+          </div>
+        </section>
+
+        <!-- AI Tools -->
+        <section id="view-aitools" style="display:none">
+          <div class="card">
+            <h3>AI Tools (Demo)</h3>
+            <div class="small">Placeholders: Replace with GPT / ElevenLabs / Runway APIs in production.</div>
+            <label>Auto Title / Tag Generator</label>
+            <input id="aiPrompt" placeholder="Describe your video / niche" />
+            <button class="btn btn-primary" onclick="aiGenerate()">Generate</button>
+            <div id="aiResult" style="margin-top:12px"></div>
+          </div>
+        </section>
+
+        <!-- KYC View -->
+        <section id="view-kyc" style="display:none">
+          <div class="card">
+            <h3>KYC & Verification (Creator-only)</h3>
+            <div class="small">Required for withdrawals & real monetization. Demo stores a hashed record locally.</div>
+            <label>Full name</label>
+            <input id="kycName" />
+            <label>Phone (with country code)</label>
+            <input id="kycPhone" placeholder="+91..." />
+            <label>Upload ID (PAN / Passport / 10th mark sheet) — choose any</label>
+            <input id="kycFile" type="file" accept="image/*,application/pdf" />
+            <div style="display:flex;gap:8px">
+              <button class="btn btn-primary" onclick="submitKYC()">Submit KYC (Demo)</button>
+              <button class="btn" onclick="clearKYC()">Clear Demo KYC</button>
+            </div>
+            <div id="kycLog" style="margin-top:8px;color:var(--muted)"></div>
+          </div>
+        </section>
+
       </main>
 
-      <!-- RIGHT: Creator hub / Leaderboard -->
-      <aside>
+      <!-- RIGHT PANE -->
+      <aside class="rightpane" aria-label="Right Panel">
         <div class="card">
-          <h3 style="margin:0">Top 10 Leaderboard</h3>
-          <div class="hr"></div>
-          <div id="leaderboard">
-            <!-- dynamic -->
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div style="font-weight:800">HolaBot</div>
+              <div style="color:var(--muted);font-size:13px">AI assistant — demo</div>
+            </div>
+            <div>
+              <button class="btn" onclick="openBot()">Open</button>
+            </div>
           </div>
-          <div style="height:8px"></div>
-          <div class="hr"></div>
-          <h4 style="margin:6px 0 0">HolaCoin • Rewards</h4>
-          <small class="muted">Activity rewards, referral earnings, watch tasks convert to HolaCoins.</small>
-          <div style="margin-top:8px" class="pill">1 HolaCoin = ₹0.5 (configurable)</div>
+
+          <div style="margin-top:10px">
+            <label>Quick Tips</label>
+            <div class="small" style="color:var(--muted)">Try: "generate tags for tech review", "how to monetize", "suggest thumbnail text".</div>
+            <div style="margin-top:8px">
+              <input id="quickQ" placeholder="Ask quick..." onkeydown="if(event.key==='Enter') quickAsk()" />
+              <div style="display:flex;gap:8px;margin-top:6px">
+                <button class="btn btn-primary" onclick="quickAsk()">Ask</button>
+                <button class="btn" onclick="simulateEarn()">Simulate Views</button>
+              </div>
+            </div>
+            <div id="quickResp" style="margin-top:8px;color:var(--muted)"></div>
+          </div>
         </div>
 
         <div class="card" style="margin-top:12px">
-          <h4 style="margin:0">Quick Actions</h4>
-          <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
-            <button class="btn" onclick="openKYC()">Complete KYC</button>
-            <button class="btn" onclick="openPolicies()">Read Policies</button>
-            <button class="btn" onclick="openCreatorHub()">Creator Hub</button>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="font-weight:800">Trending</div>
+            <div class="small" style="color:var(--muted)">Now</div>
           </div>
+          <ol id="trendingList" style="margin-top:8px"></ol>
         </div>
 
         <div class="card" style="margin-top:12px">
-          <h4 style="margin:0">Recent Activity</h4>
-          <div class="review-list" id="recentActivity" style="margin-top:8px">
-            <div class="pill">Priya earned ₹120 via affiliate</div>
-            <div class="pill">Aman uploaded new video (3:42)</div>
-            <div class="pill">Meena referral +100 HolaCoins</div>
+          <div style="font-weight:800">Quick Actions</div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+            <button class="btn" onclick="navigateTo('upload')">Upload</button>
+            <button class="btn" onclick="navigateTo('creator')">Creator Studio</button>
+            <button class="btn" onclick="openWallet()">Wallet</button>
+            <button class="btn" onclick="openKYC()">KYC</button>
           </div>
         </div>
       </aside>
     </div>
 
-    <footer>
-      © 2025 HolaTube • All Rights Reserved • Secure payments via integrated gateways (configure)
+    <footer style="text-align:center;color:var(--muted);margin-top:18px">
+      © <span id="yr"></span> HolaTube — Demo — For production use backend & secure integrations.
     </footer>
   </div>
 
-  <!-- HolaBot Widget -->
-  <button id="hbBtn" aria-label="HolaBot" title="HolaBot">🤖</button>
-  <div id="hbModal" role="dialog" aria-hidden="true">
-    <header style="display:flex;align-items:center;justify-content:space-between;padding:12px;border-bottom:1px solid rgba(255,255,255,0.02)">
-      <div style="display:flex;gap:10px;align-items:center">
-        <div style="width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:800;color:#02111a">HB</div>
-        <div>
-          <div style="font-weight:700;color:#dff6ff">HolaBot Assistant</div>
-          <div style="font-size:13px;color:var(--muted)">Ask about rewards, tickets, or policies</div>
-        </div>
-      </div>
-      <button style="background:transparent;border:none;color:#dff6ff;font-size:18px;padding:8px;cursor:pointer" onclick="toggleHB()">✕</button>
-    </header>
-    <div style="padding:12px;color:#dff6ff">
-      <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
-        <input id="hbQ" placeholder="Ask HolaBot: e.g. How to qualify for Rank 1?" style="flex:1;border-radius:8px;padding:10px;background:#021025;border:1px solid rgba(255,255,255,0.03);color:#dff6ff" />
-        <button class="btn btn-primary" onclick="askHolaBot()">Ask</button>
-      </div>
-      <div id="hbResp" style="min-height:80px;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02);color:#dff6ff"></div>
+  <!-- Bot widget -->
+  <div class="bot-btn" onclick="openBot()">🤖</div>
+  <div class="bot-window" id="botWindow" role="dialog" aria-hidden="true">
+    <div class="bot-header">
+      <div>HolaBot Assistant</div>
+      <div style="font-size:12px;opacity:0.9">Ask tags, monetization tips, or simulated analytics</div>
+    </div>
+    <div class="bot-body" id="botBody">
+      <div class="msg bot">Hi! I'm HolaBot. Try: "generate tags", "title ideas", "how to monetize".</div>
+    </div>
+    <div class="bot-input">
+      <input id="botText" placeholder="Ask HolaBot..." onkeydown="if(event.key==='Enter') botSend()" />
+      <button onclick="botSend()">Send</button>
     </div>
   </div>
 
-  <!-- MODALS (Auth, Policies, Creator Hub, Editor, KYC) -->
-  <div id="modal-root" style="display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;padding:18px"></div>
-
   <script>
-    /* ---------- Demo client state (localStorage-based) - replace with real backend ---------- */
-    const state = {
-      wallet: Number(localStorage.getItem('holatube_wallet') || 0),
-      links: JSON.parse(localStorage.getItem('holatube_links') || '[]'),
-      leaderboard: JSON.parse(localStorage.getItem('holatube_leaderboard') || '["CreatorA","CreatorB","CreatorC","CreatorD"]'),
-      tickets: JSON.parse(localStorage.getItem('holatube_tickets') || '[]'),
-      kycDone: localStorage.getItem('holatube_kyc') === 'true'
-    };
+    /************************************************************************
+     * HolaTube Demo Frontend (single-file)
+     * - LocalStorage keys:
+     *   - holatube_user
+     *   - holatube_videos
+     *   - holatube_wallet
+     *   - holatube_kyc
+     *
+     * IMPORTANT: This is a frontend demo only. Replace placeholders with real
+     * backend endpoints for production (Auth, Storage, Payments, AI).
+     ************************************************************************/
 
-    // initialize UI values
-    document.getElementById('wallet-balance').innerText = `₹${(state.wallet).toFixed(2)}`;
-    document.getElementById('stat-creators').innerText = 5000;
-    document.getElementById('stat-uploads').innerText = 120000;
-    document.getElementById('stat-countries').innerText = 25;
+    // ====== Utilities ======
+    const YEAR_EL = document.getElementById('yr'); YEAR_EL.innerText = new Date().getFullYear();
 
-    function refreshLeaderboard(){
-      const el = document.getElementById('leaderboard');
-      el.innerHTML = '';
-      state.leaderboard.forEach((name,i)=> {
-        const d = document.createElement('div'); d.style.display='flex'; d.style.justifyContent='space-between'; d.style.alignItems='center'; d.style.padding='8px 0';
-        d.innerHTML = `<div style="display:flex;gap:10px;align-items:center"><div style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;font-weight:800">${i+1}</div><div><b>${name}</b><div class="muted" style="font-size:12px">3.${i}M watch min • Clean</div></div></div><div class="pill">Rank ${i+1}</div>`;
-        el.appendChild(d);
+    function uid(len=8){ return Math.random().toString(36).slice(2,2+len) }
+
+    function showToast(msg){
+      // simple alert for demo, replace with UI toast in prod
+      alert(msg);
+    }
+
+    // ====== Demo data persistence ======
+    function loadState(){
+      const videos = JSON.parse(localStorage.getItem('holatube_videos')||'[]');
+      const user = JSON.parse(localStorage.getItem('holatube_user')||'null');
+      const wallet = JSON.parse(localStorage.getItem('holatube_wallet')||'{"hc":0,"inr":0,"requests":[]}');
+      const kyc = JSON.parse(localStorage.getItem('holatube_kyc')||'null');
+      return {videos,user,wallet,kyc};
+    }
+    function saveState(state){
+      localStorage.setItem('holatube_videos', JSON.stringify(state.videos));
+      localStorage.setItem('holatube_user', JSON.stringify(state.user));
+      localStorage.setItem('holatube_wallet', JSON.stringify(state.wallet));
+      localStorage.setItem('holatube_kyc', JSON.stringify(state.kyc));
+    }
+
+    let state = loadState();
+
+    // ====== Initial demo samples (seed videos if none) ======
+    function seedVideos(){
+      if(state.videos.length>0) return;
+      const sample = [
+        {id:'v1',title:'HolaTube Demo — Building a Creator Platform',channel:'HolaTube Official',views:12500,duration:'4:12',src:'https://www.w3schools.com/html/mov_bbb.mp4',thumb:'https://picsum.photos/seed/1/400/220',likes:120,tags:['demo','platform']},
+        {id:'v2',title:'AI Tools for Creators — Quick Tour',channel:'AI Studio',views:8300,duration:'3:45',src:'https://www.w3schools.com/html/mov_bbb.mp4',thumb:'https://picsum.photos/seed/2/400/220',likes:85,tags:['ai','tools']},
+        {id:'v3',title:'How to Earn with Affiliate Links',channel:'MoneyMaker',views:5400,duration:'6:10',src:'https://www.w3schools.com/html/mov_bbb.mp4',thumb:'https://picsum.photos/seed/3/400/220',likes:54,tags:['affiliate','earn']},
+      ];
+      state.videos = sample;
+      saveState(state);
+    }
+    seedVideos();
+
+    // ====== Rendering feed ======
+    function renderFeed(q){
+      const feed = document.getElementById('feed');
+      feed.innerHTML = '';
+      const items = (q? state.videos.filter(v=> (v.title+v.channel+(v.tags||[]).join(' ')).toLowerCase().includes(q.toLowerCase()) ) : state.videos);
+      if(items.length===0){ feed.innerHTML = '<div style="color:var(--muted)">No videos yet.</div>'; return;}
+      items.forEach(v=>{
+        const card = document.createElement('div'); card.className='video-card';
+        card.innerHTML = `
+          <div class="thumbnail" onclick="openWatch('${v.id}')">
+            <img src="${v.thumb}" alt="" style="width:100%;height:100%;object-fit:cover">
+            <div class="duration">${v.duration}</div>
+          </div>
+          <div class="video-meta">
+            <div class="channel">
+              <div class="avatar"></div>
+              <div class="meta-text">
+                <div class="title">${escapeHtml(v.title)}</div>
+                <div class="subtle">${escapeHtml(v.channel)} • ${formatNum(v.views)} views</div>
+              </div>
+            </div>
+          </div>
+        `;
+        feed.appendChild(card);
+      });
+      renderTrending();
+    }
+
+    function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c]);}
+    function formatNum(n){ if(n>1000000) return (n/1000000).toFixed(1)+'M'; if(n>1000) return (n/1000).toFixed(1)+'K'; return n; }
+
+    renderFeed();
+
+    // ====== Navigation SPA ======
+    function hideAllViews(){
+      document.querySelectorAll('[id^="view-"]').forEach(el=>el.style.display='none');
+      document.querySelectorAll('.menu-item').forEach(mi=>mi.classList.remove('active'));
+    }
+    function navigateTo(view){
+      hideAllViews();
+      const el = document.getElementById('view-'+view);
+      if(el) el.style.display='block';
+      // highlight sidebar item
+      document.querySelectorAll('.menu-item').forEach(mi=>{ if(mi.dataset.view===view) mi.classList.add('active'); });
+      // special actions
+      if(view==='home') renderFeed();
+      if(view==='creator') renderCreator();
+      if(view==='wallet') renderWallet();
+      if(view==='kyc') renderKYCLog();
+      if(view==='aitools') document.getElementById('aiResult').innerHTML='';
+    }
+    // default
+    navigateTo('home');
+
+    // ====== Search ======
+    function doSearch(){
+      const q = document.getElementById('searchInput').value.trim();
+      renderFeed(q);
+    }
+
+    // ====== Watch (open video) ======
+    let currentVideo = null;
+    function openWatch(id){
+      const vid = state.videos.find(v=>v.id===id);
+      if(!vid) return;
+      currentVideo = vid;
+      // inject video element
+      const container = document.getElementById('watchVideoContainer');
+      container.innerHTML = `<video id="player" controls playsinline src="${vid.src}" poster="${vid.thumb}"></video>`;
+      document.getElementById('watchTitle').innerText = vid.title;
+      document.getElementById('watchMeta').innerText = `${vid.channel} • ${formatNum(vid.views)} views • ${vid.likes||0} likes`;
+      document.getElementById('likeCount').innerText = vid.likes||0;
+      // upnext
+      renderUpnext(vid.id);
+      // comments
+      renderComments(id);
+      navigateTo('watch');
+    }
+
+    function renderUpnext(currId){
+      const up = document.getElementById('upnextList');
+      up.innerHTML = '';
+      state.videos.filter(v=>v.id!==currId).slice(0,5).forEach(v=>{
+        const div = document.createElement('div'); div.style.padding='8px 0';
+        div.innerHTML = `<div style="display:flex;gap:8px;align-items:center">
+          <img src="${v.thumb}" style="width:80px;height:48px;object-fit:cover;border-radius:6px">
+          <div style="flex:1"><div style="font-weight:700">${escapeHtml(v.title)}</div><div class="subtle">${escapeHtml(v.channel)}</div></div>
+          <button class="btn" onclick="openWatch('${v.id}')">Play</button>
+        </div>`;
+        up.appendChild(div);
       });
     }
-    refreshLeaderboard();
 
-    /* ---------- Affiliate link generator ---------- */
-    function generateAff(){
-      const url = document.getElementById('input-url').value.trim();
-      const comm = document.getElementById('input-comm').value;
-      const out = document.getElementById('aff-result');
-      if(!url){ out.innerText = 'Paste a valid product URL.'; return; }
-      // NOTE: In production, call backend to create a tracked link and shorten it.
-      const id = Math.random().toString(36).slice(2,10);
-      const holalink = `${location.origin}/r/${id}?u=${encodeURIComponent(url)}&c=${comm}`;
-      state.links.unshift({id, url, comm, holalink, created:Date.now()});
-      localStorage.setItem('holatube_links', JSON.stringify(state.links));
-      out.innerHTML = `Generated HolaLink: <a href="${holalink}" target="_blank" style="color:var(--accent)">${holalink}</a>`;
+    // ====== Likes & Subscribe (demo) ======
+    function toggleLike(){
+      if(!currentVideo) return;
+      currentVideo.likes = (currentVideo.likes||0) + 1;
+      saveState(state);
+      document.getElementById('likeCount').innerText = currentVideo.likes;
+      showToast('Liked (demo).');
+    }
+    function toggleSubscribe(){
+      showToast('Subscribed (demo). In production connect to backend.');
     }
 
-    /* ---------- Wallet actions (demo) ---------- */
-    function requestWithdraw(){
-      if(state.wallet < 100){ alert('Minimum withdraw is ₹100 (demo).'); return; }
-      // TODO: In production, send withdraw request to backend for admin approval
-      alert('Withdraw request created (demo). Admin will approve manually.');
-      state.wallet = 0;
-      localStorage.setItem('holatube_wallet', state.wallet);
-      document.getElementById('wallet-balance').innerText = `₹${state.wallet.toFixed(2)}`;
+    // ====== Comments ======
+    function renderComments(vidId){
+      const list = document.getElementById('commentsList');
+      list.innerHTML = '';
+      const comments = JSON.parse(localStorage.getItem('holatube_comments')||'{}')[vidId]||[];
+      if(comments.length===0) list.innerHTML = '<div class="small" style="color:var(--muted)">No comments yet.</div>';
+      comments.forEach(c=>{
+        const d = document.createElement('div'); d.style.marginBottom='8px';
+        d.innerHTML = `<div style="font-weight:700">${escapeHtml(c.user||'Guest')}</div><div class="small" style="color:var(--muted)">${escapeHtml(c.text)}</div>`;
+        list.appendChild(d);
+      });
     }
-    function openWalletTopUp(){
-      // demo top-up prompt
-      const amt = Number(prompt('Enter amount to add (demo)', '100'));
-      if(!amt || amt <= 0) return;
-      // TODO: Integrate Razorpay/Stripe checkout here
-      state.wallet += amt;
-      localStorage.setItem('holatube_wallet', state.wallet);
-      document.getElementById('wallet-balance').innerText = `₹${state.wallet.toFixed(2)}`;
-      alert('Top-up demo complete. Replace with real payment gateway.');
-    }
-
-    /* ---------- Tickets ---------- */
-    function createTicket(e){
-      e && e.preventDefault();
-      const n = document.getElementById('tname').value.trim();
-      const em = document.getElementById('temail').value.trim();
-      const t = document.getElementById('ttype').value;
-      const m = document.getElementById('tmsg').value.trim();
-      if(!n || !em || !m){ alert('Complete the form.'); return; }
-      state.tickets.push({id:Date.now(), name:n, email:em, type:t, msg:m, status:'open', created:Date.now()});
-      localStorage.setItem('holatube_tickets', JSON.stringify(state.tickets));
-      alert('Ticket created (demo). We will contact you at ' + em);
-      document.getElementById('tname').value='';document.getElementById('temail').value='';document.getElementById('tmsg').value='';
+    function postComment(){
+      const txt = document.getElementById('commentInput').value.trim();
+      if(!txt){ alert('Write something'); return; }
+      const vidId = currentVideo.id;
+      const all = JSON.parse(localStorage.getItem('holatube_comments')||'{}');
+      all[vidId] = all[vidId]||[];
+      all[vidId].push({user: state.user?state.user.name:'Guest', text: txt, time: Date.now()});
+      localStorage.setItem('holatube_comments', JSON.stringify(all));
+      document.getElementById('commentInput').value='';
+      renderComments(vidId);
     }
 
-    /* ---------- Checkout placeholder ---------- */
-    function startCheckout(plan){
-      // TODO: Launch real checkout (Razorpay/Stripe) & on success call backend subscription activation
-      alert(`Checkout started for plan: ${plan} (demo). Replace with payment gateway integration.`);
+    // ====== Upload Demo (stores metadata + local blob URL) ======
+    function doUpload(){
+      const title = document.getElementById('uploadTitle').value.trim();
+      const desc = document.getElementById('uploadDesc').value.trim();
+      const file = document.getElementById('uploadFile').files[0];
+      const thumb = document.getElementById('uploadThumb').files[0];
+      const tags = document.getElementById('uploadTags').value.split(',').map(s=>s.trim()).filter(Boolean);
+      if(!title || !file){ alert('Provide title and video file (demo).'); return; }
+      // create local blob url preview
+      const id = 'v_'+uid(6);
+      const blobUrl = URL.createObjectURL(file);
+      let thumbUrl = '';
+      if(thumb) thumbUrl = URL.createObjectURL(thumb); else thumbUrl = 'https://picsum.photos/seed/'+Math.floor(Math.random()*999)+'/400/220';
+      const videoObj = {id,title,channel: state.user?state.user.name:'Guest',views:0,duration:'0:00',src:blobUrl,thumb:thumbUrl,likes:0,desc,tags};
+      state.videos.unshift(videoObj);
+      saveState(state);
+      renderFeed();
+      document.getElementById('uploadTitle').value='';document.getElementById('uploadDesc').value='';document.getElementById('uploadFile').value='';
+      showToast('Video uploaded to demo feed (local).');
+      navigateTo('creator');
     }
 
-    /* ---------- Editor Studio placeholder ---------- */
-    function openEditor(){
-      showModal('Editor Studio — Demo','<p class="muted">Editor Studio is a web-based AI editor. This is a placeholder UI.</p><p class="muted">TODO: Integrate cloud render, templates, watermark logic (watermark only if no Elite subscription).</p><div style="margin-top:8px"><button class="btn" onclick="closeModal()">Close</button></div>');
-    }
-    function openEditorTemplates(){
-      showModal('Editor Templates','<p class="muted">Templates marketplace — connect real marketplace API to sell templates and assets.</p><div style="margin-top:8px"><button class="btn" onclick="closeModal()">Close</button></div>');
-    }
-
-    /* ---------- KYC UI (frontend only demo) ---------- */
-    function openKYC(){
-      const html = `
-        <h3>KYC / Creator Verification (Demo)</h3>
-        <p class="muted">Required for monetization — upload any 2 documents (demo only)</p>
-        <div style="display:flex;flex-direction:column;gap:8px">
-          <label>Document 1 (PAN / Passport / 10th Marksheet)</label><input id="doc1" type="file" />
-          <label>Document 2 (Driving license / Passport / Aadhaar)</label><input id="doc2" type="file" />
-          <label>Live selfie verification (demo)</label><input id="selfie" type="file" />
-          <div style="display:flex;gap:8px;margin-top:8px"><button class="btn btn-primary" onclick="submitKYC()">Submit KYC (demo)</button><button class="btn" onclick="closeModal()">Cancel</button></div>
+    // ====== Creator dashboard rendering ======
+    function renderCreator(){
+      document.getElementById('dashboardCoins').innerText = (state.wallet?.hc||0) + ' HC';
+      document.getElementById('dashboardViews').innerText = (state.videos.reduce((s,v)=>s+ (v.views||0),0));
+      document.getElementById('creatorVideos').innerHTML = '';
+      state.videos.filter(v=> v.channel === (state.user?state.user.name:'Guest')).forEach(v=>{
+        const div = document.createElement('div'); div.className='card'; div.style.display='flex'; div.style.justifyContent='space-between'; div.style.alignItems='center';
+        div.innerHTML = `<div style="display:flex;gap:12px;align-items:center">
+          <img src="${v.thumb}" style="width:120px;height:70px;object-fit:cover;border-radius:6px">
+          <div><div style="font-weight:800">${escapeHtml(v.title)}</div><div class="small">${formatNum(v.views)} views • ${escapeHtml((v.tags||[]).slice(0,3).join(', '))}</div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+          <div><button class="btn" onclick="openWatch('${v.id}')">View</button></div>
+          <div class="small" style="color:var(--muted)">ID: ${v.id}</div>
         </div>`;
-      showModal('KYC', html);
+        document.getElementById('creatorVideos').appendChild(div);
+      });
     }
+
+    // ====== Wallet & HolaCoin logic (demo) ======
+    if(!state.wallet) state.wallet = {hc:0,inr:0,requests:[]};
+
+    function renderWallet(){
+      document.getElementById('walletBalance').innerText = (state.wallet.hc||0) + ' HC';
+      document.getElementById('walletUser').innerText = state.user?state.user.name: 'Guest (demo)';
+      // withdraws
+      const list = document.getElementById('withdrawsList');
+      list.innerHTML = '';
+      if((state.wallet.requests||[]).length===0) list.innerHTML = '<div class="small" style="color:var(--muted)">No withdraw requests.</div>';
+      else (state.wallet.requests||[]).forEach(r=>{
+        const d = document.createElement('div'); d.className='card'; d.style.marginTop='8px'; d.innerHTML = `<div><b>${r.amount} INR</b> • ${r.status}</div><div class="small" style="color:var(--muted)">${new Date(r.time).toLocaleString()}</div>`;
+        list.appendChild(d);
+      });
+    }
+
+    function convertCoins(){
+      const hc = state.wallet.hc || 0;
+      if(hc < 10){ showToast('Minimum 10 HC to convert (demo).'); return; }
+      const inr = (hc * 0.5).toFixed(2);
+      state.wallet.inr = (state.wallet.inr||0) + parseFloat(inr);
+      state.wallet.hc = 0;
+      saveState(state);
+      renderWallet(); renderCreator();
+      showToast(`Converted ${hc} HC → ₹${inr} (demo)`);
+    }
+
+    function requestWithdraw(){
+      if(!state.user){ showToast('Create an account / login and complete KYC to withdraw (demo).'); return; }
+      if((state.wallet.inr||0) < 100){ showToast('Minimum ₹100 to request withdraw (demo).'); return; }
+      const req = {id:'wd_'+uid(6),amount:state.wallet.inr,time:Date.now(),status:'pending'};
+      state.wallet.requests.push(req);
+      state.wallet.inr = 0;
+      saveState(state);
+      renderWallet();
+      showToast('Withdraw request submitted (demo). Admin approval needed in production.');
+    }
+
+    // === Simulate earning from views (adds HolaCoins to wallet) ===
+    function simulateEarn(){
+      // add 5-20 HC to demo wallet
+      const gain = Math.floor(Math.random()*16)+5;
+      state.wallet.hc = (state.wallet.hc||0) + gain;
+      // also increment a random video views
+      const v = state.videos[Math.floor(Math.random()*state.videos.length)];
+      v.views = (v.views||0) + Math.floor(Math.random()*200)+50;
+      saveState(state);
+      renderCreator(); renderWallet(); renderFeed();
+      showToast(`Simulated ${gain} HC earned (demo).`);
+    }
+
+    // ====== KYC demo ======
     function submitKYC(){
-      // TODO: upload files to secure backend, call verification service (human/AI)
-      state.kycDone = true;
-      localStorage.setItem('holatube_kyc', 'true');
-      alert('KYC submitted (demo). In production, run human+AI checks, store encrypted.');
-      closeModal();
+      const name = document.getElementById('kycName').value.trim();
+      const phone = document.getElementById('kycPhone').value.trim();
+      const file = document.getElementById('kycFile').files[0];
+      if(!name || !phone || !file){ alert('Provide name, phone, and an ID image (demo).'); return; }
+      // store a small hash: simulate (DON'T store sensitive raw data in production)
+      const rec = {name, phone, idName: file.name, time: Date.now(), status:'submitted'};
+      state.kyc = rec;
+      saveState(state);
+      renderKYCLog();
+      document.getElementById('kycLog').innerText = 'KYC submitted (demo). Admin verification required in production.';
+    }
+    function clearKYC(){ state.kyc = null; saveState(state); renderKYCLog(); }
+    function renderKYCLog(){ document.getElementById('kycStatus').innerText = state.kyc ? 'Submitted (demo)' : 'Not submitted'; document.getElementById('kycLog').innerText = state.kyc ? JSON.stringify(state.kyc,null,2) : 'No KYC record (demo)'; }
+
+    // ====== KYC helper for navigation ======
+    function openKYC(){ navigateTo('kyc'); }
+
+    // ====== Simple "Auth" demo (local) ======
+    function openLogin(){
+      const name = prompt('Enter display name for demo (this simulates login):');
+      if(!name) return;
+      state.user = {id: 'u_'+uid(6), name};
+      saveState(state);
+      document.getElementById('loginBtn').innerText = 'Account';
+      document.getElementById('walletUser').innerText = name;
+      renderCreator(); showToast('Logged in as '+name+' (demo).');
     }
 
-    /* ---------- Policies modal ---------- */
-    function openPolicies(){
-      const html = `
-        <h3>HolaTube — Policies Summary</h3>
-        <ul style="color:var(--muted)">
-          <li><b>Sexual Content:</b> Zero tolerance. Remove & ban.</li>
-          <li><b>Child Safety:</b> COPPA rules — no minors sexual content.</li>
-          <li><b>Copyright:</b> DMCA takedown process — strikes & appeals.</li>
-          <li><b>AI Usage:</b> AI-generated content must be labeled and limited by plan.</li>
-          <li><b>Monetization:</b> KYC mandatory. Platform cut applied.</li>
-        </ul>
-        <div style="margin-top:8px"><button class="btn" onclick="closeModal()">Close</button></div>
-      `;
-      showModal('Policies & Guidelines', html, 760);
+    // ====== Simple HolaBot (keyword-based) ======
+    const botWindow = document.getElementById('botWindow'), botBody = document.getElementById('botBody');
+    function openBot(){ botWindow.style.display = 'flex'; botWindow.setAttribute('aria-hidden','false'); document.getElementById('botText').focus(); }
+    function closeBot(){ botWindow.style.display = 'none'; botWindow.setAttribute('aria-hidden','true'); }
+    function botSend(){
+      const q = document.getElementById('botText').value.trim();
+      if(!q) return;
+      appendBot('user',q);
+      setTimeout(()=>{ // simple canned responses
+        let r = "HolaBot: I can help with titles, tags, monetization tips, and quick analytics. Try 'generate tags', 'title for ai video', or 'how to monetize'.";
+        const ql = q.toLowerCase();
+        if(ql.includes('generate') && ql.includes('tag')) r = "Tags: ai, tutorial, howto, hola";
+        else if(ql.includes('title')) r = "Title ideas: 'Top 5 AI tools for creators (2025)'";
+        else if(ql.includes('monet')|| ql.includes('earn')) r = "Monetization tips: enable subscriptions, create affiliate links, add super thanks.";
+        else if(ql.includes('kyc')) r = "KYC: submit government ID and phone verification to enable payouts.";
+        appendBot('bot', r);
+      },500);
+      document.getElementById('botText').value='';
+    }
+    function appendBot(kind, text){
+      const d = document.createElement('div');
+      d.className = 'msg ' + (kind==='user'? 'user':'bot');
+      d.innerText = text;
+      botBody.appendChild(d);
+      botBody.scrollTop = botBody.scrollHeight;
     }
 
-    /* ---------- Creator Hub ---------- */
-    function openCreatorHub(){
-      const html = `
-        <h3>Creator Hub</h3>
-        <p class="muted">Welcome to Creator Hub — tools, analytics, affiliate dashboard, and support.</p>
-        <div style="display:flex;gap:8px;margin-top:8px">
-          <button class="btn" onclick="alert('Open Analytics - TODO')">Analytics</button>
-          <button class="btn" onclick="alert('Open Affiliate Dashboard - TODO')">Affiliate Dashboard</button>
-          <button class="btn" onclick="alert('Open Achievements - TODO')">Achievements</button>
-        </div>
-        <div style="margin-top:12px;color:var(--muted)">
-          <b>Note:</b> Full Creator Hub requires backend APIs to fetch user metrics, referrals, and earnings.
-        </div>
-        <div style="margin-top:8px"><button class="btn" onclick="closeModal()">Close</button></div>
-      `;
-      showModal('Creator Hub', html, 780);
+    // quick ask from right pane
+    function quickAsk(){
+      const q = document.getElementById('quickQ').value.trim();
+      if(!q) return; document.getElementById('quickResp').innerText = 'Processing...';
+      setTimeout(()=>{ document.getElementById('quickResp').innerText = 'HolaBot (demo): Try this title — "How I earned with affiliate links (demo)"'; },600);
     }
 
-    /* ---------- Auth modal (demo flow) ---------- */
-    function openAuthModal(){
-      const html = `
-        <h3>Sign Up / Login (Demo)</h3>
-        <p class="muted">Recommended: Google Sign-In / OTP Auth + WebAuthn for owner.</p>
-        <div style="display:flex;flex-direction:column;gap:8px">
-          <button class="btn btn-primary" onclick="demoGoogleSignIn()">Continue with Google (demo)</button>
-          <div style="height:8px"></div>
-          <label>Email</label><input id="authEmail" placeholder="you@domain.com" />
-          <label>Phone (with country code)</label><input id="authPhone" placeholder="+91 98765 43210" />
-          <div style="display:flex;gap:8px;margin-top:8px"><button class="btn" onclick="demoEmailLogin()">Sign up / Login (demo)</button><button class="btn" onclick="closeModal()">Cancel</button></div>
-        </div>
-      `;
-      showModal('Authentication', html);
-    }
-    function demoGoogleSignIn(){
-      // TODO: Real Google OAuth integration (client-side + backend)
-      alert('Google Sign-In demo. Implement OAuth 2.0 + backend session.');
-      closeModal();
-    }
-    function demoEmailLogin(){
-      const email = document.getElementById('authEmail').value.trim();
-      if(!email) { alert('Enter email'); return; }
-      localStorage.setItem('holatube_user_email', email);
-      alert('Logged in as ' + email + ' (demo). Replace with secure auth on backend.');
-      closeModal();
+    // ====== AI Tools placeholder ======
+    function aiGenerate(){
+      const p = document.getElementById('aiPrompt').value.trim();
+      if(!p) { alert('Type a prompt'); return; }
+      document.getElementById('aiResult').innerHTML = '<div style="color:var(--muted)">Processing (demo)...</div>';
+      setTimeout(()=>{
+        document.getElementById('aiResult').innerHTML = `<div style="font-weight:800">Suggested title:</div>
+        <div>${escapeHtml('Best '+p+' Tips — 2025 (HolaTube AI)')}</div>
+        <div style="margin-top:8px;font-weight:800">Suggested tags:</div>
+        <div class="subtle">#${p.replace(/\s+/g,'').toLowerCase()} #tutorial #holatube</div>`;
+      },700);
     }
 
-    /* ---------- HolaBot demo logic (UI only) ---------- */
-    const hbBtn = document.getElementById('hbBtn');
-    const hbModal = document.getElementById('hbModal');
-    function toggleHB(){
-      hbModal.style.display = hbModal.style.display === 'block' ? 'none' : 'block';
-      hbModal.setAttribute('aria-hidden', hbModal.style.display !== 'block');
-      if(hbModal.style.display === 'block') document.getElementById('hbQ').focus();
+    // ====== Trending & sidebar lists ======
+    function renderTrending(){
+      const tr = document.getElementById('trendingList');
+      tr.innerHTML = '';
+      state.videos.slice(0,6).forEach(v=>{
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="javascript:openWatch('${v.id}')">${escapeHtml(v.title)}</a> • <span class="subtle">${formatNum(v.views)} views</span>`;
+        tr.appendChild(li);
+      });
+      const t2 = document.getElementById('trendingList');
+      // also right trending small list
+      const t3 = document.getElementById('trendingList');
     }
-    hbBtn.addEventListener('click', toggleHB);
-    function askHolaBot(){
-      const q = document.getElementById('hbQ').value.trim();
-      const r = document.getElementById('hbResp');
-      if(!q){ r.innerText = 'Please ask a question.'; return; }
-      r.innerHTML = '<div class="muted">Processing... (demo)</div>';
-      setTimeout(()=> {
-        let out = '';
-        if(/rank|top/i.test(q)) out = 'Top creators earn weekly rewards. Keep zero strikes and high watch time.';
-        else if(/withdraw|wallet/i.test(q)) out = 'Withdrawals require KYC and admin approval (demo).';
-        else if(/kyc|verify/i.test(q)) out = 'KYC requires 2 documents + live selfie. Use Creator Hub → KYC.';
-        else out = 'HolaBot: For account-specific help, open Creator Hub → Support → Create Ticket.';
-        r.innerText = out;
-      },600);
-    }
+    renderTrending();
 
-    /* ---------- Modal helpers ---------- */
-    const modalRoot = document.getElementById('modal-root');
-    function showModal(title, html, width=720){
-      modalRoot.style.display = 'flex';
-      modalRoot.innerHTML = `
-        <div style="width:${Math.min(width, window.innerWidth-40)}px;max-height:90vh;overflow:auto;padding:18px;border-radius:12px;background:#071427;border:1px solid rgba(255,255,255,0.04)">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-            <h3 style="margin:0">${title}</h3>
-            <button class="btn" onclick="closeModal()">Close</button>
-          </div>
-          <div style="color:#dff6ff">${html}</div>
-        </div>
-      `;
-    }
-    function closeModal(){ modalRoot.style.display = 'none'; modalRoot.innerHTML = ''; }
+    // ====== Simple UI helpers ======
+    function openWallet(){ navigateTo('wallet'); }
+    function openSettings(){ alert('Open Settings (demo). In production: user preferences + privacy controls.'); }
+    function openWatchById(id){ openWatch(id); navigateTo('watch'); }
 
-    /* ---------- Creator Hub quick open (navigation) ---------- */
-    function openCreatorHub(){ openCreatorHubModal(); }
-    function openCreatorHubModal(){
-      const html = `
-        <h3>Creator Hub — Demo</h3>
-        <p class="muted">This hub contains analytics, wallet, affiliate links, achievements, and support.</p>
-        <div style="display:flex;gap:8px;margin-top:8px">
-          <button class="btn" onclick="alert('Open Analytics - integrate API')">Analytics</button>
-          <button class="btn" onclick="alert('Open Creator Feed')">Creator Feed</button>
-          <button class="btn" onclick="alert('Open Earnings')">Earnings</button>
-        </div>
-        <div style="margin-top:12px">
-          <b>Links:</b>
-          <ul style="color:var(--muted)">${state.links.map(l => `<li><a href="${l.holalink}" target="_blank">${l.holalink}</a> • ${l.comm}%</li>`).join('') || '<li class="muted">No links yet</li>'}</ul>
-        </div>
-      `;
-      showModal('Creator Hub', html, 900);
-    }
+    // ====== Local persistence save on unload ======
+    window.addEventListener('beforeunload', ()=> saveState(state) );
 
-    /* ---------- Simple deep-link handler for /r/:id (hola links demo) ---------- */
-    (function handleRoute(){
-      const p = location.pathname.split('/').filter(Boolean);
-      if(p[0] === 'r' && p[1]){
-        // demo: show redirect page
-        const id = p[1];
-        document.querySelector('.wrap').innerHTML = `<div style="max-width:700px;margin:80px auto;padding:18px" class="card"><h2>HolaLink Redirect</h2><p class="muted">This is a demo redirect page for HolaLink <b>${id}</b>.</p><p class="muted">In production, server will record click → redirect to original product URL → track conversions.</p><div style="height:12px"></div><a class="btn btn-primary" href="/">Back to HolaTube</a></div>`;
-      }
-    })();
+    // ====== small helper: escape HTML for safety ======
+    // already defined above: escapeHtml
 
-    /* ---------- Simple functions for pages ---------- */
-    function openPolicies(){ openPolicies(); } // no-op (exists above)
-    function openEditorTemplates(){ openEditorTemplates(); } // no-op
-    function openWalletTopUp(){ openWalletTopUp(); } // defined earlier
-
-    /* ---------- Onload: small init ---------- */
-    window.addEventListener('load', ()=> {
-      // seed leaderboard if empty
-      if(!state.leaderboard || state.leaderboard.length === 0){
-        state.leaderboard = ["CreatorA","CreatorB","CreatorC","CreatorD"];
-        localStorage.setItem('holatube_leaderboard', JSON.stringify(state.leaderboard));
-      }
-      refreshLeaderboard();
-    });
-
-    /* ---------- Utility: Admin / Owner sensitive notes ---------- */
-    // NOTE FOR DEPLOY: Protect owner admin pages on server-side.
-    // - Owner keys must never be in client JS.
-    // - Use environment variables on server to hold API keys.
-    // - Implement server-side verification for payouts and KYC approvals.
+    // expose some debug to console
+    window.holatube_state = state;
+    window.simulateEarn = simulateEarn;
+    window.openBot = openBot;
+    window.openKYC = openKYC;
+    window.navigateTo = navigateTo;
   </script>
 </body>
 </html>
