@@ -1,76 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HolaTube Shopping & Earning</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>HolaTube — Watch • Promote • Earn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-body{margin:0;font-family:'Poppins',sans-serif;background:#f8f8f8;color:#222;}
-header{background:#ff0057;color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;}
-header input{width:60%;padding:8px;border:none;border-radius:8px;}
-.banner{background:url('https://images.unsplash.com/photo-1607083206173-9e105d40d3a4?auto=format&fit=crop&w=1500&q=80')no-repeat center/cover;
-height:200px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.5em;font-weight:600;text-shadow:2px 2px 5px #000;}
-.section{padding:20px;}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:15px;}
-.card{background:#fff;border-radius:12px;box-shadow:0 3px 8px rgba(0,0,0,0.1);overflow:hidden;text-align:center;}
-.card img{width:100%;height:140px;object-fit:cover;}
-.card h4{margin:10px 0 5px;}
-.card p{margin:0 0 8px;font-weight:500;}
-.card button{background:linear-gradient(90deg,#ff0057,#ff7a00);border:none;color:#fff;padding:8px 14px;border-radius:6px;cursor:pointer;}
-.earn{text-align:center;background:#fff;padding:25px;border-radius:15px;box-shadow:0 3px 10px rgba(0,0,0,0.1);}
-footer{background:#111;color:#aaa;text-align:center;padding:15px;margin-top:40px;}
+  :root{
+    --accent1: #ff3b66;
+    --accent2: #ff8a00;
+    --muted:#7b7b7b;
+    --bg:#f6f7fb;
+    --card:#ffffff;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;background:var(--bg);color:#111}
+  /* Top navbar like shopping apps */
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:40}
+  .brand{display:flex;align-items:center;gap:8px}
+  .brand .logo{
+    width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--accent1),var(--accent2));color:#fff;font-weight:700;font-size:14px;
+  }
+  .brand h1{font-size:16px;margin:0}
+  .icons{display:flex;gap:10px;align-items:center}
+  .icon{width:36px;height:36px;border-radius:10px;background:#f3f4f8;display:flex;align-items:center;justify-content:center}
+
+  /* Search bar */
+  .search-wrap{display:flex;align-items:center;gap:10px;padding:12px;background:linear-gradient(180deg,#e9fff7,#dffaf0);border-radius:12px;margin:12px;border:1px solid #c7f0e0}
+  .search-wrap input{flex:1;border:none;background:transparent;font-size:16px;padding:8px;outline:none}
+  .search-actions{display:flex;gap:8px}
+
+  /* Top quick offers row */
+  .offers{display:flex;gap:10px;padding:10px 12px;overflow:hidden;scroll-snap-type:x mandatory}
+  .offer{flex:0 0 33%;min-width:33%;background:#fff;padding:8px;border-radius:10px;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,0.05)}
+  .offer small{display:block;color:var(--muted);font-size:12px}
+  .offer strong{display:block;margin-top:6px;color:#222}
+
+  /* Hero video/banner */
+  .hero-wrap{position:relative;height:300px;border-radius:16px;margin:12px;overflow:hidden}
+  .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.6) contrast(1.02)}
+  .hero-fallback{position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,82,82,0.06),rgba(255,138,0,0.06))}
+  .hero-content{position:relative;z-index:3;color:#fff;padding:22px;display:flex;flex-direction:column;gap:12px;height:100%;justify-content:center}
+  .hero-title{font-size:26px;font-weight:700;text-shadow:0 6px 18px rgba(0,0,0,0.35)}
+  .hero-sub{font-size:14px;color:rgba(255,255,255,0.92)}
+  .cta-row{display:flex;gap:12px;align-items:center}
+  .btn{background:linear-gradient(90deg,var(--accent1),var(--accent2));border:none;color:#fff;padding:10px 16px;border-radius:10px;font-weight:600;cursor:pointer;box-shadow:0 8px 24px rgba(255,59,102,0.18)}
+  .ghost{background:rgba(255,255,255,0.12);padding:9px 12px;border-radius:10px;color:#fff;border:1px solid rgba(255,255,255,0.12)}
+
+  /* confetti / emoji animation */
+  .confetti{position:absolute;inset:0;pointer-events:none;z-index:2}
+  .emo{position:absolute;font-size:20px;animation:float 6s linear infinite;opacity:.95}
+  @keyframes float{
+    0%{transform:translateY(0) rotate(0deg)}
+    50%{transform:translateY(-40px) rotate(45deg)}
+    100%{transform:translateY(0) rotate(90deg)}
+  }
+
+  /* product strip (recently viewed) */
+  .section{padding:12px}
+  .section h3{margin:6px 6px 12px;font-size:18px}
+  .hstrip{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px}
+  .pcard{flex:0 0 140px;background:var(--card);padding:10px;border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,0.06);text-align:center}
+  .pcard img{width:100%;height:100px;object-fit:cover;border-radius:8px}
+  .pcard small{display:block;color:var(--muted);margin-top:8px}
+  .price{font-weight:700;margin-top:6px}
+
+  /* recommended / carousel style */
+  .recommended{display:flex;gap:12px;overflow-x:auto;padding:10px 6px}
+  .rec{min-width:160px;background:#fff;border-radius:12px;padding:10px;box-shadow:0 8px 20px rgba(0,0,0,0.06)}
+  .rec img{width:100%;height:110px;object-fit:cover;border-radius:8px}
+
+  /* wallet card */
+  .wallet{margin:12px;padding:14px;border-radius:12px;background:linear-gradient(90deg,#fff,#fff);box-shadow:0 6px 18px rgba(0,0,0,0.06);display:flex;justify-content:space-between;align-items:center}
+  .wallet .left{font-weight:600}
+  .withdraw{background:#0b84ff;color:#fff;padding:10px 12px;border-radius:10px;border:none}
+
+  /* footer */
+  footer{padding:20px;text-align:center;color:var(--muted);font-size:13px;margin-top:24px}
+
+  /* responsiveness */
+  @media(min-width:860px){
+    .hero-wrap{height:420px}
+    .hero-title{font-size:40px}
+    .pcard{flex-basis:180px}
+  }
 </style>
 </head>
 <body>
 
-<header>
-  <h2>HolaTube 🛍️</h2>
-  <input type="text" placeholder="Search for Products... 🔍">
-</header>
-
-<div class="banner">
-  100% Cashback Offer – Diwali Sale 🎇
+<!-- TOP -->
+<div class="topbar">
+  <div class="brand">
+    <div class="logo">HT</div>
+    <div>
+      <div style="font-size:12px;color:var(--muted)">HolaTube</div>
+      <div style="font-weight:700">Watch • Promote • Earn</div>
+    </div>
+  </div>
+  <div class="icons">
+    <div class="icon">🏠</div>
+    <div class="icon">🛍️</div>
+    <div class="icon">💰</div>
+    <div class="icon">👤</div>
+  </div>
 </div>
 
-<div class="section">
-  <h3>🔥 Trending Products</h3>
-  <div class="grid">
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80" alt="">
-      <h4>Stylish Kurti</h4>
-      <p>₹299</p>
-      <button>Buy Now</button>
-    </div>
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1606813902914-8f63f114e6d7?auto=format&fit=crop&w=400&q=80" alt="">
-      <h4>Smart Watch</h4>
-      <p>₹499</p>
-      <button>Buy Now</button>
-    </div>
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=400&q=80" alt="">
-      <h4>Headphones</h4>
-      <p>₹799</p>
-      <button>Buy Now</button>
-    </div>
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1618354691541-0e3b8b8d83f3?auto=format&fit=crop&w=400&q=80" alt="">
-      <h4>Women's Saree</h4>
-      <p>₹499</p>
-      <button>Buy Now</button>
+<!-- SEARCH -->
+<div style="padding:10px">
+  <div class="search-wrap">
+    <input placeholder="Find Your Product's..?" aria-label="search">
+    <div class="search-actions">
+      <div class="icon" title="camera">📷</div>
+      <div class="icon" title="qr">🔍</div>
     </div>
   </div>
 </div>
 
-<div class="section earn">
-  <h3>💰 Earn With HolaTube</h3>
-  <p>Promote HolaTube and Earn <b>HolaCoins</b> for every 10K views!</p>
-  <button>Start Earning 🚀</button>
+<!-- OFFERS -->
+<div class="offers">
+  <div class="offer"><small>UNLOCK DISCOUNTS</small><strong>Special Deals</strong></div>
+  <div class="offer"><small>SUBSCRIBE & SAVE</small><strong>GET ₹30 OFF</strong></div>
+  <div class="offer"><small>INVITE & EARN</small><strong>₹60,000 EXTRA</strong></div>
+</div>
+
+<!-- HERO (video background + overlay + confetti) -->
+<div class="hero-wrap">
+  <!-- sample royalty-free video from Pexels (fallback to image if blocked) -->
+  <video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1600&q=80">
+    <source src="https://player.vimeo.com/external/449138540.sd.mp4?s=93b3b3f0b3e4d7c6a3b93c2b3a6d9fa1a2b7c3d8&profile_id=164" type="video/mp4">
+  </video>
+  <div class="hero-fallback"></div>
+
+  <div class="hero-content">
+    <div style="max-width:760px">
+      <div class="hero-title">HolaTube — 100% Cashback Diwali Sale 🎉</div>
+      <div class="hero-sub">18th — 24th Oct • Special cashback & HolaCoin rewards. Promote & earn today!</div>
+
+      <div class="cta-row" style="margin-top:10px">
+        <button class="btn" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Resell Now 🚀</button>
+        <button class="ghost">How it works ❓</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- confetti/emoji animated elements -->
+  <div class="confetti" aria-hidden="true">
+    <div class="emo" style="left:8%;top:20%">✨</div>
+    <div class="emo" style="left:28%;top:60%;animation-delay:1s">🎁</div>
+    <div class="emo" style="left:50%;top:10%;animation-delay:0.6s">💰</div>
+    <div class="emo" style="left:74%;top:40%;animation-delay:1.2s">🔥</div>
+  </div>
+</div>
+
+<!-- Recently viewed strip -->
+<section>
+  <h3>हाल ही में देखा गया</h3>
+  <div class="hstrip" id="recent">
+    <!-- product cards (replace images with affiliate images later) -->
+    <div class="pcard">
+      <img src="https://images.unsplash.com/photo-1543163521-1bf539c55be3?auto=format&fit=crop&w=600&q=80" alt="dress">
+      <small>Stylish Kurti</small>
+      <div class="price">₹408</div>
+    </div>
+    <div class="pcard">
+      <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=600&q=80" alt="lehenga">
+      <small>Party Lehenga</small>
+      <div class="price">₹246</div>
+    </div>
+    <div class="pcard">
+      <img src="https://images.unsplash.com/photo-1585386959984-a4155227c0d6?auto=format&fit=crop&w=600&q=80" alt="watch">
+      <small>Smart Watch</small>
+      <div class="price">₹464</div>
+    </div>
+    <div class="pcard">
+      <img src="https://images.unsplash.com/photo-1526178610131-28f8f85f5f81?auto=format&fit=crop&w=600&q=80" alt="necklace">
+      <small>Designer Necklace</small>
+      <div class="price">₹1299</div>
+    </div>
+  </div>
+</section>
+
+<!-- Recommended / carousel -->
+<section id="products">
+  <h3>Still looking for these?</h3>
+  <div class="recommended">
+    <div class="rec">
+      <img src="https://images.unsplash.com/photo-1580910051077-9c4b6f2a3b2f?auto=format&fit=crop&w=800&q=80" alt="">
+      <div style="padding-top:8px;font-weight:600">Shampoo</div>
+      <div style="color:var(--muted);margin-top:6px">View Store</div>
+    </div>
+    <div class="rec">
+      <img src="https://images.unsplash.com/photo-1617101522206-5c0b3b3bf1b7?auto=format&fit=crop&w=800&q=80" alt="">
+      <div style="padding-top:8px;font-weight:600">Mobiles</div>
+      <div style="color:var(--muted);margin-top:6px">View Store</div>
+    </div>
+    <div class="rec">
+      <img src="https://images.unsplash.com/photo-1600180758891-7c0f9f8b6e0a?auto=format&fit=crop&w=800&q=80" alt="">
+      <div style="padding-top:8px;font-weight:600">Women's Sweater</div>
+      <div style="color:var(--muted);margin-top:6px">View Store</div>
+    </div>
+    <div class="rec">
+      <img src="https://images.unsplash.com/photo-1585386959984-a4155227c0d6?auto=format&fit=crop&w=800&q=80" alt="">
+      <div style="padding-top:8px;font-weight:600">Accessories</div>
+      <div style="color:var(--muted);margin-top:6px">View Store</div>
+    </div>
+  </div>
+</section>
+
+<!-- Wallet + CTA -->
+<div class="section">
+  <div class="wallet">
+    <div class="left">👛 Your HolaCoin Wallet • Balance: <strong>120 HolaCoins (₹6.00)</strong></div>
+    <div><button class="withdraw">Withdraw Now</button></div>
+  </div>
 </div>
 
 <footer>
   © 2025 HolaTube. All Rights Reserved. Designed with ❤️ by HolaTube Team.
 </footer>
 
+<script>
+  // small JS: autoplay hero, safe fallback, minor UX
+  document.addEventListener('DOMContentLoaded',function(){
+    const vid = document.querySelector('.hero-video');
+    if(vid){
+      vid.addEventListener('error',()=>{ vid.style.display='none' });
+      // try to play (mobile autoplay may be blocked; muted already set)
+      vid.play().catch(()=>{ vid.style.display='none' });
+    }
+    // simple swipe scroll for strips on touch devices
+    const strips = document.querySelectorAll('.hstrip, .recommended');
+    strips.forEach(s=>{
+      let pos = null;
+      s.addEventListener('touchstart', e=> pos = e.touches[0].clientX);
+      s.addEventListener('touchmove', e=> {
+        if(!pos) return;
+        const diff = pos - e.touches[0].clientX;
+        s.scrollLeft += diff;
+        pos = e.touches[0].clientX;
+      });
+      s.addEventListener('touchend', ()=> pos = null);
+    });
+  });
+</script>
 </body>
 </html>
