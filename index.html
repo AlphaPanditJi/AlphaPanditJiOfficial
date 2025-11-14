@@ -1,250 +1,811 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>HolaTube — Watch • Promote • Earn</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --accent1: #ff3b66;
-    --accent2: #ff8a00;
-    --muted:#7b7b7b;
-    --bg:#f6f7fb;
-    --card:#ffffff;
-    --radius:14px;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;background:var(--bg);color:#111}
-  /* Top navbar like shopping apps */
-  .topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:40}
-  .brand{display:flex;align-items:center;gap:8px}
-  .brand .logo{
-    width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;
-    background:linear-gradient(135deg,var(--accent1),var(--accent2));color:#fff;font-weight:700;font-size:14px;
-  }
-  .brand h1{font-size:16px;margin:0}
-  .icons{display:flex;gap:10px;align-items:center}
-  .icon{width:36px;height:36px;border-radius:10px;background:#f3f4f8;display:flex;align-items:center;justify-content:center}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpha Pandit Ji - Premium Spiritual Content & Exclusive Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  /* Search bar */
-  .search-wrap{display:flex;align-items:center;gap:10px;padding:12px;background:linear-gradient(180deg,#e9fff7,#dffaf0);border-radius:12px;margin:12px;border:1px solid #c7f0e0}
-  .search-wrap input{flex:1;border:none;background:transparent;font-size:16px;padding:8px;outline:none}
-  .search-actions{display:flex;gap:8px}
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif;
+            background: #f5f5f5;
+            color: #1a1a1a;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-  /* Top quick offers row */
-  .offers{display:flex;gap:10px;padding:10px 12px;overflow:hidden;scroll-snap-type:x mandatory}
-  .offer{flex:0 0 33%;min-width:33%;background:#fff;padding:8px;border-radius:10px;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,0.05)}
-  .offer small{display:block;color:var(--muted);font-size:12px}
-  .offer strong{display:block;margin-top:6px;color:#222}
+        /* Scroll Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            z-index: 9999;
+            transition: width 0.1s;
+        }
 
-  /* Hero video/banner */
-  .hero-wrap{position:relative;height:300px;border-radius:16px;margin:12px;overflow:hidden}
-  .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.6) contrast(1.02)}
-  .hero-fallback{position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,82,82,0.06),rgba(255,138,0,0.06))}
-  .hero-content{position:relative;z-index:3;color:#fff;padding:22px;display:flex;flex-direction:column;gap:12px;height:100%;justify-content:center}
-  .hero-title{font-size:26px;font-weight:700;text-shadow:0 6px 18px rgba(0,0,0,0.35)}
-  .hero-sub{font-size:14px;color:rgba(255,255,255,0.92)}
-  .cta-row{display:flex;gap:12px;align-items:center}
-  .btn{background:linear-gradient(90deg,var(--accent1),var(--accent2));border:none;color:#fff;padding:10px 16px;border-radius:10px;font-weight:600;cursor:pointer;box-shadow:0 8px 24px rgba(255,59,102,0.18)}
-  .ghost{background:rgba(255,255,255,0.12);padding:9px 12px;border-radius:10px;color:#fff;border:1px solid rgba(255,255,255,0.12)}
+        /* Important Notice Banner */
+        .notice-banner {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #ff4757;
+            animation: slideDown 0.6s ease;
+            position: relative;
+            overflow: hidden;
+        }
 
-  /* confetti / emoji animation */
-  .confetti{position:absolute;inset:0;pointer-events:none;z-index:2}
-  .emo{position:absolute;font-size:20px;animation:float 6s linear infinite;opacity:.95}
-  @keyframes float{
-    0%{transform:translateY(0) rotate(0deg)}
-    50%{transform:translateY(-40px) rotate(45deg)}
-    100%{transform:translateY(0) rotate(90deg)}
-  }
+        .notice-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shine 3s infinite;
+        }
 
-  /* product strip (recently viewed) */
-  .section{padding:12px}
-  .section h3{margin:6px 6px 12px;font-size:18px}
-  .hstrip{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px}
-  .pcard{flex:0 0 140px;background:var(--card);padding:10px;border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,0.06);text-align:center}
-  .pcard img{width:100%;height:100px;object-fit:cover;border-radius:8px}
-  .pcard small{display:block;color:var(--muted);margin-top:8px}
-  .price{font-weight:700;margin-top:6px}
+        .notice-banner .notice-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-  /* recommended / carousel style */
-  .recommended{display:flex;gap:12px;overflow-x:auto;padding:10px 6px}
-  .rec{min-width:160px;background:#fff;border-radius:12px;padding:10px;box-shadow:0 8px 20px rgba(0,0,0,0.06)}
-  .rec img{width:100%;height:110px;object-fit:cover;border-radius:8px}
+        .notice-banner h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: #fff;
+            font-weight: 800;
+        }
 
-  /* wallet card */
-  .wallet{margin:12px;padding:14px;border-radius:12px;background:linear-gradient(90deg,#fff,#fff);box-shadow:0 6px 18px rgba(0,0,0,0.06);display:flex;justify-content:space-between;align-items:center}
-  .wallet .left{font-weight:600}
-  .withdraw{background:#0b84ff;color:#fff;padding:10px 12px;border-radius:10px;border:none}
+        .notice-banner p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
 
-  /* footer */
-  footer{padding:20px;text-align:center;color:var(--muted);font-size:13px;margin-top:24px}
+        .notice-banner strong {
+            color: #ffeb3b;
+            font-weight: 900;
+            text-decoration: underline;
+        }
 
-  /* responsiveness */
-  @media(min-width:860px){
-    .hero-wrap{height:420px}
-    .hero-title{font-size:40px}
-    .pcard{flex-basis:180px}
-  }
-</style>
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveGrid 20s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .logo {
+            width: 220px;
+            height: 220px;
+            margin: 0 auto 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 6px solid rgba(255,255,255,0.4);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3), 0 0 50px rgba(102, 126, 234, 0.6);
+            animation: float 3s ease-in-out infinite;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: rotate 3s linear infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 25px;
+            text-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease 0.2s both;
+            letter-spacing: -1px;
+            color: #fff;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 50px;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease 0.4s both;
+            font-weight: 300;
+            color: #fff;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 20px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease 0.6s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .cta-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 80px 20px;
+            background: #ffffff;
+            position: relative;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(145deg, #f9f9f9, #fff);
+            border-radius: 20px;
+            border: 2px solid #e0e0e0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 100px 20px;
+            background: #f5f5f5;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 70px;
+            font-weight: 800;
+            color: #1a1a1a;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .price-card {
+            background: #ffffff;
+            border-radius: 30px;
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            border: 2px solid #e0e0e0;
+            transition: all 0.4s ease;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .price-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.05), transparent);
+            transition: left 0.6s;
+        }
+
+        .price-card:hover::before {
+            left: 100%;
+        }
+
+        .price-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: #667eea;
+            box-shadow: 0 15px 50px rgba(102, 126, 234, 0.25);
+        }
+
+        .price-card.featured {
+            border-color: #FFD700;
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.25);
+            transform: scale(1.05);
+        }
+
+        .price-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .price-card.featured .price-badge {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000;
+        }
+
+        .price-card h3 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            color: #1a1a1a;
+        }
+
+        .price {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #667eea;
+            margin-bottom: 15px;
+            line-height: 1;
+        }
+
+        .price-card.featured .price {
+            color: #FFD700;
+        }
+
+        .price span {
+            font-size: 1.3rem;
+            color: #888;
+            font-weight: 400;
+        }
+
+        .price-features {
+            list-style: none;
+            margin: 40px 0;
+            text-align: left;
+        }
+
+        .price-features li {
+            padding: 18px 0;
+            border-bottom: 1px solid #e0e0e0;
+            color: #333;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+        }
+
+        .price-features li::before {
+            content: '✓';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            margin-right: 15px;
+            font-weight: 900;
+            flex-shrink: 0;
+            font-size: 0.9rem;
+            color: white;
+        }
+
+        .buy-button {
+            display: block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-top: 35px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .buy-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .buy-button:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .buy-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        .price-card.featured .buy-button {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000;
+        }
+
+        .alt-button {
+            display: block;
+            background: transparent;
+            color: #667eea;
+            padding: 17px 40px;
+            border: 2px solid #667eea;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-top: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .alt-button:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: #ffffff;
+            padding: 80px 20px 40px;
+            text-align: center;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .footer-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(145deg, #f9f9f9, #fff);
+            border-radius: 50%;
+            color: #667eea;
+            font-size: 1.8rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-links a::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: #667eea;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s, height 0.4s;
+        }
+
+        .social-links a:hover::before {
+            width: 100%;
+            height: 100%;
+        }
+
+        .social-links a:hover {
+            color: white;
+            transform: translateY(-8px) scale(1.1);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .social-links a svg {
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer p {
+            color: #666;
+            margin: 15px 0;
+            font-size: 1rem;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: #764ba2;
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shine {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .price {
+                font-size: 3rem;
+            }
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            .price-card.featured {
+                transform: scale(1);
+            }
+            .logo {
+                width: 180px;
+                height: 180px;
+            }
+            .notice-banner h3 {
+                font-size: 1.1rem;
+            }
+            .notice-banner p {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Scroll Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
 
-<!-- TOP -->
-<div class="topbar">
-  <div class="brand">
-    <div class="logo">HT</div>
-    <div>
-      <div style="font-size:12px;color:var(--muted)">HolaTube</div>
-      <div style="font-weight:700">Watch • Promote • Earn</div>
-    </div>
-  </div>
-  <div class="icons">
-    <div class="icon">🏠</div>
-    <div class="icon">🛍️</div>
-    <div class="icon">💰</div>
-    <div class="icon">👤</div>
-  </div>
-</div>
+    <!-- Important Notice Banner -->
+    <section class="notice-banner">
+        <div class="notice-content">
+            <h3>⚠️ IMPORTANT NOTICE</h3>
+            <p>
+                <strong>Once you purchase any subscription, the payment is NON-REFUNDABLE.</strong> 
+                Whether you like our service or not, <strong>we will NOT provide any refund.</strong> 
+                Please purchase subscription <strong>at your own risk and discretion.</strong> Thank you!
+            </p>
+        </div>
+    </section>
 
-<!-- SEARCH -->
-<div style="padding:10px">
-  <div class="search-wrap">
-    <input placeholder="Find Your Product's..?" aria-label="search">
-    <div class="search-actions">
-      <div class="icon" title="camera">📷</div>
-      <div class="icon" title="qr">🔍</div>
-    </div>
-  </div>
-</div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="logo">
+                <img src="https://i.ibb.co/HTmgqXLh/Picsart-25-11-04-05-36-14-228.png" alt="Alpha Pandit Ji">
+            </div>
+            <h1>Alpha Pandit Ji</h1>
+            <p class="subtitle">Premium Spiritual Content, Guidance & Exclusive Professional Services</p>
+            <a href="#pricing" class="cta-button">Choose Your Plan</a>
+        </div>
+    </section>
 
-<!-- OFFERS -->
-<div class="offers">
-  <div class="offer"><small>UNLOCK DISCOUNTS</small><strong>Special Deals</strong></div>
-  <div class="offer"><small>SUBSCRIBE & SAVE</small><strong>GET ₹30 OFF</strong></div>
-  <div class="offer"><small>INVITE & EARN</small><strong>₹60,000 EXTRA</strong></div>
-</div>
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" data-target="5000">0</div>
+                <div class="stat-label">Happy Members</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-target="10000">0</div>
+                <div class="stat-label">Content Downloads</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-target="50">0</div>
+                <div class="stat-label">Premium Apps Unlocked</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-target="99">0</div>
+                <div class="stat-label">Customer Satisfaction</div>
+            </div>
+        </div>
+    </section>
 
-<!-- HERO (video background + overlay + confetti) -->
-<div class="hero-wrap">
-  <!-- sample royalty-free video from Pexels (fallback to image if blocked) -->
-  <video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1600&q=80">
-    <source src="https://player.vimeo.com/external/449138540.sd.mp4?s=93b3b3f0b3e4d7c6a3b93c2b3a6d9fa1a2b7c3d8&profile_id=164" type="video/mp4">
-  </video>
-  <div class="hero-fallback"></div>
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <h2 class="section-title">Choose Your Premium Plan</h2>
+        <div class="pricing-grid">
+            <!-- Basic Plan -->
+            <div class="price-card">
+                <span class="price-badge">BASIC</span>
+                <h3>Basic Plan</h3>
+                <div class="price">₹199<span>/month</span></div>
+                <ul class="price-features">
+                    <li>Premium Telegram Channel Access</li>
+                    <li>Daily Spiritual Content</li>
+                    <li>Community Support</li>
+                    <li>30 Days Validity</li>
+                </ul>
+                <a href="https://imjo.in/v8sXQG" class="buy-button" target="_blank">Buy Now</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSciLA2M3H1XVJdVWmbWKhpuwZgLLRIUMAkArIVRHH7u-zoLEg/viewform" class="alt-button" target="_blank">Alternative Form</a>
+            </div>
 
-  <div class="hero-content">
-    <div style="max-width:760px">
-      <div class="hero-title">HolaTube — 100% Cashback Diwali Sale 🎉</div>
-      <div class="hero-sub">18th — 24th Oct • Special cashback & HolaCoin rewards. Promote & earn today!</div>
+            <!-- Premium Plan -->
+            <div class="price-card featured">
+                <span class="price-badge">⭐ MOST POPULAR</span>
+                <h3>Premium Plan</h3>
+                <div class="price">₹499<span>/month</span></div>
+                <ul class="price-features">
+                    <li>All Basic Features</li>
+                    <li>WhatsApp Group Access</li>
+                    <li>Priority Support</li>
+                    <li>Exclusive Spiritual Content</li>
+                    <li>30 Days Validity</li>
+                </ul>
+                <a href="https://imjo.in/mKZYp9" class="buy-button" target="_blank">Buy Now</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSciLA2M3H1XVJdVWmbWKhpuwZgLLRIUMAkArIVRHH7u-zoLEg/viewform" class="alt-button" target="_blank">Alternative Form</a>
+            </div>
 
-      <div class="cta-row" style="margin-top:10px">
-        <button class="btn" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Resell Now 🚀</button>
-        <button class="ghost">How it works ❓</button>
-      </div>
-    </div>
-  </div>
+            <!-- Premium Plus Plan -->
+            <div class="price-card">
+                <span class="price-badge">💎 VIP</span>
+                <h3>Premium Plus</h3>
+                <div class="price">₹999<span>/month</span></div>
+                <ul class="price-features">
+                    <li>Daily New Updates For Social Media</li>
+                    <li>Personal Guide For Only Plus Members</li>
+                    <li>All Premium Features</li>
+                    <li>Personal Guidance</li>
+                    <li>All Editing Premiums Unlocked Apps</li>
+                    <li>30 Days Validity</li>
+                    <li>VIP Content Access</li>
+                </ul>
+                <a href="https://imjo.in/g9YxyK" class="buy-button" target="_blank">Buy Now</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSciLA2M3H1XVJdVWmbWKhpuwZgLLRIUMAkArIVRHH7u-zoLEg/viewform" class="alt-button" target="_blank">Alternative Form</a>
+            </div>
 
-  <!-- confetti/emoji animated elements -->
-  <div class="confetti" aria-hidden="true">
-    <div class="emo" style="left:8%;top:20%">✨</div>
-    <div class="emo" style="left:28%;top:60%;animation-delay:1s">🎁</div>
-    <div class="emo" style="left:50%;top:10%;animation-delay:0.6s">💰</div>
-    <div class="emo" style="left:74%;top:40%;animation-delay:1.2s">🔥</div>
-  </div>
-</div>
+            <!-- Enterprise Plan -->
+            <div class="price-card">
+                <span class="price-badge">💼 ENTERPRISE</span>
+                <h3>Enterprise Plan</h3>
+                <div class="price">₹1999<span>/month</span></div>
+                <ul class="price-features">
+                    <li>All Premium Plus Features</li>
+                    <li>24/7 Priority Support</li>
+                    <li>Custom Content Creation Service</li>
+                    <li>Movie Clips Upload Without Copyright</li>
+                    <li>Bulk Premium Apps Unlocked (50+)</li>
+                    <li>Weekly Any 10 Questions Answered</li>
+                    <li>Premium Telegram Contact Access</li>
+                    <li>30 Days Validity</li>
+                    <li>Private VIP Group Access</li>
+                    <li>Early Access to New Features</li>
+                    <li>YouTube Channel Security Tips & Tricks</li>
+                </ul>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSciLA2M3H1XVJdVWmbWKhpuwZgLLRIUMAkArIVRHH7u-zoLEg/viewform" class="buy-button" target="_blank">Buy Now</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSciLA2M3H1XVJdVWmbWKhpuwZgLLRIUMAkArIVRHH7u-zoLEg/viewform" class="alt-button" target="_blank">Alternative Form</a>
+            </div>
+        </div>
+    </section>
 
-<!-- Recently viewed strip -->
-<section>
-  <h3>हाल ही में देखा गया</h3>
-  <div class="hstrip" id="recent">
-    <!-- product cards (replace images with affiliate images later) -->
-    <div class="pcard">
-      <img src="https://images.unsplash.com/photo-1543163521-1bf539c55be3?auto=format&fit=crop&w=600&q=80" alt="dress">
-      <small>Stylish Kurti</small>
-      <div class="price">₹408</div>
-    </div>
-    <div class="pcard">
-      <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=600&q=80" alt="lehenga">
-      <small>Party Lehenga</small>
-      <div class="price">₹246</div>
-    </div>
-    <div class="pcard">
-      <img src="https://images.unsplash.com/photo-1585386959984-a4155227c0d6?auto=format&fit=crop&w=600&q=80" alt="watch">
-      <small>Smart Watch</small>
-      <div class="price">₹464</div>
-    </div>
-    <div class="pcard">
-      <img src="https://images.unsplash.com/photo-1526178610131-28f8f85f5f81?auto=format&fit=crop&w=600&q=80" alt="necklace">
-      <small>Designer Necklace</small>
-      <div class="price">₹1299</div>
-    </div>
-  </div>
-</section>
+    <!-- Footer -->
+    <footer class="footer">
+        <h3 class="footer-title">Follow Us on Social Media</h3>
+        <div class="social-links">
+            <a href="https://www.instagram.com/alphapanditjiofficial?igsh=cjhwZ2F2bXowMHJp" target="_blank" title="Instagram">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://youtube.com/@alphapanditji?si=8EiqrotqCMrtcGyt" target="_blank" title="YouTube Alpha Pandit Ji">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+            <a href="https://youtube.com/@holaaieditz?si=DLe-zaPr0vqlYao7" target="_blank" title="YouTube Hola AI Editz">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+            <a href="https://t.me/AlphaPanditJiApp" target="_blank" title="Telegram">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            </a>
+            <a href="https://whatsapp.com/channel/0029VbB4dZrCxoB4uE18WT2a" target="_blank" title="WhatsApp">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/share/1BuK9n8R1N/" target="_blank" title="Facebook">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+        </div>
+        <p>&copy; 2025 Alpha Pandit Ji | All Rights Reserved</p>
+        <p>Secure payments powered by <a href="https://www.instamojo.com" target="_blank">Instamojo</a></p>
+        <p>Made with ❤️ in India</p>
+    </footer>
 
-<!-- Recommended / carousel -->
-<section id="products">
-  <h3>Still looking for these?</h3>
-  <div class="recommended">
-    <div class="rec">
-      <img src="https://images.unsplash.com/photo-1580910051077-9c4b6f2a3b2f?auto=format&fit=crop&w=800&q=80" alt="">
-      <div style="padding-top:8px;font-weight:600">Shampoo</div>
-      <div style="color:var(--muted);margin-top:6px">View Store</div>
-    </div>
-    <div class="rec">
-      <img src="https://images.unsplash.com/photo-1617101522206-5c0b3b3bf1b7?auto=format&fit=crop&w=800&q=80" alt="">
-      <div style="padding-top:8px;font-weight:600">Mobiles</div>
-      <div style="color:var(--muted);margin-top:6px">View Store</div>
-    </div>
-    <div class="rec">
-      <img src="https://images.unsplash.com/photo-1600180758891-7c0f9f8b6e0a?auto=format&fit=crop&w=800&q=80" alt="">
-      <div style="padding-top:8px;font-weight:600">Women's Sweater</div>
-      <div style="color:var(--muted);margin-top:6px">View Store</div>
-    </div>
-    <div class="rec">
-      <img src="https://images.unsplash.com/photo-1585386959984-a4155227c0d6?auto=format&fit=crop&w=800&q=80" alt="">
-      <div style="padding-top:8px;font-weight:600">Accessories</div>
-      <div style="color:var(--muted);margin-top:6px">View Store</div>
-    </div>
-  </div>
-</section>
+    <script>
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
 
-<!-- Wallet + CTA -->
-<div class="section">
-  <div class="wallet">
-    <div class="left">👛 Your HolaCoin Wallet • Balance: <strong>120 HolaCoins (₹6.00)</strong></div>
-    <div><button class="withdraw">Withdraw Now</button></div>
-  </div>
-</div>
+        // Counter Animation
+        const counters = document.querySelectorAll('.stat-number');
+        const speed = 200;
 
-<footer>
-  © 2025 HolaTube. All Rights Reserved. Designed with ❤️ by HolaTube Team.
-</footer>
+        counters.forEach(counter => {
+            const updateCount = () => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const inc = target / speed;
 
-<script>
-  // small JS: autoplay hero, safe fallback, minor UX
-  document.addEventListener('DOMContentLoaded',function(){
-    const vid = document.querySelector('.hero-video');
-    if(vid){
-      vid.addEventListener('error',()=>{ vid.style.display='none' });
-      // try to play (mobile autoplay may be blocked; muted already set)
-      vid.play().catch(()=>{ vid.style.display='none' });
-    }
-    // simple swipe scroll for strips on touch devices
-    const strips = document.querySelectorAll('.hstrip, .recommended');
-    strips.forEach(s=>{
-      let pos = null;
-      s.addEventListener('touchstart', e=> pos = e.touches[0].clientX);
-      s.addEventListener('touchmove', e=> {
-        if(!pos) return;
-        const diff = pos - e.touches[0].clientX;
-        s.scrollLeft += diff;
-        pos = e.touches[0].clientX;
-      });
-      s.addEventListener('touchend', ()=> pos = null);
-    });
-  });
-</script>
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + inc);
+                    setTimeout(updateCount, 1);
+                } else {
+                    counter.innerText = target + (target === 99 ? '%' : '+');
+                }
+            };
+
+            const observer = new IntersectionObserver(entries => {
+                if (entries[0].isIntersecting) {
+                    updateCount();
+                    observer.disconnect();
+                }
+            });
+
+            observer.observe(counter);
+        });
+
+        // Smooth Scroll
+        document.querySelector('.cta-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('#pricing').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    </script>
 </body>
 </html>
