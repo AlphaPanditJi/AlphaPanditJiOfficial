@@ -1,1262 +1,257 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alpha Pandit Ji - Premium Spiritual Content & Exclusive Services</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif;
-            background: #f5f5f5;
-            color: #1a1a1a;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            z-index: 9999;
-            transition: width 0.1s;
-        }
-
-        .notice-banner {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
-            padding: 15px 20px;
-            text-align: center;
-            border-bottom: 3px solid #ff4757;
-            animation: slideDown 0.6s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .notice-banner::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
-            animation: shine 3s infinite;
-        }
-
-        .notice-banner .notice-content {
-            position: relative;
-            z-index: 1;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .notice-banner h3 {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            color: #fff;
-            font-weight: 800;
-        }
-
-        .notice-banner p {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: #fff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .notice-banner strong {
-            color: #ffeb3b;
-            font-weight: 900;
-            text-decoration: underline;
-        }
-
-        .header {
-            background: #ffffff;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            position: sticky;
-            top: 0;
-            z-index: 999;
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 30px;
-        }
-
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid #667eea;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-            flex-shrink: 0;
-        }
-
-        .logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .brand-info h1 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #1a1a1a;
-            margin-bottom: 5px;
-        }
-
-        .brand-info p {
-            font-size: 0.85rem;
-            color: #666;
-        }
-
-        .search-box {
-            flex: 1;
-            max-width: 500px;
-            position: relative;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 12px 50px 12px 20px;
-            border: 2px solid #e0e0e0;
-            border-radius: 50px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            outline: none;
-        }
-
-        .search-box input:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
-        }
-
-        .search-box button {
-            position: absolute;
-            right: 5px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.3s ease;
-        }
-
-        .search-box button:hover {
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .search-box button svg {
-            width: 20px;
-            height: 20px;
-            fill: white;
-        }
-
-        .search-results {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 15px;
-            margin-top: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            display: none;
-            z-index: 1000;
-        }
-
-        .search-results.active {
-            display: block;
-        }
-
-        .search-result-item {
-            padding: 15px 20px;
-            border-bottom: 1px solid #f0f0f0;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .search-result-item:hover {
-            background: #f9f9f9;
-        }
-
-        .search-result-item:last-child {
-            border-bottom: none;
-        }
-
-        .result-title {
-            font-weight: 600;
-            color: #1a1a1a;
-            margin-bottom: 5px;
-        }
-
-        .result-price {
-            color: #667eea;
-            font-weight: 700;
-        }
-
-        .result-badge {
-            display: inline-block;
-            background: #667eea;
-            color: white;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            margin-left: 10px;
-        }
-
-        .stats {
-            padding: 60px 20px;
-            background: #ffffff;
-            position: relative;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .stat-card {
-            text-align: center;
-            padding: 35px;
-            background: linear-gradient(145deg, #f9f9f9, #fff);
-            border-radius: 20px;
-            border: 2px solid #e0e0e0;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.2);
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            color: #666;
-        }
-
-        .pricing {
-            padding: 80px 20px;
-            background: #f5f5f5;
-            position: relative;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 50px;
-            font-weight: 800;
-            color: #1a1a1a;
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .price-card {
-            background: #ffffff;
-            border-radius: 25px;
-            padding: 40px 30px;
-            text-align: center;
-            position: relative;
-            border: 2px solid #e0e0e0;
-            transition: all 0.4s ease;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-        }
-
-        .price-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.05), transparent);
-            transition: left 0.6s;
-        }
-
-        .price-card:hover::before {
-            left: 100%;
-        }
-
-        .price-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: #667eea;
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.25);
-        }
-
-        .price-card.featured {
-            border-color: #FFD700;
-            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.25);
-            transform: scale(1.03);
-        }
-
-        .price-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .price-card.featured .price-badge {
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-            color: #000;
-        }
-
-        .price-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            font-weight: 800;
-            color: #1a1a1a;
-        }
-
-        .price {
-            font-size: 3rem;
-            font-weight: 900;
-            color: #667eea;
-            margin-bottom: 10px;
-            line-height: 1;
-        }
-
-        .price-card.featured .price {
-            color: #FFD700;
-        }
-
-        .price span {
-            font-size: 1.1rem;
-            color: #888;
-            font-weight: 400;
-        }
-
-        .price-features {
-            list-style: none;
-            margin: 30px 0;
-            text-align: left;
-        }
-
-        .price-features li {
-            padding: 14px 0;
-            border-bottom: 1px solid #e0e0e0;
-            color: #333;
-            display: flex;
-            align-items: center;
-            font-size: 0.95rem;
-        }
-
-        .price-features li::before {
-            content: '✓';
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 24px;
-            height: 24px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            margin-right: 12px;
-            font-weight: 900;
-            flex-shrink: 0;
-            font-size: 0.85rem;
-            color: white;
-        }
-
-        .buy-button {
-            display: block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 16px 40px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1rem;
-            margin-top: 25px;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .buy-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.2);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .buy-button:hover::before {
-            width: 400px;
-            height: 400px;
-        }
-
-        .buy-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
-        }
-
-        .price-card.featured .buy-button {
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-            color: #000;
-        }
-
-        .alt-button {
-            display: block;
-            background: transparent;
-            color: #667eea;
-            padding: 14px 35px;
-            border: 2px solid #667eea;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            margin-top: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .alt-button:hover {
-            background: #667eea;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .reviews {
-            padding: 80px 20px;
-            background: #ffffff;
-            position: relative;
-        }
-
-        .reviews-container {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .overall-rating {
-            margin-bottom: 50px;
-        }
-
-        .rating-display {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .stars {
-            display: flex;
-            gap: 8px;
-            font-size: 2.5rem;
-        }
-
-        .star {
-            color: #ddd;
-            transition: all 0.3s ease;
-        }
-
-        .star.filled {
-            color: #FFD700;
-            text-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
-        }
-
-        .rating-text {
-            font-size: 1.2rem;
-            color: #666;
-            margin-top: 10px;
-        }
-
-        .rating-count {
-            font-weight: 700;
-            color: #667eea;
-        }
-
-        .review-form-container {
-            background: #f9f9f9;
-            padding: 40px;
-            border-radius: 20px;
-            border: 2px solid #e0e0e0;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-        }
-
-        .review-form-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 30px;
-            color: #1a1a1a;
-        }
-
-        .form-note {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            border-radius: 10px;
-            padding: 15px 20px;
-            margin-bottom: 30px;
-            text-align: left;
-            font-size: 0.95rem;
-            color: #856404;
-        }
-
-        .form-note strong {
-            color: #000;
-        }
-
-        .review-submit-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 16px 50px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-            border: none;
-            cursor: pointer;
-        }
-
-        .review-submit-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
-        }
-
-        .footer {
-            background: #ffffff;
-            padding: 60px 20px 40px;
-            text-align: center;
-            border-top: 2px solid #e0e0e0;
-        }
-
-        .footer-title {
-            font-size: 1.8rem;
-            margin-bottom: 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-bottom: 35px;
-            flex-wrap: wrap;
-        }
-
-        .social-links a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 55px;
-            height: 55px;
-            background: linear-gradient(145deg, #f9f9f9, #fff);
-            border-radius: 50%;
-            color: #667eea;
-            font-size: 1.6rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: 2px solid #e0e0e0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .social-links a::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: #667eea;
-            transform: translate(-50%, -50%);
-            transition: width 0.4s, height 0.4s;
-        }
-
-        .social-links a:hover::before {
-            width: 100%;
-            height: 100%;
-        }
-
-        .social-links a:hover {
-            color: white;
-            transform: translateY(-8px) scale(1.1);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-            border-color: #667eea;
-        }
-
-        .social-links a svg {
-            position: relative;
-            z-index: 1;
-        }
-
-        .auth-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-            border: none;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .auth-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
-        }
-
-        .auth-button svg {
-            width: 20px;
-            height: 20px;
-            fill: white;
-        }
-
-        .reviews-slider {
-            margin: 50px 0;
-            overflow: hidden;
-            position: relative;
-            padding: 40px 0;
-        }
-
-        .reviews-track {
-            display: flex;
-            animation: scroll 60s linear infinite;
-            gap: 30px;
-        }
-
-        .review-card {
-            min-width: 350px;
-            background: #f9f9f9;
-            border-radius: 15px;
-            padding: 25px;
-            border: 2px solid #e0e0e0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease;
-        }
-
-        .review-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.15);
-        }
-
-        .review-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .reviewer-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #667eea;
-        }
-
-        .reviewer-info h4 {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 5px;
-        }
-
-        .review-stars {
-            display: flex;
-            gap: 3px;
-        }
-
-        .review-stars .star {
-            font-size: 1rem;
-            color: #FFD700;
-        }
-
-        .review-text {
-            color: #555;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        .review-meta {
-            display: flex;
-            gap: 15px;
-            font-size: 0.85rem;
-            color: #888;
-        }
-
-        .social-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 4px 10px;
-            background: #e0e0e0;
-            border-radius: 12px;
-        }
-
-        .social-badge svg {
-            width: 14px;
-            height: 14px;
-        }
-
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        .footer p {
-            color: #666;
-            margin: 12px 0;
-            font-size: 0.95rem;
-        }
-
-        .footer a {
-            color: #667eea;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer a:hover {
-            color: #764ba2;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes shine {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .logo-section {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .brand-info h1 {
-                font-size: 1.3rem;
-            }
-
-            .search-box {
-                max-width: 100%;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .price {
-                font-size: 2.5rem;
-            }
-
-            .pricing-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .price-card.featured {
-                transform: scale(1);
-            }
-
-            .notice-banner h3 {
-                font-size: 1rem;
-            }
-
-            .notice-banner p {
-                font-size: 0.85rem;
-            }
-
-            .review-form-container {
-                padding: 30px 20px;
-            }
-
-            .stars {
-                font-size: 2rem;
-            }
-        }
-    </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>HolaTube — Watch • Resell • Earn</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050409;            /* deep black */
+    --card:#0f1216;          /* dark card */
+    --muted:#9aa3b2;
+    --neon1:#8b5cf6;         /* purple */
+    --neon2:#ff6b6b;         /* pink/red */
+    --accent: linear-gradient(90deg,var(--neon1),#00e6a8,var(--neon2));
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;font-family:'Poppins',system-ui,Segoe UI,Roboto,-apple-system,Arial;
+    background:linear-gradient(180deg,#03040a 0%, #07101a 100%); color:#e6eef8;
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    padding-bottom:88px; /* for fixed bottom ad */
+  }
+
+  /* TOP NAV (compact app-like) */
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:transparent;position:sticky;top:0;z-index:60}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo-wrap{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#0b1020, #0f1724);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.04)}
+  .logo-wrap img{width:36px;height:36px;object-fit:contain;border-radius:8px}
+  .brand-title{line-height:1}
+  .brand-title .b1{font-weight:700;font-size:15px;color:linear-gradient(90deg,var(--neon1),var(--neon2))}
+  .icons{display:flex;gap:10px;align-items:center}
+  .nav-ico{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;color:#cbd5e1;font-size:18px;border:1px solid rgba(255,255,255,0.03)}
+
+  /* Search */
+  .search-area{padding:12px}
+  .search{display:flex;gap:8px;align-items:center;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;padding:10px;border:1px solid rgba(255,255,255,0.03)}
+  .search input{flex:1;background:transparent;border:none;color:#e6eef8;font-size:15px;outline:none}
+  .search .sbtn{background:transparent;border:none;color:var(--muted);font-size:18px;padding:6px;border-radius:8px}
+
+  /* HERO */
+  .hero{margin:12px;border-radius:18px;overflow:hidden;position:relative;background:linear-gradient(180deg, rgba(139,92,246,0.06), rgba(0,230,168,0.04));border:1px solid rgba(255,255,255,0.03)}
+  .hero video{width:100%;height:220px;object-fit:cover;display:block;filter:brightness(.55) saturate(1.05)}
+  .hero .overlay{position:absolute;inset:0;padding:18px;display:flex;flex-direction:column;justify-content:flex-end;gap:8px}
+  .hero .badge{display:inline-block;background:linear-gradient(90deg,var(--neon1),var(--neon2));color:#fff;padding:6px 10px;border-radius:999px;font-weight:700;box-shadow:0 10px 30px rgba(139,92,246,0.12)}
+  .hero h1{margin:0;font-size:20px;font-weight:800;color:#fff;text-shadow:0 6px 18px rgba(0,0,0,0.6)}
+  .hero p{margin:0;color:rgba(230,238,248,0.85);font-size:13px}
+
+  .hero-cta{display:flex;gap:10px;margin-top:10px}
+  .btn-primary{padding:10px 14px;border-radius:12px;background:var(--accent);border:none;color:#03040a;font-weight:700;cursor:pointer;box-shadow:0 10px 30px rgba(139,92,246,0.12)}
+  .btn-ghost{padding:9px 12px;border-radius:12px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:#e6eef8}
+
+  /* OFFER TAGS row */
+  .offers{display:flex;gap:10px;padding:12px;overflow-x:auto}
+  .tag{flex:0 0 48%;min-width:48%;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);font-weight:700;color:#e6eef8;text-align:center}
+
+  /* Featured picks - rounded card style like AppStore */
+  .section{padding:12px}
+  .section h3{margin:0 0 12px;font-size:16px;color:#e6eef8}
+  .hstrip{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px}
+  .pcard{flex:0 0 150px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:12px;border-radius:18px;border:1px solid rgba(255,255,255,0.03);text-align:center;min-width:150px;box-shadow:0 10px 30px rgba(0,0,0,0.45)}
+  .pcard img{width:100%;height:120px;object-fit:cover;border-radius:14px}
+  .pcard .label{color:var(--muted);font-size:13px;margin-top:8px}
+  .pcard .price{margin-top:6px;font-weight:800;color:#fff}
+
+  /* Category circles */
+  .cats{display:flex;gap:12px;overflow-x:auto;padding:12px}
+  .cat{flex:0 0 92px;min-width:92px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:12px;border-radius:22px;text-align:center;border:1px solid rgba(255,255,255,0.02)}
+  .cat img{width:56px;height:56px;border-radius:999px;object-fit:cover;border:2px solid rgba(255,255,255,0.03)}
+  .cat small{display:block;margin-top:8px;color:var(--muted)}
+
+  /* quick banner / promo */
+  .promo{margin:12px;border-radius:14px;padding:12px;background:linear-gradient(90deg,#06101a 0%, rgba(139,92,246,0.06) 100%);border:1px solid rgba(255,255,255,0.03);display:flex;align-items:center;justify-content:space-between}
+  .promo .txt{font-weight:700}
+  .promo .sub{color:var(--muted);font-size:13px}
+
+  /* wallet card */
+  .wallet{margin:12px;padding:14px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(255,255,255,0.03)}
+
+  /* bottom fixed ad area (IMPORTANT) */
+  .bottom-ad{position:fixed;left:0;right:0;bottom:0;height:72px;background:#000;border-top:1px solid rgba(255,255,255,0.03);display:flex;align-items:center;justify-content:center;z-index:999}
+  .ad-wrap{width:100%;max-width:720px;padding:10px;display:flex;align-items:center;justify-content:center}
+  .ad-placeholder{width:100%;height:50px;border-radius:8px;background:linear-gradient(90deg,#0f1724,#071428);display:flex;align-items:center;justify-content:center;color:#8aa6ff;border:1px dashed rgba(138,166,255,0.18)}
+
+  /* language bottom button (small) */
+  .lang-btn{position:fixed;left:12px;bottom:88px;background:rgba(255,255,255,0.03);padding:8px 10px;border-radius:10px;font-weight:700;color:#cfe9ff;border:1px solid rgba(255,255,255,0.04);z-index:90}
+
+  footer{padding:18px;text-align:center;color:var(--muted);font-size:13px;margin-top:12px}
+
+  /* responsive tweaks */
+  @media(min-width:860px){
+    body{padding-bottom:120px}
+    .hero video{height:360px}
+    .pcard{min-width:200px}
+  }
+</style>
 </head>
 <body>
-    <div class="progress-bar" id="progressBar"></div>
 
-    <section class="notice-banner">
-        <div class="notice-content">
-            <h3>⚠️ IMPORTANT NOTICE</h3>
-            <p>
-                <strong>Once you purchase any subscription, the payment is NON-REFUNDABLE.</strong> 
-                Whether you like our service or not, <strong>we will NOT provide any refund.</strong> 
-                Please purchase subscription <strong>at your own risk and discretion.</strong> Thank you!
-            </p>
-        </div>
-    </section>
+<!-- Top -->
+<div class="topbar">
+  <div class="brand">
+    <div class="logo-wrap">
+      <!-- placeholder logo (replace with your logo image) -->
+      <img alt="HolaTube" id="appLogo" src="data:image/svg+xml;utf8,
+      <svg xmlns='http://www.w3.org/2000/svg' width='90' height='90'>
+        <rect rx='16' width='90' height='90' fill='%230e1720'/>
+        <text x='50%' y='56%' font-size='38' fill='white' font-family='Poppins' font-weight='700' text-anchor='middle'>HT</text>
+      </svg>">
+    </div>
+    <div class="brand-title">
+      <div style="font-size:12px;color:var(--muted)">HolaTube</div>
+      <div style="font-weight:800;font-size:14px">Watch • Resell • Earn</div>
+    </div>
+  </div>
 
-    <header class="header">
-        <div class="header-container">
-            <div class="logo-section">
-                <div class="logo">
-                    <img src="https://i.ibb.co/HTmgqXLh/Picsart-25-11-04-05-36-14-228.png" alt="Alpha Pandit Ji">
-                </div>
-                <div class="brand-info">
-                    <h1>Alpha Pandit Ji</h1>
-                    <p>Premium Spiritual Content & Exclusive Services</p>
-                </div>
-            </div>
-            
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Search subscriptions, products, services..." autocomplete="off">
-                <button type="button" onclick="performSearch()">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                    </svg>
-                </button>
-                <div class="search-results" id="searchResults"></div>
-            </div>
+  <div class="icons">
+    <div class="nav-ico" title="Home">🏠</div>
+    <div class="nav-ico" title="Categories">🔲</div>
+    <div class="nav-ico" title="Wishlist">💖</div>
+    <div class="nav-ico" title="Account">👤</div>
+  </div>
+</div>
 
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSciLA2M3H1XVJdVWmbWKhpuwZgLLRIUMAkArIVRHH7u-zoLEg/viewform" class="auth-button" target="_blank">
-                <svg viewBox="0 0 24 24">
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                </svg>
-                Sign Up / Login
-            </a>
-        </div>
-    </header>
+<!-- Search -->
+<div class="search-area">
+  <div class="search">
+    <input placeholder="Find Your Product's..?" aria-label="search">
+    <button class="sbtn" title="camera">📷</button>
+    <button class="sbtn" title="scan">🔍</button>
+  </div>
+</div>
 
-    <section class="stats">
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number" data-target="5000">0</div>
-                <div class="stat-label">Happy Members</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" data-target="10000">0</div>
-                <div class="stat-label">Content Downloads</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" data-target="50">0</div>
-                <div class="stat-label">Premium Apps Unlocked</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" data-target="99">0</div>
-                <div class="stat-label">Customer Satisfaction</div>
-            </div>
-        </div>
-    </section>
+<!-- Hero (animated video / fallback image) -->
+<div class="hero" role="banner">
+  <video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1600&q=80">
+    <!-- Sample royalty-free mp4 (replace with your own short mp4) -->
+    <source src="https://cdn.coverr.co/videos/coverr-neon-city-1579?token=eyJhbGciOi..." type="video/mp4">
+  </video>
 
-    <section class="pricing" id="pricing">
-        <h2 class="section-title">Choose Your Premium Plan</h2>
-        <div class="pricing-grid">
-            <div class="price-card" data-plan="basic">
-                <span class="price-badge">BASIC</span>
-                <h3>Basic Plan</h3>
-                <div class="price">₹199<span>/month</span></div>
-                <ul class="price-features">
-                    <li>Premium Telegram Channel Access</li>
-                    <li>Daily Spiritual Content</li>
-                    <li>Community Support</li>
-                    <li>30 Days Validity</li>
-                </ul>
-                <a href="https://imjo.in/v8sXQG" class="buy-button" target="_blank">Buy Now</a>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSciLA2M3H1XVJdVWmbWKhpuwZgLLRIUMAkArIVRHH7u-zoLEg/viewform" class="alt-button" target="_blank">Alternative Form</a>
-            </div>
+  <div class="overlay"></div>
+  <div class="overlay hero-overlay">
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <div class="badge">HOT • LIMITED</div>
+      <h1>HolaTube — 100% CASHBACK FESTIVAL</h1>
+      <p>18th — 24th Oct • Resell & Earn HolaCoins • Multi-language • Global sellers</p>
+      <div class="hero-cta">
+        <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Resell Now 🚀</button>
+        <button class="btn-ghost" onclick="alert('How it works: Promote, Share, Earn HolaCoins!')">How it works</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-            <div class="price-card featured" data-plan="premium">
-                <span class="price-badge">⭐ MOST POPULAR</span>
-                <h3>Premium Plan</h3>
-                <div class="price">₹499<span>/month</span></div>
-                <ul class="price-features">
-                    <li>All Basic Features</li>
-                    <li>WhatsApp Group Access</li>
-                    <li>Priority Support</li>
-                    <li>Exclusive Spiritual Content</li>
-                    <li>30 Days Validity</li>
-                </ul>
-                <a href="https://imjo.in/mKZYp9" class="buy-button" target="_blank">Buy Now</a>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSciLA2M3H1XVJdVWmbWKhpuwZgLLRIUMAkArIVRHH7u-zoLEg/viewform" class="alt-button" target="_blank">Alternative Form</a>
-            </div>
+<!-- Offer tags row -->
+<div class="offers">
+  <div class="tag">UNLOCK FESTIVE DEALS</div>
+  <div class="tag">SUBSCRIBE & SAVE • UPTO 50% OFF</div>
+</div>
 
-            <div class="price-card" data-plan="premium-plus">
-                <span class="price-badge">💎 VIP</span>
-                <h3>Premium Plus</h3>
-                <div class="price">₹999<span>/month</span></div>
-                <ul class="price-features">
-                    <li>Daily New Updates For Social Media</li>
-                    <li>Personal Guide For Only Plus Members</li>
-                    <li>All Premium Features</li>
-                    <li>Personal Guidance</li>
-                    <li>All Editing Premiums Unlocked Apps</li>
-                    <li>30 Days Validity</li>
-                    <li>VIP Content Access</li>
-                </ul>
-                <a href="https://imjo.in/g9YxyK" class="buy-button" target="_blank">Buy Now</a>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSciLA2M3H1XVJdVWmbWKhpuwZgLLRIUMAkArIVRHH7u-zoLEg/viewform" class="alt-button" target="_blank">Alternative Form</a>
-            </div>
+<!-- Featured picks -->
+<section class="section">
+  <h3>FEATURED PICKS</h3>
+  <div class="hstrip" id="products">
+    <!-- product cards (rounded, AppStore style) -->
+    <div class="pcard">
+      <img src="https://images.unsplash.com/photo-1580910051077-9c4b6f2a3b2f?auto=format&fit=crop&w=800&q=80" alt="">
+      <div class="label">Electronics</div>
+      <div class="price">₹129.50</div>
+    </div>
+    <div class="pcard">
+      <img src="https://images.unsplash.com/photo-1543163521-1bf539c55be3?auto=format&fit=crop&w=800&q=80" alt="">
+      <div class="label">Smartwatch</div>
+      <div class="price">₹2,499</div>
+    </div>
+    <div class="pcard">
+      <img src="https://images.unsplash.com/photo-1526178610131-28f8f85f5f81?auto=format&fit=crop&w=800&q=80" alt="">
+      <div class="label">Handbag</div>
+      <div class="price">₹1,299</div>
+    </div>
+    <div class="pcard">
+      <img src="https://images.unsplash.com/photo-1600180758891-7c0f9f8b6e0a?auto=format&fit=crop&w=800&q=80" alt="">
+      <div class="label">Candle</div>
+      <div class="price">₹399</div>
+    </div>
+  </div>
+</section>
 
-            <div class="price-card" data-plan="enterprise">
-                <span class="price-badge">💼 ENTERPRISE</span>
-                <h3>Enterprise Plan</h3>
-                <div class="price">₹1999<span>/month</span></div>
-                <ul class="price-features">
-                    <li>All Premium Plus Features</li>
-                    <li>24/7 Priority Support</li>
-                    <li>Custom Content Creation Service</li>
-                    <li>Movie Clips Upload Without Copyright</li>
-                    <li>Bulk Premium Apps Unlocked (50+)</li>
-                    <li>Weekly Any 10 Questions Answered</li>
-                    <li>Premium Telegram Contact Access</li>
-                    <li>30 Days Validity</li>
-                    <li>Private VIP Group Access</li>
-                    <li>Early Access to New Features</li>
-                    <li>YouTube Channel Security Tips & Tricks</li>
-                </ul>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSciLA2M3H1XVJdVWmbWKhpuwZgLLRIUMAkArIVRHH7u-zoLEg/viewform" class="buy-button" target="_blank">Buy Now</a>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSciLA2M3H1XVJdVWmbWKhpuwZgLLRIUMAkArIVRHH7u-zoLEg/viewform" class="alt-button" target="_blank">Alternative Form</a>
-            </div>
-        </div>
-    </section>
+<!-- Categories -->
+<section class="section">
+  <h3>POPULAR CATEGORIES</h3>
+  <div class="cats">
+    <div class="cat"><img src="https://images.unsplash.com/photo-1592878849124-2d56a4df1f16?auto=format&fit=crop&w=400&q=80"><small>Electronics</small></div>
+    <div class="cat"><img src="https://images.unsplash.com/photo-1556909215-3ddf0b66d8d5?auto=format&fit=crop&w=400&q=80"><small>Home Decor</small></div>
+    <div class="cat"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80"><small>Beauty</small></div>
+    <div class="cat"><img src="https://images.unsplash.com/photo-1532634896-26909d0d1b5d?auto=format&fit=crop&w=400&q=80"><small>Fashion</small></div>
+  </div>
+</section>
 
-    <section class="reviews" id="reviews">
-        <div class="reviews-container">
-            <h2 class="section-title">Customer Reviews</h2>
-            
-            <div class="overall-rating">
-                <div class="rating-display">
-                    <div class="stars">
-                        <span class="star filled">★</span>
-                        <span class="star filled">★</span>
-                        <span class="star filled">★</span>
-                        <span class="star filled">★</span>
-                        <span class="star">★</span>
-                    </div>
-                </div>
-                <p class="rating-text">
-                    <span class="rating-count">4.2 out of 5</span> - Based on 100+ customer reviews
-                </p>
-            </div>
+<!-- Promo / Earn -->
+<section class="section">
+  <div class="promo">
+    <div>
+      <div class="txt">Earn with every action 💎</div>
+      <div class="sub">Refer • Promote • Resell • Spin • Watch • Win</div>
+    </div>
+    <div><button class="btn-primary" onclick="alert('Start Earning Now!')">Start Earning</button></div>
+  </div>
+</section>
 
-            <div class="reviews-slider">
-                <div class="reviews-track" id="reviewsTrack"></div>
-            </div>
+<!-- Wallet card -->
+<div class="wallet">
+  <div>👛 HolaCoin Balance • <strong>120 HC (₹6)</strong></div>
+  <div><button class="btn-ghost" onclick="alert('Withdraw flow (KYC required)')">Withdraw</button></div>
+</div>
 
-            <div class="review-form-container">
-                <h3 class="review-form-title">📝 Share Your Experience</h3>
-                
-                <div class="form-note">
-                    <strong>📌 Note:</strong> Your feedback helps us improve our services and helps other customers make informed decisions. Please share your honest experience with Alpha Pandit Ji services.
-                </div>
+<footer>
+  © 2025 HolaTube. All Rights Reserved. Designed with ❤️ by HolaTube Team.
+</footer>
 
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSciLA2M3H1XVJdVWmbWKhpuwZgLLRIUMAkArIVRHH7u-zoLEg/viewform" class="review-submit-button" target="_blank">
-                    Write a Review
-                </a>
-            </div>
-        </div>
-    </section>
+<!-- LANGUAGE BUTTON -->
+<button class="lang-btn" onclick="openLang()">🌐 Language</button>
 
-    <footer class="footer">
-        <h3 class="footer-title">Follow Us on Social Media</h3>
-        <div class="social-links">
-            <a href="https://www.instagram.com/alphapanditjiofficial?igsh=cjhwZ2F2bXowMHJp" target="_blank" title="Instagram">
-                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-            </a>
-            <a href="https://youtube.com/@alphapanditji?si=8EiqrotqCMrtcGyt" target="_blank" title="YouTube Alpha Pandit Ji">
-                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-            </a>
-            <a href="https://youtube.com/@holaaieditz?si=DLe-zaPr0vqlYao7" target="_blank" title="YouTube Hola AI Editz">
-                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-            </a>
-            <a href="https://t.me/AlphaPanditJiApp" target="_blank" title="Telegram">
-                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-            </a>
-            <a href="https://whatsapp.com/channel/0029VbB4dZrCxoB4uE18WT2a" target="_blank" title="WhatsApp">
-                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-            </a>
-            <a href="https://www.facebook.com/share/1BuK9n8R1N/" target="_blank" title="Facebook">
-                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            </a>
-        </div>
-        <p>&copy; 2025 Alpha Pandit Ji | All Rights Reserved</p>
-        <p>Secure payments powered by <a href="https://www.instamojo.com" target="_blank">Instamojo</a></p>
-        <p>Made with ❤️ in India</p>
-    </footer>
+<!-- BOTTOM FIXED AD (AdMob placeholder) -->
+<div class="bottom-ad" aria-hidden="false">
+  <div class="ad-wrap">
+    <!-- Replace inner div with AdSense/AdMob iframe / script as required -->
+    <div class="ad-placeholder" id="adSlot">[Fixed Bottom Ad • AdMob Slot] - Replace with Ad Code</div>
+  </div>
+</div>
 
-    <script>
-        const searchData = [
-            { title: 'Basic Plan Subscription', price: '₹199/month', type: 'subscription', plan: 'basic' },
-            { title: 'Premium Plan Subscription', price: '₹499/month', type: 'subscription', plan: 'premium' },
-            { title: 'Premium Plus Subscription', price: '₹999/month', type: 'subscription', plan: 'premium-plus' },
-            { title: 'Enterprise Plan Subscription', price: '₹1999/month', type: 'subscription', plan: 'enterprise' },
-            { title: 'Telegram Channel Access', price: 'From ₹199', type: 'service', plan: 'basic' },
-            { title: 'WhatsApp Group Support', price: 'From ₹499', type: 'service', plan: 'premium' },
-            { title: 'VIP Content Access', price: '₹999/month', type: 'service', plan: 'premium-plus' },
-            { title: 'Custom Content Creation', price: '₹1999/month', type: 'service', plan: 'enterprise' }
-        ];
+<script>
+  // Basic interactions
+  function openLang(){
+    const lang = prompt('Select language (type name) — e.g. English, Hindi, Arabic, Spanish');
+    if(lang) alert('Language set to: ' + lang + ' (demo)');
+  }
 
-        const searchInput = document.getElementById('searchInput');
-        const searchResults = document.getElementById('searchResults');
+  // Replace default logo with uploaded file (if present)
+  function setLogo(url){
+    const img = document.getElementById('appLogo');
+    if(img) img.src = url;
+  }
 
-        searchInput.addEventListener('input', function() {
-            const query = this.value.toLowerCase().trim();
-            
-            if (query.length === 0) {
-                searchResults.classList.remove('active');
-                return;
-            }
+  // Swipe support for strips
+  document.querySelectorAll('.hstrip, .cats, .offers').forEach(s=>{
+    let startX=0, scrollLeft=0;
+    s.addEventListener('touchstart', e=>{ startX = e.touches[0].pageX - s.offsetLeft; scrollLeft = s.scrollLeft; });
+    s.addEventListener('touchmove', e=>{ const x = e.touches[0].pageX - s.offsetLeft; const walk = (x - startX); s.scrollLeft = scrollLeft - walk; });
+  });
 
-            const filtered = searchData.filter(item => 
-                item.title.toLowerCase().includes(query) || 
-                item.type.toLowerCase().includes(query) ||
-                item.price.toLowerCase().includes(query)
-            );
-
-            if (filtered.length > 0) {
-                displayResults(filtered);
-                searchResults.classList.add('active');
-            } else {
-                searchResults.innerHTML = '<div class="search-result-item"><div class="result-title">No results found</div></div>';
-                searchResults.classList.add('active');
-            }
-        });
-
-        function displayResults(results) {
-            searchResults.innerHTML = results.map(item => `
-                <div class="search-result-item" onclick="scrollToPlan('${item.plan}')">
-                    <div class="result-title">${item.title}<span class="result-badge">${item.type}</span></div>
-                    <div class="result-price">${item.price}</div>
-                </div>
-            `).join('');
-        }
-
-        function scrollToPlan(planType) {
-            const planCard = document.querySelector(`[data-plan="${planType}"]`);
-            if (planCard) {
-                planCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                planCard.style.transform = 'scale(1.05)';
-                setTimeout(() => {
-                    planCard.style.transform = '';
-                }, 500);
-            }
-            searchResults.classList.remove('active');
-            searchInput.value = '';
-        }
-
-        function performSearch() {
-            const query = searchInput.value.toLowerCase().trim();
-            if (query) {
-                searchInput.dispatchEvent(new Event('input'));
-            }
-        }
-
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.search-box')) {
-                searchResults.classList.remove('active');
-            }
-        });
-
-        window.addEventListener('scroll', () => {
-            const winScroll = document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            document.getElementById('progressBar').style.width = scrolled + '%';
-        });
-
-        const counters = document.querySelectorAll('.stat-number');
-        const speed = 200;
-
-        counters.forEach(counter => {
-            const updateCount = () => {
-                const target = +counter.getAttribute('data-target');
-                const count = +counter.innerText;
-                const inc = target / speed;
-
-                if (count < target) {
-                    counter.innerText = Math.ceil(count + inc);
-                    setTimeout(updateCount, 1);
-                } else {
-                    counter.innerText = target + (target === 99 ? '%' : '+');
-                }
-            };
-
-            const observer = new IntersectionObserver(entries => {
-                if (entries[0].isIntersecting) {
-                    updateCount();
-                    observer.disconnect();
-                }
-            });
-
-            observer.observe(counter);
-        });
-
-        const reviews = [
-            { name: 'Rajesh Kumar', avatar: 'https://i.pravatar.cc/150?img=12', rating: 5, text: 'Excellent service! Got all premium apps unlocked. Worth every penny!', social: 'instagram', verified: true },
-            { name: 'Priya Sharma', avatar: 'https://i.pravatar.cc/150?img=5', rating: 5, text: 'Great content quality. WhatsApp group is very active and helpful.', social: 'facebook', verified: true },
-            { name: 'Amit Patel', avatar: 'https://i.pravatar.cc/150?img=33', rating: 5, text: 'Best decision ever! Premium content is amazing. Highly recommended!', social: 'instagram', verified: true },
-            { name: 'Sneha Reddy', avatar: 'https://i.pravatar.cc/150?img=9', rating: 4, text: 'Very satisfied with the service. Customer support is excellent.', social: 'facebook', verified: true },
-            { name: 'Vikram Singh', avatar: 'https://i.pravatar.cc/150?img=15', rating: 5, text: 'Got Enterprise plan. All features working perfectly. Thank you!', social: 'instagram', verified: true },
-            { name: 'Anjali Gupta', avatar: 'https://i.pravatar.cc/150?img=16', rating: 4, text: 'Good value for money. Content updates are regular and useful.', social: 'facebook', verified: true },
-            { name: 'Rohit Verma', avatar: 'https://i.pravatar.cc/150?img=68', rating: 5, text: 'Amazing experience! Premium apps are working great. Very happy!', social: 'instagram', verified: true },
-            { name: 'Deepika Joshi', avatar: 'https://i.pravatar.cc/150?img=20', rating: 5, text: 'Professional service. Got all promised features. Recommended!', social: 'facebook', verified: true },
-            { name: 'Karan Mehta', avatar: 'https://i.pravatar.cc/150?img=52', rating: 5, text: 'Superb content quality! WhatsApp support is very responsive.', social: 'instagram', verified: true },
-            { name: 'Pooja Nair', avatar: 'https://i.pravatar.cc/150?img=23', rating: 4, text: 'Great service! Daily updates are helpful for my work.', social: 'facebook', verified: true },
-            { name: 'Arjun Desai', avatar: 'https://i.pravatar.cc/150?img=57', rating: 5, text: 'Best spiritual content provider! Very satisfied customer.', social: 'instagram', verified: true },
-            { name: 'Neha Kapoor', avatar: 'https://i.pravatar.cc/150?img=27', rating: 5, text: 'Premium Plus plan is worth it! All apps unlocked perfectly.', social: 'facebook', verified: true },
-            { name: 'Sanjay Rao', avatar: 'https://i.pravatar.cc/150?img=60', rating: 5, text: 'Excellent customer service! Quick response to all queries.', social: 'instagram', verified: true },
-            { name: 'Ritu Agarwal', avatar: 'https://i.pravatar.cc/150?img=29', rating: 4, text: 'Good content quality. Regular updates keep me engaged.', social: 'facebook', verified: true },
-            { name: 'Manoj Kumar', avatar: 'https://i.pravatar.cc/150?img=70', rating: 5, text: 'Amazing service! Got more than what I expected. Highly recommended!', social: 'instagram', verified: true },
-            { name: 'Sahil Jain', avatar: 'https://i.pravatar.cc/150?img=13', rating: 5, text: 'Superb quality! Daily content updates are fantastic.', social: 'instagram', verified: true },
-            { name: 'Divya Singh', avatar: 'https://i.pravatar.cc/150?img=24', rating: 5, text: 'Best investment for my YouTube channel. Highly recommended!', social: 'facebook', verified: true },
-            { name: 'Rahul Sharma', avatar: 'https://i.pravatar.cc/150?img=32', rating: 4, text: 'Great service! All premium apps working perfectly.', social: 'instagram', verified: true },
-            { name: 'Kavita Deshmukh', avatar: 'https://i.pravatar.cc/150?img=45', rating: 5, text: 'Amazing support team! Always there to help. Thank you!', social: 'facebook', verified: true },
-            { name: 'Aditya Rao', avatar: 'https://i.pravatar.cc/150?img=51', rating: 5, text: 'Premium content is top-notch. Worth every rupee!', social: 'instagram', verified: true },
-            { name: 'Meera Iyer', avatar: 'https://i.pravatar.cc/150?img=26', rating: 4, text: 'Very satisfied customer! Regular updates and good support.', social: 'facebook', verified: true },
-            { name: 'Gaurav Malik', avatar: 'https://i.pravatar.cc/150?img=61', rating: 5, text: 'Best spiritual content provider in India! Highly recommended!', social: 'instagram', verified: true },
-            { name: 'Shweta Reddy', avatar: 'https://i.pravatar.cc/150?img=31', rating: 5, text: 'Excellent service! Got all features as promised. Very happy!', social: 'facebook', verified: true },
-            { name: 'Nikhil Bansal', avatar: 'https://i.pravatar.cc/150?img=54', rating: 5, text: 'Premium Plus is amazing! All apps unlocked perfectly.', social: 'instagram', verified: true },
-            { name: 'Anushka Patel', avatar: 'https://i.pravatar.cc/150?img=22', rating: 4, text: 'Great content quality. Customer support is very responsive.', social: 'facebook', verified: true },
-            { name: 'Vivek Kumar', avatar: 'https://i.pravatar.cc/150?img=59', rating: 5, text: 'Outstanding service! Exceeded my expectations completely.', social: 'instagram', verified: true },
-            { name: 'Priyanka Joshi', avatar: 'https://i.pravatar.cc/150?img=28', rating: 5, text: 'Best decision for my YouTube channel growth. Thank you!', social: 'facebook', verified: true },
-            { name: 'Siddharth Verma', avatar: 'https://i.pravatar.cc/150?img=66', rating: 5, text: 'Superb content! WhatsApp group is very active and helpful.', social: 'instagram', verified: true },
-            { name: 'Nisha Gupta', avatar: 'https://i.pravatar.cc/150?img=25', rating: 4, text: 'Good value for money. All features working as promised.', social: 'facebook', verified: true },
-            { name: 'Akash Mehta', avatar: 'https://i.pravatar.cc/150?img=55', rating: 5, text: 'Amazing experience! Premium apps are all working great.', social: 'instagram', verified: true },
-            { name: 'Tanvi Kapoor', avatar: 'https://i.pravatar.cc/150?img=21', rating: 5, text: 'Excellent service! Daily updates are very useful for content creation.', social: 'facebook', verified: true },
-            { name: 'Rohit Agarwal', avatar: 'https://i.pravatar.cc/150?img=67', rating: 5, text: 'Best spiritual content provider! Very satisfied with the service.', social: 'instagram', verified: true },
-            { name: 'Simran Kaur', avatar: 'https://i.pravatar.cc/150?img=30', rating: 4, text: 'Great support! All my queries were answered promptly.', social: 'facebook', verified: true },
-            { name: 'Kunal Desai', avatar: 'https://i.pravatar.cc/150?img=58', rating: 5, text: 'Outstanding! Premium Plus plan is totally worth it.', social: 'instagram', verified: true },
-            { name: 'Isha Sharma', avatar: 'https://i.pravatar.cc/150?img=19', rating: 5, text: 'Best investment for content creators. Highly recommended!', social: 'facebook', verified: true },
-            { name: 'Harsh Patel', avatar: 'https://i.pravatar.cc/150?img=64', rating: 5, text: 'Superb service! All features working perfectly. Very happy!', social: 'instagram', verified: true },
-            { name: 'Riya Singh', avatar: 'https://i.pravatar.cc/150?img=18', rating: 4, text: 'Good content quality. Regular updates keep me engaged always.', social: 'facebook', verified: true },
-            { name: 'Varun Kumar', avatar: 'https://i.pravatar.cc/150?img=63', rating: 5, text: 'Amazing service! Got more value than expected. Thank you!', social: 'instagram', verified: true },
-            { name: 'Kritika Jain', avatar: 'https://i.pravatar.cc/150?img=17', rating: 5, text: 'Excellent customer support! Always ready to help members.', social: 'facebook', verified: true },
-            { name: 'Yash Reddy', avatar: 'https://i.pravatar.cc/150?img=62', rating: 5, text: 'Premium content is fantastic! Best decision for my channel.', social: 'instagram', verified: true },
-            { name: 'Aditi Verma', avatar: 'https://i.pravatar.cc/150?img=14', rating: 4, text: 'Very satisfied! All premium apps unlocked without any issues.', social: 'facebook', verified: true },
-            { name: 'Manish Gupta', avatar: 'https://i.pravatar.cc/150?img=69', rating: 5, text: 'Best spiritual content provider in India! Highly recommended!', social: 'instagram', verified: true },
-            { name: 'Snehal Desai', avatar: 'https://i.pravatar.cc/150?img=11', rating: 5, text: 'Outstanding service! All features as promised. Very happy!', social: 'facebook', verified: true },
-            { name: 'Karthik Rao', avatar: 'https://i.pravatar.cc/150?img=56', rating: 5, text: 'Amazing content quality! WhatsApp support is very responsive.', social: 'instagram', verified: true },
-            { name: 'Anjali Patel', avatar: 'https://i.pravatar.cc/150?img=10', rating: 4, text: 'Great service! Daily content updates are very helpful.', social: 'facebook', verified: true },
-            { name: 'Suresh Kumar', avatar: 'https://i.pravatar.cc/150?img=71', rating: 5, text: 'Superb! Premium Plus plan exceeded all my expectations.', social: 'instagram', verified: true },
-            { name: 'Pallavi Joshi', avatar: 'https://i.pravatar.cc/150?img=8', rating: 5, text: 'Best investment for content creators! Highly recommended!', social: 'facebook', verified: true },
-            { name: 'Ramesh Verma', avatar: 'https://i.pravatar.cc/150?img=65', rating: 5, text: 'Excellent service! All premium apps working perfectly fine.', social: 'instagram', verified: true },
-            { name: 'Shruti Agarwal', avatar: 'https://i.pravatar.cc/150?img=7', rating: 4, text: 'Good value! Content quality is good and support is helpful.', social: 'facebook', verified: true },
-            { name: 'Abhishek Sharma', avatar: 'https://i.pravatar.cc/150?img=53', rating: 5, text: 'Amazing experience! Got all features working perfectly.', social: 'instagram', verified: true },
-            { name: 'Pooja Reddy', avatar: 'https://i.pravatar.cc/150?img=6', rating: 5, text: 'Best spiritual content provider! Very satisfied customer here.', social: 'facebook', verified: true }
-        ];
-
-        function createReviewCard(review) {
-            const socialIcon = review.social === 'instagram' 
-                ? '<svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>'
-                : '<svg fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>';
-
-            const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
-
-            return `
-                <div class="review-card">
-                    <div class="review-header">
-                        <img src="${review.avatar}" alt="${review.name}" class="reviewer-avatar">
-                        <div class="reviewer-info">
-                            <h4>${review.name}</h4>
-                            <div class="review-stars">${stars.split('').map(s => `<span class="star">${s}</span>`).join('')}</div>
-                        </div>
-                    </div>
-                    <p class="review-text">${review.text}</p>
-                    <div class="review-meta">
-                        <span class="social-badge">${socialIcon} ${review.social === 'instagram' ? 'Instagram' : 'Facebook'}</span>
-                        ${review.verified ? '<span class="social-badge">✓ Verified</span>' : ''}
-                    </div>
-                </div>
-            `;
-        }
-
-        const reviewsTrack = document.getElementById('reviewsTrack');
-        const reviewsHTML = reviews.map(createReviewCard).join('');
-        reviewsTrack.innerHTML = reviewsHTML + reviewsHTML;
-
-        reviewsTrack.addEventListener('mouseenter', () => {
-            reviewsTrack.style.animationPlayState = 'paused';
-        });
-
-        reviewsTrack.addEventListener('mouseleave', () => {
-            reviewsTrack.style.animationPlayState = 'running';
-        });
-    </script>
+  // Note: Replace ad placeholder with AdMob / AdSense code when you have account
+</script>
 </body>
 </html>
