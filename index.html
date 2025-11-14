@@ -1,811 +1,640 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alpha Pandit Ji - Premium Spiritual Content & Exclusive Services</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif;
-            background: #f5f5f5;
-            color: #1a1a1a;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Scroll Progress Bar */
-        .progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            z-index: 9999;
-            transition: width 0.1s;
-        }
-
-        /* Important Notice Banner */
-        .notice-banner {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
-            padding: 20px;
-            text-align: center;
-            border-bottom: 3px solid #ff4757;
-            animation: slideDown 0.6s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .notice-banner::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
-            animation: shine 3s infinite;
-        }
-
-        .notice-banner .notice-content {
-            position: relative;
-            z-index: 1;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .notice-banner h3 {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            color: #fff;
-            font-weight: 800;
-        }
-
-        .notice-banner p {
-            font-size: 1rem;
-            line-height: 1.8;
-            color: #fff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .notice-banner strong {
-            color: #ffeb3b;
-            font-weight: 900;
-            text-decoration: underline;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 60px 20px;
-            position: relative;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            width: 150%;
-            height: 150%;
-            background: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: moveGrid 20s linear infinite;
-        }
-
-        @keyframes moveGrid {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 900px;
-        }
-
-        .logo {
-            width: 220px;
-            height: 220px;
-            margin: 0 auto 40px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 6px solid rgba(255,255,255,0.4);
-            box-shadow: 0 30px 80px rgba(0,0,0,0.3), 0 0 50px rgba(102, 126, 234, 0.6);
-            animation: float 3s ease-in-out infinite;
-            position: relative;
-        }
-
-        .logo::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
-            animation: rotate 3s linear infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 900;
-            margin-bottom: 25px;
-            text-shadow: 0 5px 20px rgba(0,0,0,0.3);
-            animation: fadeInUp 1s ease 0.2s both;
-            letter-spacing: -1px;
-            color: #fff;
-        }
-
-        .hero .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 50px;
-            opacity: 0.95;
-            animation: fadeInUp 1s ease 0.4s both;
-            font-weight: 300;
-            color: #fff;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: white;
-            color: #667eea;
-            padding: 20px 50px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-            animation: fadeInUp 1s ease 0.6s both;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(102, 126, 234, 0.2);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .cta-button:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-        }
-
-        /* Stats Section */
-        .stats {
-            padding: 80px 20px;
-            background: #ffffff;
-            position: relative;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .stat-card {
-            text-align: center;
-            padding: 40px;
-            background: linear-gradient(145deg, #f9f9f9, #fff);
-            border-radius: 20px;
-            border: 2px solid #e0e0e0;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.2);
-        }
-
-        .stat-number {
-            font-size: 3.5rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            font-size: 1.1rem;
-            color: #666;
-        }
-
-        /* Pricing Section */
-        .pricing {
-            padding: 100px 20px;
-            background: #f5f5f5;
-            position: relative;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 3rem;
-            margin-bottom: 70px;
-            font-weight: 800;
-            color: #1a1a1a;
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .price-card {
-            background: #ffffff;
-            border-radius: 30px;
-            padding: 50px 40px;
-            text-align: center;
-            position: relative;
-            border: 2px solid #e0e0e0;
-            transition: all 0.4s ease;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-        }
-
-        .price-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.05), transparent);
-            transition: left 0.6s;
-        }
-
-        .price-card:hover::before {
-            left: 100%;
-        }
-
-        .price-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            border-color: #667eea;
-            box-shadow: 0 15px 50px rgba(102, 126, 234, 0.25);
-        }
-
-        .price-card.featured {
-            border-color: #FFD700;
-            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.25);
-            transform: scale(1.05);
-        }
-
-        .price-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 10px 25px;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .price-card.featured .price-badge {
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-            color: #000;
-        }
-
-        .price-card h3 {
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-            font-weight: 800;
-            color: #1a1a1a;
-        }
-
-        .price {
-            font-size: 4rem;
-            font-weight: 900;
-            color: #667eea;
-            margin-bottom: 15px;
-            line-height: 1;
-        }
-
-        .price-card.featured .price {
-            color: #FFD700;
-        }
-
-        .price span {
-            font-size: 1.3rem;
-            color: #888;
-            font-weight: 400;
-        }
-
-        .price-features {
-            list-style: none;
-            margin: 40px 0;
-            text-align: left;
-        }
-
-        .price-features li {
-            padding: 18px 0;
-            border-bottom: 1px solid #e0e0e0;
-            color: #333;
-            display: flex;
-            align-items: center;
-            font-size: 1rem;
-        }
-
-        .price-features li::before {
-            content: '✓';
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            margin-right: 15px;
-            font-weight: 900;
-            flex-shrink: 0;
-            font-size: 0.9rem;
-            color: white;
-        }
-
-        .buy-button {
-            display: block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px 45px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-top: 35px;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .buy-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.2);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .buy-button:hover::before {
-            width: 400px;
-            height: 400px;
-        }
-
-        .buy-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
-        }
-
-        .price-card.featured .buy-button {
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-            color: #000;
-        }
-
-        .alt-button {
-            display: block;
-            background: transparent;
-            color: #667eea;
-            padding: 17px 40px;
-            border: 2px solid #667eea;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            margin-top: 18px;
-            transition: all 0.3s ease;
-        }
-
-        .alt-button:hover {
-            background: #667eea;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        /* Footer */
-        .footer {
-            background: #ffffff;
-            padding: 80px 20px 40px;
-            text-align: center;
-            border-top: 2px solid #e0e0e0;
-        }
-
-        .footer-title {
-            font-size: 2rem;
-            margin-bottom: 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-
-        .social-links a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(145deg, #f9f9f9, #fff);
-            border-radius: 50%;
-            color: #667eea;
-            font-size: 1.8rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: 2px solid #e0e0e0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .social-links a::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: #667eea;
-            transform: translate(-50%, -50%);
-            transition: width 0.4s, height 0.4s;
-        }
-
-        .social-links a:hover::before {
-            width: 100%;
-            height: 100%;
-        }
-
-        .social-links a:hover {
-            color: white;
-            transform: translateY(-8px) scale(1.1);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-            border-color: #667eea;
-        }
-
-        .social-links a svg {
-            position: relative;
-            z-index: 1;
-        }
-
-        .footer p {
-            color: #666;
-            margin: 15px 0;
-            font-size: 1rem;
-        }
-
-        .footer a {
-            color: #667eea;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer a:hover {
-            color: #764ba2;
-        }
-
-        /* Animations */
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes shine {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            .hero .subtitle {
-                font-size: 1.2rem;
-            }
-            .section-title {
-                font-size: 2rem;
-            }
-            .price {
-                font-size: 3rem;
-            }
-            .pricing-grid {
-                grid-template-columns: 1fr;
-            }
-            .price-card.featured {
-                transform: scale(1);
-            }
-            .logo {
-                width: 180px;
-                height: 180px;
-            }
-            .notice-banner h3 {
-                font-size: 1.1rem;
-            }
-            .notice-banner p {
-                font-size: 0.9rem;
-            }
-        }
-    </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Alpha Pandit Ji Official</title>
+<link rel="icon" href="https://i.ibb.co/HTmgqXLh/Picsart-25-11-04-05-36-14-228.png" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold-1:#D4AF37;
+    --gold-2:#E9C46A;
+    --bg-white:#fff;
+    --muted:#6b6b6b;
+    --accent:#00c46a; /* generate button green */
+  }
+  *{box-sizing:border-box;font-family:'Poppins',sans-serif}
+  html,body{height:100%}
+  body{
+    margin:0;
+    background:linear-gradient(180deg,#fff 0%, #fbf6ee 60%);
+    color:#111;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* STICKY HEADER */
+  header{
+    position:sticky;
+    top:0;
+    z-index:1200;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 20px;
+    border-bottom:1px solid rgba(0,0,0,0.04);
+    background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.75));
+    backdrop-filter: blur(6px);
+  }
+  .left-head{display:flex;align-items:center;gap:14px}
+  .logo-wrap{display:flex;align-items:center;gap:10px}
+  .logo-img{width:64px;height:64px;border-radius:12px;overflow:hidden;border:3px solid rgba(0,0,0,0.06);box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+  .logo-img img{width:100%;height:100%;object-fit:cover;display:block}
+  .brand{font-weight:700;color:var(--gold-1);line-height:1}
+  .tag{font-size:0.85rem;color:var(--muted);margin-top:3px}
+
+  .top-actions{display:flex;align-items:center;gap:10px}
+  .btn{padding:8px 14px;border-radius:999px;border:none;cursor:pointer;font-weight:700}
+  .btn-login{background:linear-gradient(90deg,var(--gold-1),var(--gold-2));color:#111}
+  .btn-settings{background:#fff;border:1px solid #eee;color:#333}
+  .lang-select{padding:7px 12px;border-radius:10px;border:1px solid #eee;background:#fff}
+
+  /* NOTE bar */
+  .note{
+    text-align:center;
+    background:linear-gradient(90deg, rgba(212,175,55,0.12), rgba(212,175,55,0.06));
+    padding:8px 12px;
+    font-weight:600;
+    color: #444;
+    border-bottom:1px solid rgba(212,175,55,0.08);
+  }
+
+  /* HERO */
+  .hero{
+    max-width:1200px;margin:28px auto;padding:36px 20px;border-radius:18px;display:flex;gap:30px;align-items:center;background:linear-gradient(180deg,rgba(212,175,55,0.06),rgba(255,255,255,0.6));
+    box-shadow:0 10px 40px rgba(212,175,55,0.06);
+  }
+  .hero-left{flex:1;min-width:260px}
+  .hero-title{font-size:2.1rem;margin-bottom:10px;color:var(--gold-1);font-weight:800}
+  .hero-sub{color:#444;margin-bottom:18px;line-height:1.5}
+  .cta-group{display:flex;gap:12px;flex-wrap:wrap}
+  .cta-primary{background:var(--accent);color:#00281a;padding:12px 20px;border-radius:999px;font-weight:800;box-shadow:0 10px 30px rgba(0,196,106,0.12)}
+  .cta-secondary{background:transparent;border:2px solid rgba(0,0,0,0.06);padding:10px 18px;border-radius:999px;color:#333}
+
+  .hero-stats{display:flex;gap:14px;margin-top:20px;flex-wrap:wrap}
+  .stat{background:#fff;padding:14px 18px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.04)}
+  .stat h3{color:var(--gold-1);margin-bottom:6px}
+  .stat p{color:var(--muted);font-size:0.9rem}
+
+  /* PLANS */
+  .plans{max-width:1200px;margin:28px auto;padding:18px;display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
+  .plan{background:#fff;border-radius:14px;padding:20px;width:280px;border:1px solid rgba(0,0,0,0.04);box-shadow:0 8px 28px rgba(0,0,0,0.04)}
+  .plan .badge{display:inline-block;background:linear-gradient(90deg,var(--gold-1),var(--gold-2));color:#111;padding:6px 12px;border-radius:999px;font-weight:800;margin-bottom:10px}
+  .plan h4{margin:6px 0 10px}
+  .plan p{font-size:0.95rem;color:var(--muted);margin-bottom:14px}
+  .buy{display:inline-block;background:var(--accent);color:#001f12;padding:10px 18px;border-radius:999px;font-weight:800;text-decoration:none}
+
+  /* Affiliate generator */
+  .affiliate-wrap{max-width:1000px;margin:24px auto;padding:20px;background:#fff;border-radius:14px;border:1px solid rgba(0,0,0,0.03)}
+  .affiliate-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+  .affiliate-head h3{margin:0;color:#111}
+  .affiliate-body{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .affiliate-input{flex:1;min-width:220px;display:flex;gap:10px;align-items:center}
+  .affiliate-input input[type="text"]{flex:1;padding:12px;border-radius:10px;border:1px solid #eee}
+  .affiliate-input select{padding:10px;border-radius:10px;border:1px solid #eee}
+  .generate{background:linear-gradient(90deg,var(--gold-1),var(--gold-2));color:#111;padding:10px 18px;border-radius:10px;font-weight:800;border:none;cursor:pointer}
+  .result{margin-top:12px;color:#0b6b3a;font-weight:700;word-break:break-all}
+
+  /* REVIEW SECTION */
+  .reviews-section{max-width:1200px;margin:32px auto;padding:16px}
+  .reviews-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+  .reviews-left{display:flex;flex-direction:column}
+  .avg{display:flex;align-items:center;gap:10px}
+  .avg .score{font-weight:800;color:var(--gold-1);font-size:1.3rem}
+  .review-action{display:flex;gap:8px}
+  .review-open{background:linear-gradient(90deg,var(--gold-1),var(--gold-2));color:#111;padding:8px 16px;border-radius:999px;border:none;cursor:pointer}
+
+  .carousel-viewport{position:relative;overflow:hidden;padding:12px 6px;border-radius:12px}
+  .carousel-track{display:flex;gap:12px;transition:transform 600ms linear;will-change:transform;padding-bottom:10px}
+  .review-card{min-width:220px;background:#fff;border-radius:12px;padding:12px;border:1px solid rgba(0,0,0,0.04);box-shadow:0 8px 20px rgba(0,0,0,0.04);color:#111}
+  .review-card .avatar{width:56px;height:56px;border-radius:12px;overflow:hidden;margin-bottom:8px}
+  .review-card img{width:100%;height:100%;object-fit:cover}
+  .review-name{font-weight:700}
+  .review-stars{color:gold;margin:6px 0}
+  .review-text{font-size:0.92rem;color:#333}
+
+  /* RECENT EARNERS TICKER */
+  .ticker{background:#fff;padding:10px;border-radius:999px;display:flex;align-items:center;gap:10px;max-width:1200px;margin:20px auto;overflow:hidden;border:1px solid rgba(0,0,0,0.04)}
+  .ticker .label{font-weight:700;color:var(--gold-1);padding-left:8px}
+  .ticker .marquee{white-space:nowrap;display:inline-block;animation:marquee 18s linear infinite}
+  @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+
+  /* Visitor & help chat */
+  .bottom-controls{max-width:1200px;margin:18px auto;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 8px}
+  .visitor{background:#fff;padding:8px 14px;border-radius:999px;color:#333;font-weight:700;border:1px solid rgba(0,0,0,0.04)}
+  .chat-btn{position:fixed;right:18px;bottom:24px;background:linear-gradient(90deg,var(--gold-1),var(--gold-2));color:#111;border:none;padding:14px;border-radius:999px;box-shadow:0 14px 40px rgba(212,175,55,0.18);cursor:pointer;z-index:1500}
+
+  /* Footer */
+  footer{margin-top:40px;background:#fff;padding:28px 18px;border-top:1px solid rgba(0,0,0,0.04);color:#333}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+  .social-list{display:flex;gap:12px;align-items:center}
+  .social-list a{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid rgba(0,0,0,0.04);text-decoration:none;color:#111;background:linear-gradient(90deg,#fff,#fff)}
+  .social-list img{width:26px;height:26px}
+  .contact-email{color:#666}
+
+  /* modal */
+  .modal-overlay{position:fixed;inset:0;background:rgba(10,10,10,0.6);display:none;align-items:center;justify-content:center;z-index:2000;padding:16px}
+  .modal{background:#fff;border-radius:12px;padding:18px;max-width:520px;width:100%}
+  .modal h3{margin-bottom:8px}
+  .modal input, .modal textarea, .modal select{width:100%;padding:10px;border-radius:8px;border:1px solid #eee;margin:8px 0}
+  .modal .actions{display:flex;justify-content:flex-end;gap:8px;margin-top:8px}
+
+  /* small responsive */
+  @media (max-width:900px){
+    .hero{flex-direction:column;align-items:flex-start}
+    .plans{justify-content:center}
+    .carousel-viewport{padding:0}
+  }
+</style>
 </head>
 <body>
-    <!-- Scroll Progress Bar -->
-    <div class="progress-bar" id="progressBar"></div>
 
-    <!-- Important Notice Banner -->
-    <section class="notice-banner">
-        <div class="notice-content">
-            <h3>⚠️ IMPORTANT NOTICE</h3>
-            <p>
-                <strong>Once you purchase any subscription, the payment is NON-REFUNDABLE.</strong> 
-                Whether you like our service or not, <strong>we will NOT provide any refund.</strong> 
-                Please purchase subscription <strong>at your own risk and discretion.</strong> Thank you!
-            </p>
-        </div>
-    </section>
+  <!-- NOTE -->
+  <div class="note">
+    🔔 Note: Platform fee 30% is automatically applied to all affiliate earnings (Premium Plus users pay only 25%).
+  </div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="logo">
-                <img src="https://i.ibb.co/HTmgqXLh/Picsart-25-11-04-05-36-14-228.png" alt="Alpha Pandit Ji">
-            </div>
-            <h1>Alpha Pandit Ji</h1>
-            <p class="subtitle">Premium Spiritual Content, Guidance & Exclusive Professional Services</p>
-            <a href="#pricing" class="cta-button">Choose Your Plan</a>
-        </div>
-    </section>
+  <!-- HEADER -->
+  <header>
+    <div class="left-head">
+      <div class="logo-wrap">
+        <div class="logo-img"><img src="https://i.ibb.co/HTmgqXLh/Picsart-25-11-04-05-36-14-228.png" alt="Alpha Pandit Ji Logo"></div>
+      </div>
+      <div>
+        <div class="brand">Alpha Pandit Ji Official</div>
+        <div class="tag">Professional Digital Services · Affiliate Hub</div>
+      </div>
+    </div>
 
-    <!-- Stats Section -->
-    <section class="stats">
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number" data-target="5000">0</div>
-                <div class="stat-label">Happy Members</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" data-target="10000">0</div>
-                <div class="stat-label">Content Downloads</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" data-target="50">0</div>
-                <div class="stat-label">Premium Apps Unlocked</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" data-target="99">0</div>
-                <div class="stat-label">Customer Satisfaction</div>
-            </div>
-        </div>
-    </section>
+    <div class="top-actions">
+      <select class="lang-select" id="langSelect" title="Choose language">
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="bn">Bengali</option>
+        <option value="mr">Marathi</option>
+        <option value="ta">Tamil</option>
+      </select>
+      <button class="btn btn-settings" id="settingsBtn">⚙️ Settings</button>
+      <button class="btn btn-login" id="loginBtn">Sign Up / Login</button>
+    </div>
+  </header>
 
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <h2 class="section-title">Choose Your Premium Plan</h2>
-        <div class="pricing-grid">
-            <!-- Basic Plan -->
-            <div class="price-card">
-                <span class="price-badge">BASIC</span>
-                <h3>Basic Plan</h3>
-                <div class="price">₹199<span>/month</span></div>
-                <ul class="price-features">
-                    <li>Premium Telegram Channel Access</li>
-                    <li>Daily Spiritual Content</li>
-                    <li>Community Support</li>
-                    <li>30 Days Validity</li>
-                </ul>
-                <a href="https://imjo.in/v8sXQG" class="buy-button" target="_blank">Buy Now</a>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSciLA2M3H1XVJdVWmbWKhpuwZgLLRIUMAkArIVRHH7u-zoLEg/viewform" class="alt-button" target="_blank">Alternative Form</a>
-            </div>
+  <!-- HERO -->
+  <section class="hero" role="region">
+    <div class="hero-left">
+      <div class="hero-title">India’s Smartest Affiliate Hub</div>
+      <div class="hero-sub">Join thousands who earn by sharing product links. Subscribe, generate affiliate links, share, and earn — we handle the split automatically.</div>
 
-            <!-- Premium Plan -->
-            <div class="price-card featured">
-                <span class="price-badge">⭐ MOST POPULAR</span>
-                <h3>Premium Plan</h3>
-                <div class="price">₹499<span>/month</span></div>
-                <ul class="price-features">
-                    <li>All Basic Features</li>
-                    <li>WhatsApp Group Access</li>
-                    <li>Priority Support</li>
-                    <li>Exclusive Spiritual Content</li>
-                    <li>30 Days Validity</li>
-                </ul>
-                <a href="https://imjo.in/mKZYp9" class="buy-button" target="_blank">Buy Now</a>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSciLA2M3H1XVJdVWmbWKhpuwZgLLRIUMAkArIVRHH7u-zoLEg/viewform" class="alt-button" target="_blank">Alternative Form</a>
-            </div>
+      <div class="cta-group">
+        <button class="cta-primary" id="startEarningBtn">Start Earning</button>
+        <button class="cta-secondary" id="subscribeNowBtn">Subscribe Now</button>
+      </div>
 
-            <!-- Premium Plus Plan -->
-            <div class="price-card">
-                <span class="price-badge">💎 VIP</span>
-                <h3>Premium Plus</h3>
-                <div class="price">₹999<span>/month</span></div>
-                <ul class="price-features">
-                    <li>Daily New Updates For Social Media</li>
-                    <li>Personal Guide For Only Plus Members</li>
-                    <li>All Premium Features</li>
-                    <li>Personal Guidance</li>
-                    <li>All Editing Premiums Unlocked Apps</li>
-                    <li>30 Days Validity</li>
-                    <li>VIP Content Access</li>
-                </ul>
-                <a href="https://imjo.in/g9YxyK" class="buy-button" target="_blank">Buy Now</a>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSciLA2M3H1XVJdVWmbWKhpuwZgLLRIUMAkArIVRHH7u-zoLEg/viewform" class="alt-button" target="_blank">Alternative Form</a>
-            </div>
+      <div class="hero-stats">
+        <div class="stat"><h3>5000+</h3><p>Happy Members</p></div>
+        <div class="stat"><h3>10000+</h3><p>Content Downloads</p></div>
+        <div class="stat"><h3>50+</h3><p>Premium Tools</p></div>
+      </div>
+    </div>
 
-            <!-- Enterprise Plan -->
-            <div class="price-card">
-                <span class="price-badge">💼 ENTERPRISE</span>
-                <h3>Enterprise Plan</h3>
-                <div class="price">₹1999<span>/month</span></div>
-                <ul class="price-features">
-                    <li>All Premium Plus Features</li>
-                    <li>24/7 Priority Support</li>
-                    <li>Custom Content Creation Service</li>
-                    <li>Movie Clips Upload Without Copyright</li>
-                    <li>Bulk Premium Apps Unlocked (50+)</li>
-                    <li>Weekly Any 10 Questions Answered</li>
-                    <li>Premium Telegram Contact Access</li>
-                    <li>30 Days Validity</li>
-                    <li>Private VIP Group Access</li>
-                    <li>Early Access to New Features</li>
-                    <li>YouTube Channel Security Tips & Tricks</li>
-                </ul>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSciLA2M3H1XVJdVWmbWKhpuwZgLLRIUMAkArIVRHH7u-zoLEg/viewform" class="buy-button" target="_blank">Buy Now</a>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSciLA2M3H1XVJdVWmbWKhpuwZgLLRIUMAkArIVRHH7u-zoLEg/viewform" class="alt-button" target="_blank">Alternative Form</a>
-            </div>
-        </div>
-    </section>
+    <div class="hero-right">
+      <img src="https://i.ibb.co/HTmgqXLh/Picsart-25-11-04-05-36-14-228.png" alt="logo" style="width:200px;border-radius:14px;box-shadow:0 20px 60px rgba(212,175,55,0.12)">
+    </div>
+  </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <h3 class="footer-title">Follow Us on Social Media</h3>
-        <div class="social-links">
-            <a href="https://www.instagram.com/alphapanditjiofficial?igsh=cjhwZ2F2bXowMHJp" target="_blank" title="Instagram">
-                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-            </a>
-            <a href="https://youtube.com/@alphapanditji?si=8EiqrotqCMrtcGyt" target="_blank" title="YouTube Alpha Pandit Ji">
-                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-            </a>
-            <a href="https://youtube.com/@holaaieditz?si=DLe-zaPr0vqlYao7" target="_blank" title="YouTube Hola AI Editz">
-                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-            </a>
-            <a href="https://t.me/AlphaPanditJiApp" target="_blank" title="Telegram">
-                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-            </a>
-            <a href="https://whatsapp.com/channel/0029VbB4dZrCxoB4uE18WT2a" target="_blank" title="WhatsApp">
-                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-            </a>
-            <a href="https://www.facebook.com/share/1BuK9n8R1N/" target="_blank" title="Facebook">
-                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            </a>
-        </div>
-        <p>&copy; 2025 Alpha Pandit Ji | All Rights Reserved</p>
-        <p>Secure payments powered by <a href="https://www.instamojo.com" target="_blank">Instamojo</a></p>
-        <p>Made with ❤️ in India</p>
-    </footer>
+  <!-- PLANS -->
+  <div class="plans" role="region" aria-label="Subscription plans">
+    <div class="plan">
+      <div class="badge">BASIC</div>
+      <h4>Basic Plan</h4>
+      <p>₹99 / month — Access to affiliate link preview & limited features.</p>
+      <a class="buy" href="https://imjo.in/v8sXQG" target="_blank" rel="noopener">Buy ₹99</a>
+    </div>
 
-    <script>
-        // Scroll Progress Bar
-        window.addEventListener('scroll', () => {
-            const winScroll = document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            document.getElementById('progressBar').style.width = scrolled + '%';
-        });
+    <div class="plan">
+      <div class="badge">MOST POPULAR</div>
+      <h4>Premium Plan</h4>
+      <p>₹299 / month — Affiliate generator + contact support.</p>
+      <a class="buy" href="https://imjo.in/mKZYp9" target="_blank" rel="noopener">Buy ₹299</a>
+    </div>
 
-        // Counter Animation
-        const counters = document.querySelectorAll('.stat-number');
-        const speed = 200;
+    <div class="plan">
+      <div class="badge">PREMIUM PLUS</div>
+      <h4>Premium Plus</h4>
+      <p>₹999 / month — Priority support, low fee (25% platform cut).</p>
+      <a class="buy" href="https://imjo.in/g9YxyK" target="_blank" rel="noopener">Buy ₹999</a>
+    </div>
+  </div>
 
-        counters.forEach(counter => {
-            const updateCount = () => {
-                const target = +counter.getAttribute('data-target');
-                const count = +counter.innerText;
-                const inc = target / speed;
+  <!-- AFFILIATE GENERATOR -->
+  <div class="affiliate-wrap" id="affiliateWrap">
+    <div class="affiliate-head">
+      <h3>Affiliate Link Generator</h3>
+      <div style="font-size:0.95rem;color:var(--muted)">Paste any shopping product link and choose commission percent</div>
+    </div>
+    <div class="affiliate-body">
+      <div class="affiliate-input">
+        <input id="productUrl" type="text" placeholder="Paste Flipkart / Amazon / other product link...">
+        <select id="commissionSelect" aria-label="commission percent">
+          <option value="5">5%</option>
+          <option value="10">10%</option>
+          <option value="15">15%</option>
+          <option value="20">20%</option>
+          <option value="30">30%</option>
+          <option value="50">50%</option>
+          <option value="100">100%</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+        <button class="generate" id="generateBtn">Generate Link</button>
+        <div style="font-size:0.9rem;color:var(--muted)">*Only for subscribed users (299 / 999)</div>
+      </div>
+    </div>
+    <div class="result" id="affiliateResult"></div>
+  </div>
 
-                if (count < target) {
-                    counter.innerText = Math.ceil(count + inc);
-                    setTimeout(updateCount, 1);
-                } else {
-                    counter.innerText = target + (target === 99 ? '%' : '+');
-                }
-            };
+  <!-- RECENT EARNERS TICKER -->
+  <div class="ticker" aria-hidden="false">
+    <div class="label">🔥 Recent Earners:</div>
+    <div style="overflow:hidden" aria-hidden="true">
+      <div class="marquee" id="earnersMarquee"></div>
+    </div>
+  </div>
 
-            const observer = new IntersectionObserver(entries => {
-                if (entries[0].isIntersecting) {
-                    updateCount();
-                    observer.disconnect();
-                }
-            });
+  <!-- REVIEWS -->
+  <div class="reviews-section">
+    <div class="reviews-header">
+      <div class="reviews-left">
+        <div class="avg"><div class="score">3.7</div><div style="color:var(--muted);margin-left:6px">/5 — 10,000+ reviews</div></div>
+        <div style="font-size:0.95rem;color:var(--muted);margin-top:6px">Real people — real experiences</div>
+      </div>
+      <div class="review-action">
+        <button class="review-open" id="openReview">Add Review</button>
+      </div>
+    </div>
 
-            observer.observe(counter);
-        });
+    <div class="carousel-viewport">
+      <div class="carousel-track" id="carouselTrack" aria-live="polite"></div>
+    </div>
+  </div>
 
-        // Smooth Scroll
-        document.querySelector('.cta-button').addEventListener('click', function(e) {
-            e.preventDefault();
-            document.querySelector('#pricing').scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
-    </script>
+  <!-- Visitor & Controls -->
+  <div class="bottom-controls">
+    <div class="visitor" id="visitorCount">👁️ 0 visitors</div>
+    <div style="color:var(--muted)">Need help? Click the chat bubble.</div>
+  </div>
+
+  <!-- Floating chat -->
+  <button class="chat-btn" id="chatBtn">💬 Help</button>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div style="font-weight:800;color:var(--gold-1)">Follow Us</div>
+        <div class="contact-email">📧 Businessrelatedsms21@gmail.com</div>
+      </div>
+
+      <div class="social-list">
+        <a href="https://youtube.com/@alphapanditji?si=erkkS2thnaJOAkbW" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="yt">YouTube</a>
+        <a href="https://www.instagram.com/alphapanditjiofficial?igsh=cjhwZ2F2bXowMHJp" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="ig">Instagram</a>
+        <a href="https://t.me/AlphaPanditJiApp" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="tg">Telegram</a>
+        <a href="https://www.facebook.com/share/1YiZJjkEmw/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="fb">Facebook</a>
+        <a href="https://youtube.com/@holaaieditz?si=uZ_oseK55QblfQKg" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="yt2">YouTube (Hola)</a>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:14px;color:#777;font-size:0.9rem">© 2025 Alpha Pandit Ji Official · All Rights Reserved</div>
+  </footer>
+
+  <!-- Review Modal -->
+  <div class="modal-overlay" id="reviewModalOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true">
+      <h3>Write a Review</h3>
+      <input id="r_name" placeholder="Your name">
+      <input id="r_photo" type="file" accept="image/*">
+      <select id="r_stars">
+        <option value="5">★★★★★ (5)</option>
+        <option value="4">★★★★ (4)</option>
+        <option value="3">★★★ (3)</option>
+        <option value="2">★★ (2)</option>
+        <option value="1">★ (1)</option>
+      </select>
+      <textarea id="r_text" rows="4" placeholder="Write your experience..."></textarea>
+      <div class="actions">
+        <button id="submitReviewBtn" class="btn" style="background:var(--gold-1);color:#111">Submit</button>
+        <button id="cancelReviewBtn" class="btn" style="background:#eee;color:#111">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal (simple) -->
+  <div class="modal-overlay" id="settingsOverlay" aria-hidden="true">
+    <div class="modal">
+      <h3>Settings</h3>
+      <div style="margin-bottom:10px">
+        <label style="font-weight:700">Theme</label>
+        <select id="themeSel">
+          <option value="gold">Gold (Recommended)</option>
+          <option value="white">White (Clean)</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
+      <div style="margin-bottom:10px">
+        <label style="font-weight:700">Language</label>
+        <select id="langSel">
+          <option value="en">English</option>
+          <option value="hi">Hindi</option>
+          <option value="bn">Bengali</option>
+          <option value="mr">Marathi</option>
+          <option value="ta">Tamil</option>
+        </select>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:8px">
+        <button id="saveSettings" class="btn" style="background:var(--gold-1);color:#111">Save</button>
+        <button id="closeSettings" class="btn" style="background:#eee;color:#111">Close</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* -------------------------
+  UTILITIES & LOCAL STORAGE
+--------------------------*/
+const LS_REVS = 'apj_reviews_v2';
+const LS_AFF = 'apj_affs_v2';
+const LS_VIS = 'apj_vis_v2';
+const instamojo = {
+  basic: 'https://imjo.in/v8sXQG',
+  standard: 'https://imjo.in/mKZYp9',
+  plus: 'https://imjo.in/g9YxyK'
+};
+
+/* -------------------------
+  Visitor counter (simulated)
+--------------------------*/
+let visitors = parseInt(localStorage.getItem(LS_VIS) || '120') || 120;
+const visitorEl = document.getElementById('visitorCount');
+function tickVisitor(){
+  // random small fluctuation for realism
+  const delta = Math.floor(Math.random()*3); visitors += delta;
+  localStorage.setItem(LS_VIS, visitors.toString());
+  visitorEl.textContent = '👁️ ' + visitors + ' visitors';
+}
+setInterval(tickVisitor, 7000);
+tickVisitor();
+
+/* -------------------------
+  Recent earners ticker (simulated)
+--------------------------*/
+const earners = ['Rahul','Priya','Aman','Meena','Rohan','Simran','Anita','Aditya','Karan','Mona','Rekha','Vikram','Nisha','Asha','Ritesh','Sonal'];
+function buildEarnerString(){
+  const parts = [];
+  for(let i=0;i<40;i++){
+    const name = earners[Math.floor(Math.random()*earners.length)];
+    const amount = Math.floor(Math.random()*1500) + 50;
+    parts.push(`${name} earned ₹${amount}`);
+  }
+  return parts.join('  •  ');
+}
+document.getElementById('earnersMarquee').textContent = buildEarnerString();
+
+/* -------------------------
+  Reviews: generate many dummy cards but not DOM-bomb
+  We'll create ~200 unique cards, duplicate to create longer track feel.
+--------------------------*/
+const sampleNames = ["Rahul","Priya","Aman","Meena","Rohan","Simran","Anjali","Vikram","Neha","Ritesh","Karan","Nisha","Pooja","Aditi","Kunal","Ritika","Asha","Mona","Rekha","Sahil","Aditya","Rakesh","Anita","Rhea","Gaurav","Sana","Tarun","Isha","Yash","Kriti"];
+const sampleTexts = [
+  "Amazing service! Highly recommended.",
+  "Really helped me a lot. Great content.",
+  "Good value for money and quick support.",
+  "Loved the guidance and timely updates.",
+  "Great experience! Will subscribe again."
+];
+function randInt(max){return Math.floor(Math.random()*max);}
+function genDummyReview(i){
+  const name = sampleNames[i % sampleNames.length] + (Math.random()<0.12 ? ' ' + (Math.floor(Math.random()*90)+10) : '');
+  const stars = (Math.random()*1.3 + 3.2).toFixed(1); // around 3.2-4.5
+  const avatar = 'https://i.pravatar.cc/150?img=' + ((i%70)+1);
+  const text = sampleTexts[i % sampleTexts.length];
+  return { id: 'd'+i, name, stars: parseFloat(stars), avatar, text };
+}
+// load or create reviews
+let reviews = JSON.parse(localStorage.getItem(LS_REVS) || 'null');
+if(!reviews){
+  const arr = [];
+  const N = 200;
+  for(let i=0;i<N;i++) arr.push(genDummyReview(i));
+  // store but we pretend count 10000+
+  localStorage.setItem(LS_REVS, JSON.stringify(arr));
+  reviews = arr;
+}
+
+const carouselTrack = document.getElementById('carouselTrack');
+
+function createCard(review){
+  const el = document.createElement('div'); el.className='review-card';
+  const avatarWrap = document.createElement('div'); avatarWrap.className='avatar';
+  const img = document.createElement('img'); img.src = review.avatar; img.alt = review.name;
+  avatarWrap.appendChild(img);
+  el.appendChild(avatarWrap);
+  const name = document.createElement('div'); name.className='review-name'; name.textContent = review.name;
+  el.appendChild(name);
+  const stars = document.createElement('div'); stars.className='review-stars';
+  const starCount = Math.round(review.stars);
+  stars.textContent = '★'.repeat(starCount) + ' ('+review.stars.toFixed(1)+')';
+  el.appendChild(stars);
+  const text = document.createElement('div'); text.className='review-text'; text.textContent = review.text;
+  el.appendChild(text);
+  return el;
+}
+
+function renderCarousel(){
+  carouselTrack.innerHTML = '';
+  // to create long track, duplicate reviews multiple times
+  const duplicate = 6; // 200 * 6 = 1200 cards (good balance)
+  for(let k=0;k<duplicate;k++){
+    for(let i=0;i<reviews.length;i++){
+      const card = createCard(reviews[i]);
+      carouselTrack.appendChild(card);
+    }
+  }
+}
+renderCarousel();
+
+/* -------------------------
+  Auto-scroll carousel
+--------------------------*/
+let trackPos = 0;
+let autoId = null;
+function startAutoScroll(){
+  stopAutoScroll();
+  const track = carouselTrack;
+  const totalWidth = track.scrollWidth;
+  autoId = setInterval(()=>{
+    trackPos += 1; // px
+    if(trackPos >= totalWidth/2) trackPos = 0; // loop (we duplicated)
+    track.style.transform = `translateX(${-trackPos}px)`;
+  }, 16); // ~60fps
+}
+function stopAutoScroll(){ if(autoId) clearInterval(autoId); autoId = null; }
+startAutoScroll();
+carouselTrack.addEventListener('mouseenter', stopAutoScroll);
+carouselTrack.addEventListener('mouseleave', startAutoScroll);
+
+/* -------------------------
+  Review modal behavior
+--------------------------*/
+const reviewModalOverlay = document.getElementById('reviewModalOverlay');
+document.getElementById('openReview').addEventListener('click', ()=> reviewModalOverlay.style.display = 'flex');
+document.getElementById('cancelReviewBtn').addEventListener('click', ()=> reviewModalOverlay.style.display = 'none');
+
+document.getElementById('submitReviewBtn').addEventListener('click', ()=>{
+  const name = document.getElementById('r_name').value.trim() || 'Anonymous';
+  const stars = parseInt(document.getElementById('r_stars').value);
+  const text = document.getElementById('r_text').value.trim() || 'Good service.';
+  const photoFile = document.getElementById('r_photo').files[0];
+  const id = 'u' + Date.now();
+  function pushReview(avatar){
+    const obj = { id, name, stars, avatar, text };
+    // prepend in storage and re-render first chunk
+    reviews.unshift(obj);
+    if(reviews.length > 500) reviews.pop(); // cap for perf
+    localStorage.setItem(LS_REVS, JSON.stringify(reviews));
+    // add card to front of track visually
+    const card = createCard(obj);
+    carouselTrack.prepend(card);
+    // update avg rating label (we keep static 3.7 but we can recompute)
+    reviewModalOverlay.style.display = 'none';
+    alert('Thanks — your review was added!');
+  }
+  if(photoFile){
+    const reader = new FileReader();
+    reader.onload = (e)=> pushReview(e.target.result);
+    reader.readAsDataURL(photoFile);
+  } else {
+    pushReview('https://i.ibb.co/dBLbrRV/user.png');
+  }
+});
+
+/* -------------------------
+  Affiliate generator logic (subscription gating)
+  - For demo: subscription flag stored in localStorage per user
+--------------------------*/
+let currentUser = JSON.parse(localStorage.getItem('apj_user') || 'null'); // demo user profile
+// For the demo, if no user, user is "guest" (no subscription)
+if(!currentUser){
+  currentUser = { id: null, email: null, subscribed:false, tier:null }; // tier: 'basic','standard','plus'
+  localStorage.setItem('apj_user', JSON.stringify(currentUser));
+}
+
+function requireSubscriptionMessage(){
+  alert('Please sign up and purchase subscription (₹299 or ₹999) to generate affiliate links.');
+}
+
+// generate link handler
+document.getElementById('generateBtn').addEventListener('click', ()=>{
+  const url = document.getElementById('productUrl').value.trim();
+  const pct = parseFloat(document.getElementById('commissionSelect').value);
+  if(!url){ alert('Paste a product link first'); return; }
+  // check subscription
+  if(!currentUser.subscribed || (currentUser.tier==='basic')){
+    requireSubscriptionMessage(); return;
+  }
+  // generate fake affiliate link
+  const base = url.split('?')[0];
+  const aff = `${base}?ref=alpha_${(currentUser.id||'guest')}&comm=${pct}&uid=${Math.floor(Math.random()*90000)+10000}`;
+  const display = `Affiliate Link (copy/share): ${aff}`;
+  document.getElementById('affiliateResult').innerHTML = `<div style="color:#0b6b3a;font-weight:800">${display}</div>`;
+  // store in localStorage
+  const arr = JSON.parse(localStorage.getItem(LS_AFF) || '[]');
+  arr.unshift({ id:'aff'+Date.now(), url:base, link:aff, pct, created:new Date().toISOString() });
+  localStorage.setItem(LS_AFF, JSON.stringify(arr));
+});
+
+/* -------------------------
+  Simulated Login / Subscribe buttons
+--------------------------*/
+document.getElementById('loginBtn').addEventListener('click', ()=>{
+  // quick pseudo-login prompt for demo
+  const email = prompt('Enter your email to sign up / login (demo):');
+  if(!email) return;
+  currentUser = { id: 'u'+Date.now(), email, subscribed:false, tier:'free' };
+  localStorage.setItem('apj_user', JSON.stringify(currentUser));
+  alert('Signed in as ' + email + '. Now please subscribe to unlock features.');
+});
+
+document.getElementById('subscribeNowBtn').addEventListener('click', ()=>{
+  // show options
+  const choice = prompt('Choose plan: 1=₹99, 2=₹299, 3=₹999  (enter 1/2/3)');
+  if(!choice) return;
+  if(choice==='1'){ window.open(instamojo.basic, '_blank'); attemptActivate('basic'); }
+  else if(choice==='2'){ window.open(instamojo.standard, '_blank'); attemptActivate('standard'); }
+  else if(choice==='3'){ window.open(instamojo.plus, '_blank'); attemptActivate('plus'); }
+});
+
+function attemptActivate(tier){
+  // For demo: ask user to confirm they've paid (since no backend)
+  const ok = confirm('After completing payment on Instamojo, click OK to activate subscription (demo).');
+  if(!ok) return;
+  // activate
+  currentUser.subscribed = true;
+  currentUser.tier = tier;
+  localStorage.setItem('apj_user', JSON.stringify(currentUser));
+  alert('Subscription activated: ' + tier + ' (demo). You can now generate affiliate links.');
+}
+
+/* -------------------------
+  Settings modal
+--------------------------*/
+const settingsOverlay = document.getElementById('settingsOverlay');
+document.getElementById('settingsBtn').addEventListener('click', ()=> settingsOverlay.style.display='flex');
+document.getElementById('closeSettings').addEventListener('click', ()=> settingsOverlay.style.display='none');
+document.getElementById('saveSettings').addEventListener('click', ()=>{
+  const theme = document.getElementById('themeSel').value;
+  const lang = document.getElementById('langSel').value;
+  // theme application (simple)
+  if(theme==='dark'){ document.body.style.background='linear-gradient(180deg,#0b0711,#12061a)'; }
+  else if(theme==='white'){ document.body.style.background='linear-gradient(180deg,#fff,#fbf6ee)'; }
+  else { document.body.style.background='linear-gradient(180deg,#fff 0%, #fbf6ee 60%)'; }
+  settingsOverlay.style.display='none';
+  alert('Settings saved (demo).');
+});
+
+/* -------------------------
+  Chat button (static helper)
+--------------------------*/
+document.getElementById('chatBtn').addEventListener('click', ()=>{
+  const answer = prompt('Help — choose:\n1. How to generate affiliate link\n2. How to subscribe\n3. Withdraw earnings\nEnter 1/2/3');
+  if(answer==='1') alert('Sign up -> Subscribe (₹299/₹999) -> Paste product link -> Generate Link.');
+  else if(answer==='2') alert('Click Subscribe Now -> choose plan -> complete Instamojo payment -> confirm activation in site.');
+  else if(answer==='3') alert('Open Wallet (coming soon), create withdraw request with UPI/Bank details, admin pays manually.');
+});
+
+/* -------------------------
+  Auto-run small helpers: scroll ticker refresh + resize handling
+--------------------------*/
+setInterval(()=> {
+  // refresh marquee content occasionally
+  document.getElementById('earnersMarquee').textContent = buildEarnerString();
+}, 18000);
+
+/* -------------------------
+  Accessibility & closing modals on ESC
+--------------------------*/
+document.addEventListener('keydown', (e)=>{
+  if(e.key==='Escape'){
+    document.querySelectorAll('.modal-overlay').forEach(m=> m.style.display='none');
+  }
+});
+
+/* -------------------------
+  Pre-seed: If no affiliate arr, add some example aff links (demo)
+--------------------------*/
+if(!localStorage.getItem(LS_AFF)){
+  const sample = [{id:'affdemo1',url:'https://flipkart.com/product1',link:'https://flipkart.com/product1?ref=alpha_demo&comm=5',pct:5,created:new Date().toISOString()}];
+  localStorage.setItem(LS_AFF, JSON.stringify(sample));
+}
+</script>
 </body>
 </html>
